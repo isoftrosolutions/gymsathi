@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -21,5 +20,29 @@ class HomeController extends Controller
     public function sectors(): View
     {
         return view('sectors');
+    }
+
+    /**
+     * Display the privacy policy page.
+     */
+    public function privacyPolicy(): View
+    {
+        return view('privacy-policy');
+    }
+
+    /**
+     * Display the terms of service page.
+     */
+    public function termsOfService(): View
+    {
+        return view('terms-of-service');
+    }
+
+    /**
+     * Display the contact support page.
+     */
+    public function contactSupport(): View
+    {
+        return view('contact-support');
     }
 }

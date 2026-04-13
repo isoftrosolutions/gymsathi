@@ -16,8 +16,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Public Routes
-Route::get('/', [HomeController::class, 'index'])->name('welcome');
-Route::get('/sectors', [HomeController::class, 'sectors'])->name('sectors');
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/', 'index')->name('welcome');
+    Route::get('/sectors', 'sectors')->name('sectors');
+    Route::get('/privacy-policy', 'privacyPolicy')->name('privacy-policy');
+    Route::get('/terms-of-service', 'termsOfService')->name('terms-of-service');
+    Route::get('/contact-support', 'contactSupport')->name('contact-support');
+});
 
 // Authentication Routes
-Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/login', 'login')->name('login');
+    Route::post('/login', 'store')->name('login.store');
+    Route::post('/logout', 'logout')->middleware('auth')->name('logout');
+});

@@ -18,10 +18,10 @@
         <div class="login-container">
             <!-- Left Panel -->
             <div class="login-info">
-                <div class="logo">
+                <a href="{{ route('welcome') }}" class="logo" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
                     <div class="logo-icon">H</div>
                     GYM<span>SATHI</span>
-                </div>
+                </a>
                 <h1>Powering the<br><span>Kinetic Pulse.</span></h1>
                 <p>Access the world's most advanced athletic management ecosystem. Precision data, member engagement, and performance scaling at your fingertips.</p>
                 
@@ -46,7 +46,17 @@
                 <h2>Admin Portal Login</h2>
                 <p class="subtitle">Enter your credentials to manage your gym pulse.</p>
 
-                <form action="{{ url('/login') }}" method="POST">
+                @if ($errors->any())
+                    <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                        <ul style="list-style: none; margin: 0; padding: 0;">
+                            @foreach ($errors->all() as $error)
+                                <li style="color: #ef4444; font-size: 0.875rem;">{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form action="{{ route('login.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="username">Email / Username</label>

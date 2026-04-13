@@ -1,6 +1,19 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^$ public/index.php [L]
-    RewriteCond %{REQUEST_URI} !public/
+    RewriteBase /gym/
+
+    # 1. Serve files/folders if they exist in the project root (like index.php)
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # 2. Bridge Rule: Serve physical files from the public folder if they exist there
+    RewriteCond %{DOCUMENT_ROOT}/gym/public/$1 -f
     RewriteRule ^(.*)$ public/$1 [L]
+
+    # 3. Replicate ERP's main routing (catch-all to root index.php)
+    RewriteRule ^(.*)$ index.php [L,QSA]
 </IfModule>
+
+# Prevent directory listing
+Options -Indexes
