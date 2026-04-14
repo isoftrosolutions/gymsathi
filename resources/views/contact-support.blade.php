@@ -26,7 +26,7 @@
                 <h3 class="text-xl font-headline font-bold mb-4">Phone Support</h3>
                 <p class="text-on-surface-variant mb-6">Speak directly with our support team for immediate assistance.</p>
                 <div class="space-y-2">
-                    <p class="font-bold text-on-surface">+977-1-XXXXXXX</p>
+                    <p class="font-bold text-on-surface">+977 9811144402</p>
                     <p class="text-sm text-on-surface-variant/60">Mon-Fri: 9AM-6PM NPT</p>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                 <h3 class="text-xl font-headline font-bold mb-4">Email Support</h3>
                 <p class="text-on-surface-variant mb-6">Send us detailed queries and we'll respond within 24 hours.</p>
                 <div class="space-y-2">
-                    <p class="font-bold text-on-surface">support@gymsathi.com</p>
+                    <p class="font-bold text-on-surface">mind59024@gmail.com</p>
                     <p class="text-sm text-on-surface-variant/60">24/7 Response</p>
                 </div>
             </div>
@@ -213,11 +213,11 @@
             <h2 class="text-3xl font-headline font-bold mb-8">Visit Our Office</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <h3 class="text-xl font-bold mb-4 text-primary-container">Kathmandu Office</h3>
+                    <h3 class="text-xl font-bold mb-4 text-primary-container">Parsa Office</h3>
                     <div class="text-left space-y-2 text-on-surface-variant">
-                        <p><span class="material-symbols-outlined align-middle mr-2">location_on</span>Thamel, Kathmandu, Nepal</p>
-                        <p><span class="material-symbols-outlined align-middle mr-2">phone</span>+977-1-XXXXXXX</p>
-                        <p><span class="material-symbols-outlined align-middle mr-2">mail</span>hello@gymsathi.com</p>
+                        <p><span class="material-symbols-outlined align-middle mr-2">location_on</span>Birgunj-13, Radhemai, Parsa, Nepal</p>
+                        <p><span class="material-symbols-outlined align-middle mr-2">phone</span>+977 9811144402</p>
+                        <p><span class="material-symbols-outlined align-middle mr-2">mail</span>mind59024@gmail.com</p>
                         <p><span class="material-symbols-outlined align-middle mr-2">schedule</span>Mon-Fri: 9AM-6PM NPT</p>
                     </div>
                 </div>

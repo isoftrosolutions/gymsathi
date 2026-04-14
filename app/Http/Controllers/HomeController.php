@@ -23,6 +23,14 @@ class HomeController extends Controller
     }
 
     /**
+     * Display the about page.
+     */
+    public function about(): View
+    {
+        return view('about');
+    }
+
+    /**
      * Display the privacy policy page.
      */
     public function privacyPolicy(): View
@@ -44,5 +52,13 @@ class HomeController extends Controller
     public function contactSupport(): View
     {
         return view('contact-support');
+    }
+
+    /**
+     * Display the security page.
+     */
+    public function security(): View
+    {
+        return view('security');
     }
 }

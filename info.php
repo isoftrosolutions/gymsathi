@@ -1,3 +1,4 @@
 <?php
-echo "Gym folder is active";
+
+echo 'Gym folder is active';
 phpinfo();

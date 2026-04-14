@@ -43,8 +43,8 @@
 
             <!-- Right Panel / Login Card -->
             <div class="login-card">
-                <h2>Admin Portal Login</h2>
-                <p class="subtitle">Enter your credentials to manage your gym pulse.</p>
+                <h2> Portal Login</h2>
+                <p class="subtitle">Enter your credentials to access your dashboard</p>
 
                 @if ($errors->any())
                     <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
@@ -77,11 +77,16 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
-                            <input type="password" name="password" placeholder="••••••••" required>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="cursor: pointer;">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                            </svg>
+                            <input type="password" id="password" name="password" placeholder="••••••••" required>
+                            <div id="togglePassword" style="cursor: pointer; display: flex; align-items: center;">
+                                <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 20px;">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <svg id="eyeOffIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 20px; display: none;">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L5.122 5.122m7.756 7.756l4.756 4.756" />
+                                </svg>
+                            </div>
                         </div>
                     </div>
 
@@ -103,9 +108,9 @@
                 <div class="login-footer">
                     <p>Authorized Personnel Only</p>
                     <div class="footer-links">
-                        <a href="#">Support</a>
-                        <a href="#">Privacy</a>
-                        <a href="#">Security</a>
+                        <a href="{{ route('support') }}">Support</a>
+                        <a href="{{ route('privacy') }}">Privacy</a>
+                        <a href="{{ route('security') }}">Security</a>
                     </div>
                 </div>
             </div>
@@ -120,5 +125,27 @@
                 End-to-End Encryption Active
             </div>
         </div>
+
+        <script>
+            const togglePassword = document.querySelector('#togglePassword');
+            const password = document.querySelector('#password');
+            const eyeIcon = document.querySelector('#eyeIcon');
+            const eyeOffIcon = document.querySelector('#eyeOffIcon');
+
+            togglePassword.addEventListener('click', function (e) {
+                // toggle the type attribute
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                
+                // toggle the eye slash icon
+                if (type === 'password') {
+                    eyeIcon.style.display = 'block';
+                    eyeOffIcon.style.display = 'none';
+                } else {
+                    eyeIcon.style.display = 'none';
+                    eyeOffIcon.style.display = 'block';
+                }
+            });
+        </script>
     </body>
 </html>

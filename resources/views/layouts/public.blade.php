@@ -117,6 +117,8 @@
 
     @include('partials.footer')
 
+    @include('partials.contact-widget')
+
     @yield('scripts')
 </body>
 </html>

@@ -17,10 +17,10 @@ class IdentifyTenant
     {
         if (auth()->check()) {
             $tenantId = auth()->user()->tenant_id;
-            
+
             // Share the tenant ID globally for the current request
             config(['app.tenant_id' => $tenantId]);
-            
+
             // You can also share the Tenant object itself
             // if ($tenantId) {
             //     app()->instance(Tenant::class, Tenant::find($tenantId));

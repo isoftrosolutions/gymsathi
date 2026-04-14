@@ -37,7 +37,7 @@
                     <span class="material-symbols-outlined text-primary-container text-4xl mb-4">fitness_center</span>
                     <h3 class="text-3xl font-headline font-bold mb-3">Fitness Club</h3>
                     <p class="text-on-surface-variant mb-6 text-sm leading-relaxed">Stop chasing payments. Automate memberships, track attendance, and increase monthly revenue — without hiring more staff.</p>
-                    <a class="inline-flex items-center gap-2 text-primary-container font-bold hover:gap-4 transition-all duration-300" href="#">
+                    <a class="inline-flex items-center gap-2 text-primary-container font-bold hover:gap-4 transition-all duration-300" href="{{ route('welcome') }}#features">
                         See How It Works <span class="material-symbols-outlined">arrow_forward</span>
                     </a>
                 </div>
@@ -53,7 +53,7 @@
                     <span class="material-symbols-outlined text-secondary text-4xl mb-4">auto_awesome_motion</span>
                     <h3 class="text-3xl font-headline font-bold mb-3">Dance Academy</h3>
                     <p class="text-on-surface-variant mb-6 text-sm leading-relaxed">End the scheduling chaos. Manage batches effortlessly, send automated SMS updates to parents, and track every student's progress.</p>
-                    <a class="inline-flex items-center gap-2 text-secondary font-bold hover:gap-4 transition-all duration-300" href="#">
+                    <a class="inline-flex items-center gap-2 text-secondary font-bold hover:gap-4 transition-all duration-300" href="{{ route('welcome') }}#features">
                         See How It Works <span class="material-symbols-outlined">arrow_forward</span>
                     </a>
                 </div>
@@ -69,7 +69,7 @@
                     <span class="material-symbols-outlined text-tertiary-fixed-dim text-4xl mb-4">self_improvement</span>
                     <h3 class="text-3xl font-headline font-bold mb-3">Yoga Center</h3>
                     <p class="text-on-surface-variant mb-6 text-sm leading-relaxed">No more overbooked sessions. Take control of your batches with smart slot management and seamless member check-ins.</p>
-                    <a class="inline-flex items-center gap-2 text-tertiary-fixed-dim font-bold hover:gap-4 transition-all duration-300" href="#">
+                    <a class="inline-flex items-center gap-2 text-tertiary-fixed-dim font-bold hover:gap-4 transition-all duration-300" href="{{ route('welcome') }}#features">
                         See How It Works <span class="material-symbols-outlined">arrow_forward</span>
                     </a>
                 </div>
@@ -85,7 +85,7 @@
                     <span class="material-symbols-outlined text-primary-container text-4xl mb-4">pool</span>
                     <h3 class="text-3xl font-headline font-bold mb-3">Swim Center</h3>
                     <p class="text-on-surface-variant mb-6 text-sm leading-relaxed">Simplify lane bookings and seasonal memberships. Track swimmer progress and manage pool access with digital precision.</p>
-                    <a class="inline-flex items-center gap-2 text-primary-container font-bold hover:gap-4 transition-all duration-300" href="#">
+                    <a class="inline-flex items-center gap-2 text-primary-container font-bold hover:gap-4 transition-all duration-300" href="{{ route('welcome') }}#features">
                         See How It Works <span class="material-symbols-outlined">arrow_forward</span>
                     </a>
                 </div>
@@ -101,7 +101,7 @@
                     <span class="material-symbols-outlined text-secondary text-4xl mb-4">spa</span>
                     <h3 class="text-3xl font-headline font-bold mb-3">Spa &amp; Leisure</h3>
                     <p class="text-on-surface-variant mb-6 text-sm leading-relaxed">Eliminate missed appointments. Automate booking reminders, maintain detailed client history, and run a stress-free facility.</p>
-                    <a class="inline-flex items-center gap-2 text-secondary font-bold hover:gap-4 transition-all duration-300" href="#">
+                    <a class="inline-flex items-center gap-2 text-secondary font-bold hover:gap-4 transition-all duration-300" href="{{ route('welcome') }}#features">
                         See How It Works <span class="material-symbols-outlined">arrow_forward</span>
                     </a>
                 </div>
@@ -117,7 +117,7 @@
                     <span class="material-symbols-outlined text-tertiary-fixed-dim text-4xl mb-4">history_edu</span>
                     <h3 class="text-3xl font-headline font-bold mb-3">Training Institute</h3>
                     <p class="text-on-surface-variant mb-6 text-sm leading-relaxed">Replace manual student logs with full automation. Centralize your certifications, attendance, and fee tracking in one powerful system.</p>
-                    <a class="inline-flex items-center gap-2 text-tertiary-fixed-dim font-bold hover:gap-4 transition-all duration-300" href="#">
+                    <a class="inline-flex items-center gap-2 text-tertiary-fixed-dim font-bold hover:gap-4 transition-all duration-300" href="{{ route('welcome') }}#features">
                         See How It Works <span class="material-symbols-outlined">arrow_forward</span>
                     </a>
                 </div>
@@ -134,7 +134,7 @@
                 <h2 class="text-4xl md:text-6xl font-headline font-bold tracking-tight mb-8">Ready to <span class="text-primary-container italic">Automate?</span></h2>
                 <p class="text-on-surface-variant text-lg mb-12">Join leading modern fitness businesses across Nepal transforming their operations with GymSathi.</p>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
-                    <button class="kinetic-gradient text-on-primary font-headline font-bold text-lg px-10 py-5 rounded-full hover:scale-105 transition-all shadow-xl shadow-primary-container/20">Automate Your Facility Today</button>
+                    <a href="{{ route('login') }}" class="kinetic-gradient text-on-primary font-headline font-bold text-lg px-10 py-5 rounded-full hover:scale-105 transition-all shadow-xl shadow-primary-container/20 inline-block">Automate Your Facility Today</a>
                     <button class="text-on-surface border border-outline-variant/30 font-headline font-medium px-10 py-5 rounded-full hover:bg-surface-bright transition-all">See Demo in 2 Minutes</button>
                 </div>
                 <p class="mt-8 text-on-surface-variant/60 text-sm font-label uppercase tracking-widest">Trusted by 50+ gyms and institutes across Nepal</p>

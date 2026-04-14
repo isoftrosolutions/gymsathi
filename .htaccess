@@ -2,16 +2,20 @@
     RewriteEngine On
     RewriteBase /gym/
 
-    # 1. Serve files/folders if they exist in the project root (like index.php)
+    # 1. Serve files/folders if they exist in the project root
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
 
     # 2. Bridge Rule: Serve physical files from the public folder if they exist there
+    # Only bridge if the request is NOT already for public/ and the file exists in public/
+    RewriteCond %{REQUEST_URI} !^/gym/public/
     RewriteCond %{DOCUMENT_ROOT}/gym/public/$1 -f
     RewriteRule ^(.*)$ public/$1 [L]
 
-    # 3. Replicate ERP's main routing (catch-all to root index.php)
+    # 3. Final Catch-all: Send to root index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php [L,QSA]
 </IfModule>
 
