@@ -3,27 +3,22 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Mail\TemplateMail;
 use App\Models\PasswordResetOtp;
-use App\Mail\SendOtpMail;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordController extends Controller
 {
-    /**
-     * Stage 2: Show forgot password form.
-     */
     public function showLinkRequestForm()
     {
         return view('auth.passwords.email');
     }
 
-    /**
-     * Stage 2: Send OTP to user's email.
-     */
     public function sendOtp(Request $request)
     {
         $request->validate(['email' => 'required|email']);
@@ -31,83 +26,84 @@ class ForgotPasswordController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if ($user) {
-            // Generate 6-digit OTP
-            $otp = rand(100000, 999999);
+            $otp = random_int(100000, 999999);
 
-            // Store OTP in database
             PasswordResetOtp::updateOrCreate(
                 ['email' => $request->email],
                 [
-                    'otp' => $otp,
-                    'expires_at' => Carbon::now()->addMinutes(10)
+                    'otp' => Hash::make((string) $otp),
+                    'expires_at' => Carbon::now()->addMinutes(10),
                 ]
             );
 
-            // Send Email
-            Mail::to($request->email)->send(new SendOtpMail($otp));
+            try {
+                Mail::to($request->email)->send(new TemplateMail('password_reset_request', [
+                    'member_name' => $user->name,
+                    'reset_token' => $otp,
+                    'reset_link' => route('password.otp', ['email' => $request->email]),
+                ]));
+
+                return redirect()->route('password.otp', ['email' => $request->email])
+                    ->with('status', 'OTP sent successfully! Please check your email.');
+
+            } catch (\Exception $e) {
+                // Log the error for debugging
+                \Log::error('Failed to send password reset OTP: '.$e->getMessage());
+
+                return back()
+                    ->withInput()
+                    ->withErrors(['email' => 'Failed to send OTP. Please try again or contact support.']);
+            }
         }
 
-        // We show the same message even if email doesn't exist for security
-        return redirect()->route('password.otp')
-            ->with(['email' => $request->email, 'status' => 'If this email is registered, you will receive an OTP.']);
+        // Same message for non-existent emails (prevents enumeration)
+        return redirect()->route('password.otp', ['email' => $request->email])
+            ->with('status', 'If this email is registered, you will receive an OTP shortly.');
     }
 
-    /**
-     * Stage 4: Show OTP verification form.
-     */
     public function showVerifyOtpForm(Request $request)
     {
-        $email = session('email') ?? $request->email;
+        $email = $request->query('email');
 
-        if (!$email) {
+        if (! $email) {
             return redirect()->route('password.request');
         }
 
         return view('auth.passwords.otp', compact('email'));
     }
 
-    /**
-     * Stage 4: Validate OTP.
-     */
     public function verifyOtp(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
-            'otp' => 'required|numeric'
+            'otp' => 'required|digits:6',
         ]);
 
         $otpRecord = PasswordResetOtp::where('email', $request->email)
-            ->where('otp', $request->otp)
             ->where('expires_at', '>', Carbon::now())
             ->first();
 
-        if (!$otpRecord) {
+        if (! $otpRecord || ! Hash::check($request->otp, $otpRecord->otp)) {
             return back()
                 ->withErrors(['otp' => 'The OTP is invalid or has expired.'])
                 ->withInput(['email' => $request->email]);
         }
 
-        // Store email and OTP in session to authorize reset form
+        // Store authorisation in session — OTP record kept so resetPassword can re-verify
         session(['reset_email' => $request->email, 'reset_otp' => $request->otp]);
 
         return redirect()->route('password.reset');
     }
 
-    /**
-     * Stage 5: Show password reset form.
-     */
     public function showResetPasswordForm()
     {
-        if (!session('reset_email') || !session('reset_otp')) {
+        if (! session('reset_email') || ! session('reset_otp')) {
             return redirect()->route('password.request');
         }
 
         return view('auth.passwords.reset');
     }
 
-    /**
-     * Stage 5: Update password.
-     */
     public function resetPassword(Request $request)
     {
         $request->validate([
@@ -117,23 +113,32 @@ class ForgotPasswordController extends Controller
         $email = session('reset_email');
         $otp = session('reset_otp');
 
-        if (!$email || !$otp) {
+        if (! $email || ! $otp) {
             return redirect()->route('password.request');
+        }
+
+        // Re-verify OTP against DB so a stale session cannot reset without a valid token
+        $otpRecord = PasswordResetOtp::where('email', $email)
+            ->where('expires_at', '>', Carbon::now())
+            ->first();
+
+        if (! $otpRecord || ! Hash::check($otp, $otpRecord->otp)) {
+            session()->forget(['reset_email', 'reset_otp']);
+
+            return redirect()->route('password.request')
+                ->withErrors(['email' => 'Your reset session has expired. Please request a new OTP.']);
         }
 
         $user = User::where('email', $email)->first();
 
-        if (!$user) {
-            return redirect()->route('password.request')->withErrors(['email' => 'User not found.']);
+        if (! $user) {
+            return redirect()->route('password.request');
         }
 
-        // Update password
-        $user->update([
-            'password' => Hash::make($request->password)
-        ]);
+        $user->update(['password' => Hash::make($request->password)]);
 
-        // Clear OTP and session
-        PasswordResetOtp::where('email', $email)->delete();
+        // Invalidate OTP and clear session
+        $otpRecord->delete();
         session()->forget(['reset_email', 'reset_otp']);
 
         return redirect()->route('login')->with('status', 'Password reset successful. Please log in.');

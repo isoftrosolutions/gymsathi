@@ -22,17 +22,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Dynamic Gate registration for permissions
-        try {
-            if (Schema::hasTable('permissions')) {
-                foreach (Permission::all() as $permission) {
-                    Gate::define($permission->slug, function ($user) use ($permission) {
-                        return $user->hasPermission($permission->slug);
-                    });
-                }
+        // Use a dynamic check for permissions instead of looping all at boot
+        // This is much faster and avoids boot-time DB hits
+        Gate::after(function ($user, $ability) {
+            if (method_exists($user, 'hasPermission')) {
+                return $user->hasPermission($ability);
             }
-        } catch (\Exception $e) {
-            // Silently fail during migrations or setup
-        }
+            return false;
+        });
     }
 }

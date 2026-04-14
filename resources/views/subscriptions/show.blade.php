@@ -51,7 +51,7 @@
                     </div>
                 </div>
 
-                @if($subscription->onTrial())
+                @if($subscription->isOnTrial())
                 <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
                     <div class="flex items-center">
                         <svg class="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,7 +86,7 @@
                         </form>
 
                         <!-- Extend Trial -->
-                        @if($subscription->onTrial())
+                        @if($subscription->isOnTrial())
                         <form action="{{ route('admin.subscriptions.extend-trial', $tenant) }}" method="POST" class="space-y-3">
                             @csrf
                             <label class="block text-sm font-medium text-gray-700">Extend Trial</label>

@@ -17,7 +17,8 @@
       "Bash(/C/php/php.exe artisan:*)",
       "Bash(net stop:*)",
       "Bash(net start:*)",
-      "Bash(/C/php/php.exe:*)"
+      "Bash(/C/php/php.exe:*)",
+      "Bash(powershell:*)"
     ]
   }
 }

@@ -84,7 +84,7 @@ class PlatformController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:tenants,name',
             'owner_name' => 'required|string|max:255',
             'owner_phone' => 'required|string|max:20',
             'city' => 'required|string|max:100',
@@ -117,8 +117,15 @@ class PlatformController extends Controller
             'role_id' => Role::where('tenant_id', $tenant->id)->where('slug', 'admin')->first()?->id,
         ]);
 
-        // TODO: Send WhatsApp message with $tempPassword
-        Log::info("Gym Created: {$tenant->name} (ID: {$tenant->id}). Credential delivery pending WhatsApp.");
+        // Send welcome email
+        \Illuminate\Support\Facades\Mail::to($validated['owner_phone'].'@gymsathi.com')->send(new \App\Mail\TemplateMail('member_registration_success', [
+            'member_name'  => $validated['owner_name'],
+            'plan_name'    => $plan->name . ' Plan',
+            'member_email' => $validated['owner_phone'].'@gymsathi.com',
+            'temp_password' => $tempPassword,
+        ]));
+
+        Log::info("Gym Created: {$tenant->name} (ID: {$tenant->id}). Credentials sent to {$validated['owner_phone']}@gymsathi.com");
 
         return redirect()->route('admin.tenants.index')->with('success', 'Gym created successfully. Deliver credentials to the owner via WhatsApp.');
     }

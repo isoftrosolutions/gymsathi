@@ -19,16 +19,17 @@ trait TenantScoped
         });
 
         static::addGlobalScope('tenant', function (Builder $builder) {
-            if (auth()->check()) {
-                $user = auth()->user();
-                
-                // If it's a super admin, don't scope
-                if ($user->platform_role === 'super_admin') {
-                    return;
-                }
+            $platformRole = config('app.platform_role');
+            $tenantId = config('app.tenant_id');
 
-                // Apply tenant scope
-                $builder->where($builder->getQuery()->from . '.tenant_id', $user->tenant_id);
+            // If it's a super admin, don't scope
+            if ($platformRole === 'super_admin') {
+                return;
+            }
+
+            // If we have a tenant ID from the middleware, apply scope
+            if ($tenantId !== null) {
+                $builder->where($builder->getQuery()->from . '.tenant_id', $tenantId);
             }
         });
     }

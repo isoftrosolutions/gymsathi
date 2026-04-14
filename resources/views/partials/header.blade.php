@@ -19,6 +19,10 @@
 
             @auth
                 <span class="text-[#C5C9AE] text-sm font-label mr-2">Hello, {{ auth()->user()->name }}</span>
+                <a href="{{ auth()->user()->platform_role === 'super_admin' ? route('admin.dashboard') : route('dashboard') }}" 
+                   class="kinetic-gradient text-on-primary font-headline font-bold px-6 py-2 rounded-full hover:opacity-90 transition-all active:scale-95 inline-block mr-2">
+                    DASHBOARD
+                </a>
                 <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                     @csrf
                     <button type="submit" class="text-[#C5C9AE] hover:text-red-400 transition-all px-4 py-2 font-headline font-medium tracking-tight border border-[#C5C9AE]/20 rounded-lg">Logout</button>

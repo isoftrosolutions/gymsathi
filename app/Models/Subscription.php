@@ -54,7 +54,7 @@ class Subscription extends Model
     /**
      * Check if subscription is in trial period.
      */
-    public function onTrial(): bool
+    public function isOnTrial(): bool
     {
         return $this->status === 'trial' &&
                $this->trial_ends_at &&

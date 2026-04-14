@@ -128,46 +128,44 @@
         </div>
     </div>
 
-    <!-- Quick Actions -->
-    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <a href="{{ route('admin.subscriptions.reports.monthly-revenue') }}" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+        <a href="{{ route('admin.subscriptions.reports.growth') }}" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
             <div class="flex items-center">
-                <div class="p-2 bg-indigo-100 rounded-lg">
-                    <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                    </svg>
-                </div>
-                <div class="ml-4">
-                    <h3 class="text-lg font-medium text-gray-900">Monthly Revenue</h3>
-                    <p class="text-gray-600 text-sm">View revenue trends</p>
-                </div>
-            </div>
-        </a>
-
-        <a href="{{ route('admin.subscriptions.reports.conversion-rates') }}" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
-            <div class="flex items-center">
-                <div class="p-2 bg-green-100 rounded-lg">
-                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="p-2 bg-blue-100 rounded-lg">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <h3 class="text-lg font-medium text-gray-900">Conversion Rates</h3>
-                    <p class="text-gray-600 text-sm">Trial to paid metrics</p>
+                    <h3 class="text-lg font-medium text-gray-900">Growth Analysis</h3>
+                    <p class="text-gray-600 text-sm">Onboarding & Acquisition</p>
                 </div>
             </div>
         </a>
 
-        <a href="{{ route('admin.tenants.index') }}" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+        <a href="{{ route('admin.subscriptions.reports.leaderboard') }}" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
             <div class="flex items-center">
-                <div class="p-2 bg-orange-100 rounded-lg">
-                    <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+                <div class="p-2 bg-yellow-100 rounded-lg">
+                    <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <h3 class="text-lg font-medium text-gray-900">Manage Gyms</h3>
-                    <p class="text-gray-600 text-sm">View all subscriptions</p>
+                    <h3 class="text-lg font-medium text-gray-900">Leaderboard</h3>
+                    <p class="text-gray-600 text-sm">Top performing gym entities</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="{{ route('admin.subscriptions.reports.health-score') }}" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+            <div class="flex items-center">
+                <div class="p-2 bg-red-100 rounded-lg">
+                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <h3 class="text-lg font-medium text-gray-900">Health Scores</h3>
+                    <p class="text-gray-600 text-sm">Engagement and churn risk</p>
                 </div>
             </div>
         </a>

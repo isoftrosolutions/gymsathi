@@ -64,12 +64,17 @@
                     
                     <div style="text-align: center; margin-top: 1.5rem;">
                         <p style="font-size: 0.8rem; color: var(--on-surface-variant);">Didn't receive the code?</p>
-                        <form action="{{ route('password.email') }}" method="POST" id="resend-form">
-                            @csrf
-                            <input type="hidden" name="email" value="{{ $email }}">
-                            <button type="submit" class="forgot-password" style="background: none; border: none; cursor: pointer; padding: 0; font-size: 0.75rem;">Resend Code</button>
-                        </form>
+                        <button type="button" onclick="document.getElementById('resend-form').submit()"
+                            class="forgot-password" style="background: none; border: none; cursor: pointer; padding: 0; font-size: 0.75rem;">
+                            Resend Code
+                        </button>
                     </div>
+                </form>
+
+                {{-- Resend form lives outside the verify form to avoid invalid nested-form HTML --}}
+                <form action="{{ route('password.email') }}" method="POST" id="resend-form" style="display:none;">
+                    @csrf
+                    <input type="hidden" name="email" value="{{ $email }}">
                 </form>
 
                 <div class="login-footer">

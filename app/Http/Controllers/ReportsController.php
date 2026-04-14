@@ -138,6 +138,72 @@ class ReportsController extends Controller
     }
 
     /**
+     * Growth report: New gyms per week & trial conversion.
+     */
+    public function growthReport(): View
+    {
+        $weeks = collect();
+        for ($i = 7; $i >= 0; $i--) {
+            $start = now()->subWeeks($i)->startOfWeek();
+            $end = now()->subWeeks($i)->endOfWeek();
+
+            $newGyms = Tenant::whereBetween('created_at', [$start, $end])->count();
+            $weeks->push([
+                'week' => $start->format('M d'),
+                'count' => $newGyms
+            ]);
+        }
+
+        return view('reports.growth', compact('weeks'));
+    }
+
+    /**
+     * Leaderboard: Top gyms by revenue and members.
+     */
+    public function leaderboard(): View
+    {
+        $topRevenue = Tenant::selectRaw('tenants.*, SUM(payments.amount) as total_revenue')
+            ->join('payments', 'tenants.id', '=', 'payments.tenant_id')
+            ->where('payments.status', 'completed')
+            ->groupBy('tenants.id')
+            ->orderByDesc('total_revenue')
+            ->take(10)
+            ->get();
+
+        $topMembers = Tenant::withCount(['users' => function($q) {
+            $q->whereHas('role', fn($rq) => $rq->where('slug', 'member'));
+        }])->orderByDesc('users_count')->take(10)->get();
+
+        return view('reports.leaderboard', compact('topRevenue', 'topMembers'));
+    }
+
+    /**
+     * Gym Health Score analysis.
+     */
+    public function gymHealthScore(): View
+    {
+        $tenants = Tenant::withCount(['users' => function($q) {
+            $q->whereHas('role', fn($rq) => $rq->where('slug', 'member'));
+        }])->get()->map(function($tenant) {
+            // Mock calculations for demo purposes
+            $memberCount = $tenant->users_count;
+            $attendanceRate = rand(40, 95); // Mock attendance rate %
+            $paymentRate = rand(60, 100);    // Mock collection rate %
+            
+            // Score formula: (Members/100 * 40) + (attendanceRate * 0.3) + (paymentRate * 0.3)
+            $score = round((min($memberCount, 100) * 0.4) + ($attendanceRate * 0.3) + ($paymentRate * 0.3));
+            
+            $tenant->health_score = $score;
+            $tenant->attendance_rate = $attendanceRate;
+            $tenant->payment_rate = $paymentRate;
+            
+            return $tenant;
+        })->sortByDesc('health_score');
+
+        return view('reports.health-score', compact('tenants'));
+    }
+
+    /**
      * Calculate Monthly Recurring Revenue.
      */
     private function calculateMRR(): float

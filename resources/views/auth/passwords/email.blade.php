@@ -13,11 +13,20 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
         <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+        <style>
+            .animate-spin {
+                animation: spin 1s linear infinite;
+            }
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        </style>
     </head>
     <body class="login-body">
-        <div class="login-container" style="justify-content: center;">
+        <div class="login-container" style="grid-template-columns: 1fr; justify-content: center; max-width: 480px;">
             <!-- Center Panel / Reset Card -->
-            <div class="login-card" style="width: 100%; max-width: 480px; margin: 0 auto;">
+            <div class="login-card" style="width: 100%; margin: 0 auto;">
                 <a href="{{ route('welcome') }}" class="logo" style="text-decoration: none; color: inherit; display: flex; align-items: center; margin-bottom: 2rem;">
                     <div class="logo-icon">H</div>
                     GYM<span>SATHI</span>
@@ -42,7 +51,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('password.email') }}" method="POST">
+                <form action="{{ route('password.email') }}" method="POST" id="passwordResetForm">
                     @csrf
                     <div class="form-group">
                         <label for="email">Registered Email Address</label>
@@ -54,11 +63,20 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-login">
-                        SEND OTP CODE
-                        <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                        </svg>
+                    <button type="submit" class="btn btn-login" id="submitBtn">
+                        <span id="buttonText">
+                            SEND OTP CODE
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                            </svg>
+                        </span>
+                        <span id="loadingSpinner" style="display: none;">
+                            <svg class="animate-spin" style="width: 20px; height: 20px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            SENDING...
+                        </span>
                     </button>
                     
                     <div style="text-align: center; margin-top: 1.5rem;">
@@ -75,5 +93,48 @@
         <div style="position: fixed; bottom: var(--space-md); width: 100%; display: flex; justify-content: center; padding: 0 var(--space-xl); font-size: 0.65rem; color: var(--on-surface-variant); text-transform: uppercase; letter-spacing: 0.1rem;">
             <div>&copy; 2026 GymSathi Kinetic Systems.</div>
         </div>
+
+        <script>
+            // Ensure form is enabled when page loads (in case of redirect back)
+            document.addEventListener('DOMContentLoaded', function() {
+                const submitBtn = document.getElementById('submitBtn');
+                const buttonText = document.getElementById('buttonText');
+                const loadingSpinner = document.getElementById('loadingSpinner');
+                const emailInput = document.getElementById('email');
+
+                // Reset form state
+                submitBtn.disabled = false;
+                emailInput.disabled = false;
+                buttonText.style.display = 'flex';
+                loadingSpinner.style.display = 'none';
+                submitBtn.style.opacity = '1';
+            });
+
+            document.getElementById('passwordResetForm').addEventListener('submit', function(e) {
+                const submitBtn = document.getElementById('submitBtn');
+                const buttonText = document.getElementById('buttonText');
+                const loadingSpinner = document.getElementById('loadingSpinner');
+                const emailInput = document.getElementById('email');
+
+                // Basic validation
+                if (!emailInput.value.trim()) {
+                    e.preventDefault();
+                    emailInput.focus();
+                    return false;
+                }
+
+                // Disable form elements
+                submitBtn.disabled = true;
+
+                // Show loading spinner
+                buttonText.style.display = 'none';
+                loadingSpinner.style.display = 'inline-flex';
+                loadingSpinner.style.alignItems = 'center';
+                loadingSpinner.style.gap = '8px';
+
+                // Optional: Add visual feedback
+                submitBtn.style.opacity = '0.8';
+            });
+        </script>
     </body>
 </html>

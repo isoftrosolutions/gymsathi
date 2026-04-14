@@ -18,7 +18,32 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Create Permissions (Platform Level)
+        // 1. Create Plans
+        $basicPlan = \App\Models\Plan::create([
+            'name' => 'Basic',
+            'slug' => 'basic',
+            'price' => 2000,
+            'features' => ['Member Records', 'Attendance', '100 Members Max'],
+            'trial_days' => 14,
+        ]);
+
+        $standardPlan = \App\Models\Plan::create([
+            'name' => 'Standard',
+            'slug' => 'standard',
+            'price' => 5000,
+            'features' => ['Member Records', 'Attendance', 'WhatsApp Reminders', '500 Members Max'],
+            'trial_days' => 14,
+        ]);
+
+        $premiumPlan = \App\Models\Plan::create([
+            'name' => 'Premium',
+            'slug' => 'premium',
+            'price' => 10000,
+            'features' => ['All Features', 'Priority Support', 'Custom Branding', 'Unlimited Members'],
+            'trial_days' => 30,
+        ]);
+
+        // 2. Create Permissions (Platform Level)
         $permissions = [
             ['name' => 'Manage Members', 'slug' => 'manage-members'],
             ['name' => 'Track Attendance', 'slug' => 'track-attendance'],
@@ -32,7 +57,7 @@ class DatabaseSeeder extends Seeder
             Permission::create($permission);
         }
 
-        // 2. Create Super Admin (Platform Level)
+        // 3. Create Super Admin (Platform Level)
         User::factory()->create([
             'name' => 'Super Admin',
             'email' => 'admin@gymsathi.com',
@@ -41,12 +66,41 @@ class DatabaseSeeder extends Seeder
             'tenant_id' => null,
         ]);
 
-        // 3. Create a Sample Tenant
+        // 4. Create Sample Tenants with Monitoring Data
         $tenant = Tenant::create([
             'name' => 'Bharatpur Kinetic Gym',
             'slug' => 'bharatpur-kinetic',
             'status' => 'active',
-            'plan' => 'premium',
+            'plan_id' => $premiumPlan->id,
+            'last_sync_at' => now()->subMinutes(15),
+            'pending_sync_count' => 2,
+        ]);
+
+        Tenant::create([
+            'name' => 'Muscle Bank',
+            'slug' => 'muscle-bank',
+            'status' => 'active',
+            'plan_id' => $standardPlan->id,
+            'last_sync_at' => now()->subMinutes(2),
+            'pending_sync_count' => 0,
+        ]);
+
+        Tenant::create([
+            'name' => 'Jim Fitness',
+            'slug' => 'jim-fitness',
+            'status' => 'active',
+            'plan_id' => $basicPlan->id,
+            'last_sync_at' => now()->subHours(3),
+            'pending_sync_count' => 12,
+        ]);
+
+        Tenant::create([
+            'name' => 'Pro Build',
+            'slug' => 'pro-build',
+            'status' => 'trial',
+            'plan_id' => $premiumPlan->id,
+            'last_sync_at' => now()->subDays(2),
+            'pending_sync_count' => 45,
         ]);
 
         // 4. Create Tenant Roles (Scoping manually for seeding)

@@ -5,25 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 
+#[Fillable([
+    'name',
+    'slug',
+    'status',
+    'plan_id',
+    'city',
+    'address',
+    'owner_name',
+    'owner_phone',
+    'subscription_expires_at',
+    'suspended_at',
+    'approved_at',
+    'rejected_at',
+    'settings',
+    'last_sync_at',
+    'pending_sync_count',
+])]
 class Tenant extends Model
 {
-    /** @var list<string> */
-    protected $fillable = [
-        'name',
-        'slug',
-        'status',
-        'plan_id', // Changed from 'plan' to 'plan_id'
-        'city',
-        'address',
-        'owner_name',
-        'owner_phone',
-        'subscription_expires_at',
-        'suspended_at',
-        'approved_at',
-        'rejected_at',
-        'settings',
-    ];
 
     /** @var list<string> */
     protected $casts = [
@@ -32,6 +34,7 @@ class Tenant extends Model
         'suspended_at' => 'datetime',
         'approved_at' => 'datetime',
         'rejected_at' => 'datetime',
+        'last_sync_at' => 'datetime',
     ];
 
     /**

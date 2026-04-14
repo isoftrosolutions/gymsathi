@@ -6,11 +6,13 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\ImpersonationController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PlatformController;
+use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\SupportController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,11 +50,11 @@ Route::controller(AuthController::class)->group(function () {
 // Password Reset Routes (OTP Based)
 Route::controller(ForgotPasswordController::class)->group(function () {
     Route::get('/forgot-password', 'showLinkRequestForm')->name('password.request');
-    Route::post('/forgot-password', 'sendOtp')->name('password.email');
+    Route::post('/forgot-password', 'sendOtp')->name('password.email')->middleware('throttle:5,1');
     Route::get('/verify-otp', 'showVerifyOtpForm')->name('password.otp');
-    Route::post('/verify-otp', 'verifyOtp')->name('password.otp.verify');
+    Route::post('/verify-otp', 'verifyOtp')->name('password.otp.verify')->middleware('throttle:10,1');
     Route::get('/reset-password', 'showResetPasswordForm')->name('password.reset');
-    Route::post('/reset-password', 'resetPassword')->name('password.update');
+    Route::post('/reset-password', 'resetPassword')->name('password.update')->middleware('throttle:5,1');
 });
 
 // Authenticated Dashboard
@@ -88,6 +90,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::get('/reports/revenue-by-city', [ReportsController::class, 'revenueByCity'])->name('reports.revenue-by-city');
         Route::get('/reports/revenue-by-plan', [ReportsController::class, 'revenueByPlan'])->name('reports.revenue-by-plan');
         Route::get('/reports/conversion-rates', [ReportsController::class, 'conversionRates'])->name('reports.conversion-rates');
+        Route::get('/reports/growth', [ReportsController::class, 'growthReport'])->name('reports.growth');
+        Route::get('/reports/leaderboard', [ReportsController::class, 'leaderboard'])->name('reports.leaderboard');
+        Route::get('/reports/health-score', [ReportsController::class, 'gymHealthScore'])->name('reports.health-score');
 
         Route::get('/{tenant}', [SubscriptionController::class, 'show'])->name('show');
         Route::patch('/{tenant}/change-plan', [SubscriptionController::class, 'changePlan'])->name('change-plan');
@@ -143,4 +148,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::post('/{tenant}', [ImpersonationController::class, 'start'])->name('start');
         Route::post('/stop', [ImpersonationController::class, 'stop'])->name('stop');
     });
+
+    // Module 4: System Monitoring
+    Route::prefix('monitoring')->name('admin.monitoring.')->group(function () {
+        Route::get('/', [MonitoringController::class, 'index'])->name('index');
+        Route::get('/sync', [MonitoringController::class, 'sync'])->name('sync');
+    });
 });
+
+Route::post('/chatbot', [ChatbotController::class, 'chat'])
+    ->middleware('throttle:30,1')
+    ->name('chatbot');
