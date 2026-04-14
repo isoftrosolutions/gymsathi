@@ -16,15 +16,17 @@ class IdentifyTenant
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->check()) {
-            $tenantId = auth()->user()->tenant_id;
+            // Use DB to avoid triggering the User model's Global Scopes (recursion)
+            $userData = \Illuminate\Support\Facades\DB::table('users')
+                ->where('id', auth()->id())
+                ->first(['tenant_id', 'platform_role']);
 
-            // Share the tenant ID globally for the current request
-            config(['app.tenant_id' => $tenantId]);
-
-            // You can also share the Tenant object itself
-            // if ($tenantId) {
-            //     app()->instance(Tenant::class, Tenant::find($tenantId));
-            // }
+            if ($userData) {
+                config([
+                    'app.tenant_id' => $userData->tenant_id,
+                    'app.platform_role' => $userData->platform_role,
+                ]);
+            }
         }
 
         return $next($request);
