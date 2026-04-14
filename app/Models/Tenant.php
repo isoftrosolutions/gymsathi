@@ -324,7 +324,7 @@ class Tenant extends Model
     public function getMemberCount(): int
     {
         // TODO: Implement when Members model exists
-        return rand(50, 200); // Placeholder
+        return 0;
     }
 
     /**

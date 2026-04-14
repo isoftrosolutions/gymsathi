@@ -105,11 +105,9 @@
                         <form action="{{ route('admin.subscriptions.toggle-auto-renew', $tenant) }}" method="POST" class="space-y-3">
                             @csrf
                             <label class="block text-sm font-medium text-gray-700">Auto Renew</label>
-                            <div class="flex items-center">
-                                <input type="checkbox" {{ $subscription->auto_renew ? 'checked' : '' }}
-                                       class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                                <span class="ml-2 text-sm text-gray-900">Enable auto-renewal</span>
-                            </div>
+                            <p class="text-xs text-gray-500">
+                                Currently: <strong>{{ $subscription->auto_renew ? 'Enabled' : 'Disabled' }}</strong>
+                            </p>
                             <button type="submit" class="w-full bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium">
                                 {{ $subscription->auto_renew ? 'Disable' : 'Enable' }} Auto Renew
                             </button>
@@ -140,8 +138,8 @@
                 @else
                 <div class="text-center py-8">
                     <p class="text-gray-500 mb-4">No active subscription found</p>
-                    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                        Create Subscription
+                    <a href="{{ route('admin.billing.create-payment', $tenant) }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                        Record First Payment
                     </a>
                 </div>
                 @endif
@@ -210,14 +208,18 @@
 
 <!-- Success/Error Messages -->
 @if(session('success'))
-<div class="fixed bottom-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg z-50">
-    {{ session('success') }}
+<div id="toast" class="fixed bottom-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg z-50 flex items-center gap-3">
+    <span>{{ session('success') }}</span>
+    <button onclick="this.parentElement.remove()" class="font-bold text-green-900">×</button>
 </div>
+<script>setTimeout(()=>document.getElementById('toast')?.remove(),5000)</script>
 @endif
 
 @if(session('error'))
-<div class="fixed bottom-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg z-50">
-    {{ session('error') }}
+<div id="toast-err" class="fixed bottom-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg z-50 flex items-center gap-3">
+    <span>{{ session('error') }}</span>
+    <button onclick="this.parentElement.remove()" class="font-bold text-red-900">×</button>
 </div>
+<script>setTimeout(()=>document.getElementById('toast-err')?.remove(),5000)</script>
 @endif
 @endsection

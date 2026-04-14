@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\Plan;
 use App\Models\Role;
+use App\Models\Subscription;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -15,6 +17,26 @@ use Illuminate\View\View;
 
 class PlatformController extends Controller
 {
+    /**
+     * Super admin overview dashboard.
+     */
+    public function dashboard(): View
+    {
+        $stats = [
+            'total_gyms'      => Tenant::count(),
+            'active_gyms'     => Tenant::where('status', 'active')->count(),
+            'pending_gyms'    => Tenant::where('status', 'pending')->count(),
+            'suspended_gyms'  => Tenant::where('status', 'suspended')->count(),
+            'active_members'  => 0, // TODO: implement when Members model exists
+            'monthly_revenue' => '₨ ' . number_format(Subscription::active()->sum('price'), 0),
+            'growth_rate'     => Tenant::where('created_at', '>=', now()->startOfMonth())->count() . ' this month',
+        ];
+
+        $tenants = Tenant::with('plan')->latest()->take(10)->get();
+
+        return view('admin.dashboard', compact('stats', 'tenants'));
+    }
+
     /**
      * Display a listing of all gyms.
      */
@@ -96,10 +118,9 @@ class PlatformController extends Controller
         ]);
 
         // TODO: Send WhatsApp message with $tempPassword
-        // Log it for now
-        Log::info("Gym Created: {$tenant->name}. Owner Password: {$tempPassword}");
+        Log::info("Gym Created: {$tenant->name} (ID: {$tenant->id}). Credential delivery pending WhatsApp.");
 
-        return redirect()->route('admin.tenants.index')->with('success', 'Gym created successfully. Password logged: '.$tempPassword);
+        return redirect()->route('admin.tenants.index')->with('success', 'Gym created successfully. Deliver credentials to the owner via WhatsApp.');
     }
 
     /**
@@ -216,10 +237,10 @@ class PlatformController extends Controller
             'password' => Hash::make($tempPassword),
         ]);
 
-        // TODO: Send WhatsApp message
-        Log::info("Password Reset for {$tenant->name}: {$tempPassword}");
+        // TODO: Send WhatsApp message with $tempPassword
+        Log::info("Password reset for {$tenant->name} (User ID: {$owner->id}). Delivery pending WhatsApp.");
 
-        return back()->with('success', "Password reset successfully. New password: {$tempPassword}");
+        return back()->with('success', 'Password reset successfully. Deliver new credentials to the owner via WhatsApp.');
     }
 
     /**

@@ -2,7 +2,22 @@
   "permissions": {
     "allow": [
       "Bash(php artisan:*)",
-      "Bash(xargs grep:*)"
+      "Bash(xargs grep:*)",
+      "Bash(php:*)",
+      "Read(//c/Apache24/bin/**)",
+      "Bash(ls /C/php*)",
+      "Bash(ls /C/php84*)",
+      "Read(//c//**)",
+      "Bash(composer dump-autoload:*)",
+      "Bash(/C/php/composer.bat dump-autoload:*)",
+      "Bash(/C/php/php.exe /C/php/composer.phar dump-autoload --optimize)",
+      "Read(//c/Users/Lenovo/AppData/Roaming/Composer/**)",
+      "Read(//c/Users/Lenovo/**)",
+      "Bash(/C/php/php.exe /C/Users/Lenovo/composer.phar dump-autoload --optimize)",
+      "Bash(/C/php/php.exe artisan:*)",
+      "Bash(net stop:*)",
+      "Bash(net start:*)",
+      "Bash(/C/php/php.exe:*)"
     ]
   }
 }

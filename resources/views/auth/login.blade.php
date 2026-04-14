@@ -71,7 +71,7 @@
                     <div class="form-group">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
                             <label style="margin-bottom: 0;">Password</label>
-                            <a href="#" class="forgot-password" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05rem;">Forgot Password?</a>
+                            <a href="{{ route('password.request') }}" class="forgot-password" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05rem;">Forgot Password?</a>
                         </div>
                         <div class="input-container">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -143,18 +143,24 @@ class ActivityController extends Controller
         $logs = $query->with('user')->orderBy('created_at', 'desc')->get();
 
         // Generate CSV content
+        $csv = function (string $value): string {
+            if (in_array(substr($value, 0, 1), ['=', '+', '-', '@', "\t", "\r"], true)) {
+                $value = "'" . $value;
+            }
+            return '"' . str_replace('"', '""', $value) . '"';
+        };
+
         $csvContent = "Date,Action,User,Severity,Message,IP Address\n";
 
         foreach ($logs as $log) {
-            $csvContent .= sprintf(
-                "%s,%s,%s,%s,%s,%s\n",
+            $csvContent .= implode(',', [
                 $log->created_at->format('Y-m-d H:i:s'),
-                $log->action,
-                $log->user?->name ?? 'System',
-                $log->severity,
-                str_replace(',', ';', $log->getFormattedMessage()),
-                $log->ip_address ?? ''
-            );
+                $csv($log->action),
+                $csv($log->user?->name ?? 'System'),
+                $csv($log->severity),
+                $csv(str_replace(',', ';', $log->getFormattedMessage())),
+                $csv($log->ip_address ?? ''),
+            ]) . "\n";
         }
 
         $filename = "gym-activity-{$tenant->slug}-".now()->format('Y-m-d').'.csv';

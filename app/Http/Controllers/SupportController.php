@@ -45,7 +45,7 @@ class SupportController extends Controller
         }
 
         // Sort by priority first, then by creation date
-        $query->orderByRaw("FIELD(priority, 'urgent', 'high', 'medium', 'low')")
+        $query->orderByRaw("CASE priority WHEN 'urgent' THEN 1 WHEN 'high' THEN 2 WHEN 'medium' THEN 3 ELSE 4 END")
             ->orderBy('created_at', 'desc');
 
         $tickets = $query->paginate(20);
@@ -69,8 +69,9 @@ class SupportController extends Controller
     public function show(SupportTicket $ticket): View
     {
         $ticket->load(['tenant', 'creator', 'assignedAdmin', 'messages.user']);
+        $admins = User::where('platform_role', 'super_admin')->select('id', 'name')->get();
 
-        return view('support.show', compact('ticket'));
+        return view('support.show', compact('ticket', 'admins'));
     }
 
     /**

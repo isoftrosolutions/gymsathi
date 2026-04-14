@@ -39,7 +39,7 @@
                     </div>
                     <div>
                         <p class="text-sm font-medium text-gray-600">Created By</p>
-                        <p class="text-lg font-semibold text-gray-900">{{ $ticket->creator->name }}</p>
+                        <p class="text-lg font-semibold text-gray-900">{{ $ticket->creator?->name ?? 'Deleted User' }}</p>
                         <p class="text-sm text-gray-500">{{ $ticket->created_at->format('M d, Y H:i') }}</p>
                     </div>
                     <div>
@@ -66,7 +66,7 @@
                 <div class="bg-gray-50 p-4 rounded-lg">
                     <p class="text-gray-900 whitespace-pre-wrap">{{ $ticket->description }}</p>
                     <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
-                        <span class="text-sm text-gray-500">{{ $ticket->creator->name }}</span>
+                        <span class="text-sm text-gray-500">{{ $ticket->creator?->name ?? 'Deleted User' }}</span>
                         <span class="text-sm text-gray-500">{{ $ticket->created_at->format('M d, Y H:i') }}</span>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                             @endif
                             <p class="text-gray-900 whitespace-pre-wrap">{{ $message->message }}</p>
                             <div class="flex justify-between items-center mt-3 pt-3 border-t border-gray-200">
-                                <span class="text-sm text-gray-500">{{ $message->user->name }}</span>
+                                <span class="text-sm text-gray-500">{{ $message->user?->name ?? 'Deleted User' }}</span>
                                 <span class="text-sm text-gray-500">{{ $message->created_at->format('M d, H:i') }}</span>
                             </div>
                         </div>
@@ -135,29 +135,23 @@
                 <h3 class="text-lg font-medium text-gray-900 mb-4">Ticket Actions</h3>
                 <div class="space-y-3">
                     @if($ticket->isOpen() || $ticket->isInProgress())
-                        @if(!$ticket->isResolved())
-                        <form action="{{ route('admin.support.resolve', $ticket) }}" method="POST" class="inline-block w-full">
-                            @csrf
-                            @method('PATCH')
-                            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                                Mark as Resolved
-                            </button>
-                        </form>
-                        @else
-                        <form action="{{ route('admin.support.close', $ticket) }}" method="POST" class="inline-block w-full">
-                            @csrf
-                            @method('PATCH')
-                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                                Close Ticket
-                            </button>
-                        </form>
-                        @endif
+                    <form action="{{ route('admin.support.resolve', $ticket) }}" method="POST" class="inline-block w-full">
+                        @csrf @method('PATCH')
+                        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                            Mark as Resolved
+                        </button>
+                    </form>
                     @endif
 
                     @if($ticket->isResolved())
+                    <form action="{{ route('admin.support.close', $ticket) }}" method="POST" class="inline-block w-full">
+                        @csrf @method('PATCH')
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                            Close Ticket
+                        </button>
+                    </form>
                     <form action="{{ route('admin.support.reopen', $ticket) }}" method="POST" class="inline-block w-full">
-                        @csrf
-                        @method('PATCH')
+                        @csrf @method('PATCH')
                         <button type="submit" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-md text-sm font-medium">
                             Reopen Ticket
                         </button>
@@ -247,14 +241,18 @@
 
 <!-- Success/Error Messages -->
 @if(session('success'))
-<div class="fixed bottom-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg z-50">
-    {{ session('success') }}
+<div id="toast" class="fixed bottom-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg z-50 flex items-center gap-3">
+    <span>{{ session('success') }}</span>
+    <button onclick="this.parentElement.remove()" class="font-bold text-green-900">×</button>
 </div>
+<script>setTimeout(()=>document.getElementById('toast')?.remove(),5000)</script>
 @endif
 
 @if(session('error'))
-<div class="fixed bottom-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg z-50">
-    {{ session('error') }}
+<div id="toast-err" class="fixed bottom-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg z-50 flex items-center gap-3">
+    <span>{{ session('error') }}</span>
+    <button onclick="this.parentElement.remove()" class="font-bold text-red-900">×</button>
 </div>
+<script>setTimeout(()=>document.getElementById('toast-err')?.remove(),5000)</script>
 @endif
 @endsection

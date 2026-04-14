@@ -26,9 +26,9 @@ class ImpersonationController extends Controller
             return back()->with('error', 'You are already impersonating a user. Please stop the current session first.');
         }
 
-        // Find the user to impersonate (default to first admin user)
+        // Find the user to impersonate — must belong to this tenant
         $userToImpersonate = $request->user_id
-            ? User::find($request->user_id)
+            ? $tenant->users()->findOrFail($request->user_id)
             : $tenant->users()->whereHas('role', function ($q) {
                 $q->where('slug', 'admin');
             })->first();
@@ -66,6 +66,7 @@ class ImpersonationController extends Controller
 
         // Login as the impersonated user
         auth()->login($userToImpersonate);
+        session()->regenerate();
 
         return redirect('/dashboard')->with('success', "You are now impersonating {$userToImpersonate->name} from {$tenant->name}.");
     }
@@ -99,6 +100,7 @@ class ImpersonationController extends Controller
         // Restore original admin session
         $originalAdmin = User::find($impersonateData['original_admin_id']);
         auth()->login($originalAdmin);
+        session()->regenerate();
 
         // Clear impersonation session
         session()->forget('impersonate');

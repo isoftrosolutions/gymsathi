@@ -71,35 +71,31 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
                     <span>Global Overview</span>
                 </a>
-                <a href="#" class="flex items-center gap-4 px-6 py-4 rounded-xl text-on-variant transition-all hover:bg-white/5">
+                <a href="{{ route('admin.tenants.index') }}" class="flex items-center gap-4 px-6 py-4 rounded-xl transition-all {{ request()->routeIs('admin.tenants.*') ? 'sidebar-active' : 'text-on-variant hover:bg-white/5' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                     <span>Gym Management</span>
                 </a>
-                <a href="#" class="flex items-center gap-4 px-6 py-4 rounded-xl text-on-variant transition-all hover:bg-white/5">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                    <span>Member Analytics</span>
-                </a>
-                <a href="#" class="flex items-center gap-4 px-6 py-4 rounded-xl text-on-variant transition-all hover:bg-white/5">
+                <a href="{{ route('admin.subscriptions.dashboard') }}" class="flex items-center gap-4 px-6 py-4 rounded-xl transition-all {{ request()->routeIs('admin.subscriptions.*') ? 'sidebar-active' : 'text-on-variant hover:bg-white/5' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-                    <span>Subscription Plans</span>
+                    <span>Subscriptions</span>
                 </a>
-                <a href="#" class="flex items-center gap-4 px-6 py-4 rounded-xl text-on-variant transition-all hover:bg-white/5">
+                <a href="{{ route('admin.support.index') }}" class="flex items-center gap-4 px-6 py-4 rounded-xl transition-all {{ request()->routeIs('admin.support.*') ? 'sidebar-active' : 'text-on-variant hover:bg-white/5' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-                    <span>System Alerts</span>
+                    <span>Support</span>
                 </a>
-                <a href="#" class="flex items-center gap-4 px-6 py-4 rounded-xl text-on-variant transition-all hover:bg-white/5">
+                <a href="{{ route('admin.activity.index') }}" class="flex items-center gap-4 px-6 py-4 rounded-xl transition-all {{ request()->routeIs('admin.activity.*') ? 'sidebar-active' : 'text-on-variant hover:bg-white/5' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <span>Audit Logs</span>
                 </a>
             </nav>
 
             <div class="p-4 space-y-4">
-                <button class="w-full kinetic-gradient text-black font-headline font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-all">
+                <a href="{{ route('admin.tenants.create') }}" class="w-full kinetic-gradient text-black font-headline font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
                     Add New Gym
-                </button>
+                </a>
                 <div class="px-4 py-6 text-on-variant space-y-4 text-sm font-label border-t border-primary-border/50">
-                    <a href="#" class="flex items-center gap-3 hover:text-primary-lime transition-all">
+                    <a href="{{ route('admin.support.index') }}" class="flex items-center gap-3 hover:text-primary-lime transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         Help Desk
                     </a>
@@ -121,9 +117,9 @@
                 <div>
                     <h2 class="text-xl font-headline font-bold text-white">GymSathi Admin</h2>
                     <div class="flex gap-6 mt-1 text-sm font-label text-on-variant">
-                        <a href="#" class="text-primary-lime underline underline-offset-8 decoration-2">Dashboard</a>
-                        <a href="#" class="hover:text-white transition-colors">System Health</a>
-                        <a href="#" class="hover:text-white transition-colors">Reports</a>
+                        <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'text-primary-lime underline underline-offset-8 decoration-2' : 'hover:text-white transition-colors' }}">Dashboard</a>
+                        <a href="{{ route('admin.activity.index') }}" class="{{ request()->routeIs('admin.activity.*') ? 'text-primary-lime underline underline-offset-8 decoration-2' : 'hover:text-white transition-colors' }}">Activity</a>
+                        <a href="{{ route('admin.subscriptions.dashboard') }}" class="{{ request()->routeIs('admin.subscriptions.*') ? 'text-primary-lime underline underline-offset-8 decoration-2' : 'hover:text-white transition-colors' }}">Reports</a>
                     </div>
                 </div>
 

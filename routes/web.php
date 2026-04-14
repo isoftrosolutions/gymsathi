@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImpersonationController;
@@ -44,15 +45,22 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/logout', 'logout')->middleware('auth')->name('logout');
 });
 
+// Password Reset Routes (OTP Based)
+Route::controller(ForgotPasswordController::class)->group(function () {
+    Route::get('/forgot-password', 'showLinkRequestForm')->name('password.request');
+    Route::post('/forgot-password', 'sendOtp')->name('password.email');
+    Route::get('/verify-otp', 'showVerifyOtpForm')->name('password.otp');
+    Route::post('/verify-otp', 'verifyOtp')->name('password.otp.verify');
+    Route::get('/reset-password', 'showResetPasswordForm')->name('password.reset');
+    Route::post('/reset-password', 'resetPassword')->name('password.update');
+});
+
 // Authenticated Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
 // Platform administration Routes (Super Admin)
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', function () {
-        // Redefine old dashboard if needed or keep using PlatformController
-        return redirect()->route('admin.tenants.index');
-    })->name('admin.dashboard');
+    Route::get('/dashboard', [PlatformController::class, 'dashboard'])->name('admin.dashboard');
 
     // Gym Management Module
     Route::prefix('tenants')->name('admin.tenants.')->group(function () {
