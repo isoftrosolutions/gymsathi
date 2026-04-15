@@ -2,9 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Permission;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
             if (method_exists($user, 'hasPermission')) {
                 return $user->hasPermission($ability);
             }
+
             return false;
         });
     }

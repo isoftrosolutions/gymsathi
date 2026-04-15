@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\Tenant;
 use Illuminate\View\View;
 
@@ -16,7 +14,7 @@ class MonitoringController extends Controller
     {
         $tenants = Tenant::all();
         $pendingCount = Tenant::where('pending_sync_count', '>', 0)->count();
-        
+
         return view('admin.monitoring.index', compact('tenants', 'pendingCount'));
     }
 

@@ -5,14 +5,19 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\BillingController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Gym\AttendanceController;
+use App\Http\Controllers\Gym\MemberController;
+use App\Http\Controllers\Gym\PackageController;
+use App\Http\Controllers\Gym\PaymentController;
+use App\Http\Controllers\Gym\StaffController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImpersonationController;
+use App\Http\Controllers\MonitoringController;
+use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SubscriptionController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PlatformController;
-use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\SupportController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,6 +64,26 @@ Route::controller(ForgotPasswordController::class)->group(function () {
 
 // Authenticated Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+
+// Gym Admin Routes (Tenant)
+Route::middleware(['auth'])->prefix('gym')->name('gym.')->group(function () {
+    // Members
+    Route::resource('members', MemberController::class);
+
+    // Packages
+    Route::resource('packages', PackageController::class);
+
+    // Staff
+    Route::resource('staff', StaffController::class);
+
+    // Attendance (explicit routes before resource to avoid shadowing)
+    Route::get('attendance/report', [AttendanceController::class, 'report'])->name('attendance.report');
+    Route::resource('attendance', AttendanceController::class);
+
+    // Payments
+    Route::get('payments/{payment}/receipt', [PaymentController::class, 'receipt'])->name('payments.receipt');
+    Route::resource('payments', PaymentController::class);
+});
 
 // Platform administration Routes (Super Admin)
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {

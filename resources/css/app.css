@@ -6,6 +6,13 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --color-primary-lime: #C8F135;
+    --color-primary-dark: #111318;
+    --color-primary-surface: #1A1D24;
+    --color-primary-border: #2A2E37;
+    --color-on-surface: #FFFFFF;
+    --color-on-variant: #C5C9AE;
+
+    --font-family-headline: 'Space Grotesk', sans-serif;
+    --font-family-body: 'Manrope', sans-serif;
 }

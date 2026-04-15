@@ -75,7 +75,7 @@
                 </thead>
                 <tbody class="divide-y divide-primary-border/30">
                     @forelse($tenants as $tenant)
-                    <tr class="hover:bg-white/[0.02] transition-colors group">
+                    <tr class="hover:bg-white/[0.02] transition-colors">
                         <td class="px-8 py-6">
                             <div class="flex flex-col">
                                 <span class="text-white font-bold">{{ $tenant->name }}</span>
@@ -98,49 +98,63 @@
                             {{ $tenant->subscription_expires_at?->format('M d, Y') ?? 'N/A' }}
                         </td>
                         <td class="px-8 py-6 text-right">
-                            <div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <a href="{{ route('admin.tenants.show', $tenant) }}" class="p-2 text-on-variant hover:text-primary-lime transition-colors" title="View Details">
-                                    <span class="material-symbols-outlined">visibility</span>
+                            <div class="flex justify-end gap-1">
+                                {{-- View Details --}}
+                                <a href="{{ route('admin.tenants.show', $tenant) }}"
+                                    class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-primary-surface border border-primary-border text-on-variant hover:text-primary-lime hover:border-primary-lime transition-all duration-200"
+                                    title="View Details">
+                                    <span class="material-symbols-outlined text-base">visibility</span>
                                 </a>
 
+                                {{-- Status-specific Actions --}}
                                 @if($tenant->isPending())
+                                    {{-- Approve --}}
                                     <form action="{{ route('admin.tenants.approve', $tenant) }}" method="POST" class="inline">
                                         @csrf
                                         @method('PATCH')
-                                        <button class="p-2 text-on-variant hover:text-green-500 transition-colors" title="Approve Gym">
-                                            <span class="material-symbols-outlined">check_circle</span>
+                                        <button class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-primary-surface border border-primary-border text-on-variant hover:text-green-500 hover:border-green-500 transition-all duration-200"
+                                                title="Approve Gym">
+                                            <span class="material-symbols-outlined text-base">check_circle</span>
                                         </button>
                                     </form>
+                                    {{-- Reject --}}
                                     <form action="{{ route('admin.tenants.reject', $tenant) }}" method="POST" class="inline" onsubmit="return confirm('Reject this gym application?');">
                                         @csrf
                                         @method('PATCH')
-                                        <button class="p-2 text-on-variant hover:text-red-500 transition-colors" title="Reject Gym">
-                                            <span class="material-symbols-outlined">cancel</span>
+                                        <button class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-primary-surface border border-primary-border text-on-variant hover:text-red-500 hover:border-red-500 transition-all duration-200"
+                                                title="Reject Gym">
+                                            <span class="material-symbols-outlined text-base">cancel</span>
                                         </button>
                                     </form>
                                 @elseif($tenant->isActive() || $tenant->isExpired())
+                                    {{-- Suspend --}}
                                     <form action="{{ route('admin.tenants.suspend', $tenant) }}" method="POST" class="inline" onsubmit="return confirm('Suspend this gym? Members will lose access.');">
                                         @csrf
                                         @method('PATCH')
-                                        <button class="p-2 text-on-variant hover:text-orange-500 transition-colors" title="Suspend Gym">
-                                            <span class="material-symbols-outlined">pause_circle</span>
+                                        <button class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-primary-surface border border-primary-border text-on-variant hover:text-orange-500 hover:border-orange-500 transition-all duration-200"
+                                                title="Suspend Gym">
+                                            <span class="material-symbols-outlined text-base">pause_circle</span>
                                         </button>
                                     </form>
                                 @elseif($tenant->isSuspended())
+                                    {{-- Reactivate --}}
                                     <form action="{{ route('admin.tenants.reactivate', $tenant) }}" method="POST" class="inline">
                                         @csrf
                                         @method('PATCH')
-                                        <button class="p-2 text-on-variant hover:text-green-500 transition-colors" title="Reactivate Gym">
-                                            <span class="material-symbols-outlined">play_circle</span>
+                                        <button class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-primary-surface border border-primary-border text-on-variant hover:text-green-500 hover:border-green-500 transition-all duration-200"
+                                                title="Reactivate Gym">
+                                            <span class="material-symbols-outlined text-base">play_circle</span>
                                         </button>
                                     </form>
                                 @endif
 
+                                {{-- Delete (always available) --}}
                                 <form action="{{ route('admin.tenants.destroy', $tenant) }}" method="POST" onsubmit="return confirm('Permanently delete this gym? This cannot be undone.');" class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="p-2 text-on-variant hover:text-red-500 transition-colors" title="Delete Gym">
-                                        <span class="material-symbols-outlined">delete</span>
+                                    <button class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-primary-surface border border-primary-border text-on-variant hover:text-red-500 hover:border-red-500 transition-all duration-200"
+                                            title="Delete Gym">
+                                        <span class="material-symbols-outlined text-base">delete</span>
                                     </button>
                                 </form>
                             </div>

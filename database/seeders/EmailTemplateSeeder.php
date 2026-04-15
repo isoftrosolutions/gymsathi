@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\EmailTemplate;
 use Illuminate\Database\Seeder;
 
 class EmailTemplateSeeder extends Seeder
@@ -13,15 +13,15 @@ class EmailTemplateSeeder extends Seeder
     public function run(): void
     {
         // Clear existing templates since we are switching to gym-specific slugs
-        \App\Models\EmailTemplate::truncate();
+        EmailTemplate::truncate();
 
         $templates = require base_path('gym_templates.php');
 
         foreach ($templates as $slug => $data) {
-            \App\Models\EmailTemplate::create([
-                'slug'    => $slug,
+            EmailTemplate::create([
+                'slug' => $slug,
                 'subject' => $data['subject'],
-                'body'    => $data['body'],
+                'body' => $data['body'],
             ]);
         }
     }

@@ -3,6 +3,75 @@
 @section('title', 'Onboard New Gym')
 
 @section('content')
+<script>
+let currentStep = 0; // Global variable for onclick handlers
+
+document.addEventListener('DOMContentLoaded', function() {
+    const steps = [
+        document.getElementById('step-1'),
+        document.getElementById('step-2'),
+        document.getElementById('step-3')
+    ];
+    const indicators = document.querySelectorAll('.step-indicator');
+
+    function showStep(stepIndex) {
+        steps.forEach((step, i) => {
+            step.classList.toggle('hidden', i !== stepIndex);
+        });
+        indicators.forEach((ind, i) => {
+            const circle = ind.querySelector('span:first-child');
+            const label = ind.querySelector('span:last-child');
+            if (i === stepIndex) {
+                circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold tracking-wider bg-primary-lime text-black';
+                label.className = 'text-[10px] uppercase tracking-widest font-bold text-white';
+            } else if (i < stepIndex) {
+                circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold tracking-wider bg-green-500 text-white';
+                label.className = 'text-[10px] uppercase tracking-widest font-bold text-green-400';
+            } else {
+                circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold tracking-wider bg-primary-surface border border-primary-border text-on-variant';
+                label.className = 'text-[10px] uppercase tracking-widest font-bold text-on-variant';
+            }
+        });
+        
+        // Update buttons
+        const btnBack = document.getElementById('btn-back');
+        const btnNext = document.getElementById('btn-next');
+        const btnSubmit = document.getElementById('btn-submit');
+        
+        btnBack.classList.toggle('hidden', stepIndex === 0);
+        btnNext.classList.toggle('hidden', stepIndex === 2);
+        btnSubmit.classList.toggle('hidden', stepIndex !== 2);
+        
+        currentStep = stepIndex;
+    }
+
+    window.goToStep = function(stepIndex) {
+        if (stepIndex < currentStep) {
+            showStep(stepIndex);
+            return;
+        }
+        // Validate current step
+        const currentSection = steps[currentStep];
+        const inputs = currentSection.querySelectorAll('input[required], select[required], textarea[required]');
+        let valid = true;
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                input.classList.add('border-red-500');
+                valid = false;
+            } else {
+                input.classList.remove('border-red-500');
+            }
+        });
+        if (valid) {
+            showStep(stepIndex);
+        }
+    };
+
+    // Initialize
+    showStep(0);
+});
+</script>
+
 <div class="max-w-7xl">
 
     {{-- Back link --}}
@@ -27,11 +96,11 @@
     {{-- Step indicator --}}
     <div class="flex items-center gap-3 mb-10">
         @foreach([['01','Gym Details'], ['02','Owner Identity'], ['03','Platform Tier']] as $i => $step)
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3 step-indicator" style="cursor: pointer;" onclick="goToStep({{ $i }})">
             <div class="flex items-center gap-2.5">
                 <span class="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold tracking-wider
                     {{ $i === 0 ? 'bg-primary-lime text-black' : 'bg-primary-surface border border-primary-border text-on-variant' }}">
-                    {{ $step[0] }}
+                    {{ $i < 3 ? '✓' : $step[0] }}
                 </span>
                 <span class="text-[10px] uppercase tracking-widest font-bold {{ $i === 0 ? 'text-white' : 'text-on-variant' }}">{{ $step[1] }}</span>
             </div>
@@ -64,7 +133,7 @@
             <div class="space-y-6">
 
                 {{-- GYM DETAILS --}}
-                <div class="rounded-2xl bg-primary-surface border border-primary-border overflow-hidden">
+                <div id="step-1" class="rounded-2xl bg-primary-surface border border-primary-border overflow-hidden">
                     <div class="px-8 py-5 border-b border-primary-border flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <span class="w-8 h-8 rounded-xl bg-primary-lime/10 flex items-center justify-center">
@@ -121,7 +190,7 @@
                 </div>
 
                 {{-- OWNER IDENTITY --}}
-                <div class="rounded-2xl bg-primary-surface border border-primary-border overflow-hidden">
+                <div id="step-2" class="hidden rounded-2xl bg-primary-surface border border-primary-border overflow-hidden">
                     <div class="px-8 py-5 border-b border-primary-border flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <span class="w-8 h-8 rounded-xl bg-primary-lime/10 flex items-center justify-center">
@@ -151,18 +220,24 @@
                         </div>
 
                         <div class="space-y-2">
-                            <label class="block text-[10px] uppercase tracking-widest text-on-variant font-bold">
-                                Unverified Email <span class="text-on-variant/40 normal-case tracking-normal text-[9px]">(optional)</span>
-                            </label>
+                            <label class="block text-[10px] uppercase tracking-widest text-on-variant font-bold">Owner Email</label>
                             <input type="email" name="owner_email" value="{{ old('owner_email') }}"
-                                placeholder="owner@example.com"
+                                placeholder="owner@example.com" required
                                 class="w-full bg-primary-dark border border-primary-border rounded-xl px-5 py-3.5 text-white placeholder-on-variant/40 focus:outline-none focus:border-primary-lime/50 focus:ring-1 focus:ring-primary-lime/20 transition-all text-sm">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-[10px] uppercase tracking-widest text-on-variant font-bold">Password</label>
+                            <input type="password" name="owner_password" required
+                                placeholder="Set login password" minlength="8"
+                                class="w-full bg-primary-dark border border-primary-border rounded-xl px-5 py-3.5 text-white placeholder-on-variant/40 focus:outline-none focus:border-primary-lime/50 focus:ring-1 focus:ring-primary-lime/20 transition-all text-sm">
+                            <p class="text-[9px] text-on-variant/60">Minimum 8 characters. This will be the gym owner's login password.</p>
                         </div>
                     </div>
                 </div>
 
                 {{-- PLATFORM TIER --}}
-                <div class="rounded-2xl bg-primary-surface border border-primary-border overflow-hidden">
+                <div id="step-3" class="hidden rounded-2xl bg-primary-surface border border-primary-border overflow-hidden">
                     <div class="px-8 py-5 border-b border-primary-border flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <span class="w-8 h-8 rounded-xl bg-primary-lime/10 flex items-center justify-center">
@@ -285,13 +360,20 @@
 
                 {{-- Action Buttons --}}
                 <div class="space-y-4 pt-2">
-                    <button type="submit"
-                        class="w-full kinetic-gradient text-black font-headline font-bold py-5 rounded-2xl hover:opacity-90 hover:scale-[1.01] transition-all shadow-xl shadow-primary-lime/20 text-sm uppercase tracking-widest flex items-center justify-center gap-3">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
-                        </svg>
-                        Execute Onboarding
-                    </button>
+                    <div class="flex gap-4">
+                        <button type="button" id="btn-back" onclick="goToStep(currentStep - 1)" class="hidden flex-1 py-5 rounded-2xl border border-primary-border text-on-variant font-headline font-bold text-sm uppercase tracking-widest hover:bg-primary-surface transition-all">
+                            Back
+                        </button>
+                        <button type="button" id="btn-next" onclick="goToStep(currentStep + 1)" class="flex-1 kinetic-gradient text-black font-headline font-bold py-5 rounded-2xl hover:opacity-90 hover:scale-[1.01] transition-all shadow-xl shadow-primary-lime/20 text-sm uppercase tracking-widest">
+                            Next Step
+                        </button>
+                        <button type="submit" id="btn-submit" class="hidden flex-1 kinetic-gradient text-black font-headline font-bold py-5 rounded-2xl hover:opacity-90 hover:scale-[1.01] transition-all shadow-xl shadow-primary-lime/20 text-sm uppercase tracking-widest flex items-center justify-center gap-3">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Execute Onboarding
+                        </button>
+                    </div>
                     <div class="flex items-center justify-center gap-6">
                         <button type="reset" class="text-[10px] uppercase tracking-widest font-bold text-on-variant hover:text-white transition-colors">
                             Clear Form

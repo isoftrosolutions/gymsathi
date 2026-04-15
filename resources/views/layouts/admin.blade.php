@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS v4 via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Vite Assets -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script>
         tailwind.config = {
@@ -56,9 +56,12 @@
     </style>
 </head>
 <body class="bg-primary-dark text-on-surface font-body font-medium antialiased custom-scrollbar">
+    <!-- Mobile Sidebar Overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 lg:hidden hidden"></div>
+
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
-        <aside class="w-72 bg-black/40 border-r border-primary-border flex flex-col pt-8">
+        <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-50 w-72 bg-black/40 border-r border-primary-border flex flex-col pt-8 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out lg:flex">
             <div class="px-8 mb-12">
                 <div class="flex flex-col">
                     <span class="font-headline text-2xl font-bold tracking-tighter text-white">Sathi HQ</span>
@@ -117,18 +120,26 @@
         <!-- Main Content -->
         <main class="flex-1 flex flex-col min-w-0 bg-primary-dark">
             <!-- Topbar -->
-            <header class="h-24 px-12 border-b border-primary-border flex items-center justify-between">
+            <header class="h-20 lg:h-24 px-4 lg:px-12 border-b border-primary-border flex items-center justify-between">
                 <div>
-                    <h2 class="text-xl font-headline font-bold text-white">GymSathi Admin</h2>
-                    <div class="flex gap-6 mt-1 text-sm font-label text-on-variant">
+                    <h2 class="text-lg lg:text-xl font-headline font-bold text-white">GymSathi Admin</h2>
+                    <div class="hidden lg:flex gap-6 mt-1 text-sm font-label text-on-variant">
                         <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'text-primary-lime underline underline-offset-8 decoration-2' : 'hover:text-white transition-colors' }}">Dashboard</a>
                         <a href="{{ route('admin.activity.index') }}" class="{{ request()->routeIs('admin.activity.*') ? 'text-primary-lime underline underline-offset-8 decoration-2' : 'hover:text-white transition-colors' }}">Activity</a>
                         <a href="{{ route('admin.subscriptions.dashboard') }}" class="{{ request()->routeIs('admin.subscriptions.*') ? 'text-primary-lime underline underline-offset-8 decoration-2' : 'hover:text-white transition-colors' }}">Reports</a>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-8">
-                    <div class="flex items-center gap-4 pr-6 border-r border-primary-border">
+                <div class="flex items-center gap-2 lg:gap-8">
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="lg:hidden p-2 text-on-variant hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+
+                    <!-- Desktop Buttons -->
+                    <div class="hidden lg:flex items-center gap-4 pr-6 border-r border-primary-border">
                         <button class="relative p-2 text-on-variant hover:text-white transition-colors">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
                             <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-primary-dark"></span>
@@ -138,12 +149,13 @@
                         </button>
                     </div>
 
-                    <div class="flex items-center gap-4">
-                        <div class="text-right">
+                    <!-- User Info - Compact on Mobile -->
+                    <div class="flex items-center gap-2 lg:gap-4">
+                        <div class="hidden sm:block text-right">
                             <div class="text-sm font-bold text-white">{{ auth()->user()->name }}</div>
                             <div class="text-[10px] text-on-variant uppercase tracking-wider font-label">Platform Superuser</div>
                         </div>
-                        <div class="w-12 h-12 rounded-full border-2 border-primary-lime p-1">
+                        <div class="w-8 h-8 lg:w-12 lg:h-12 rounded-full border-2 border-primary-lime p-0.5 lg:p-1">
                             <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=C8F135&color=000" class="w-full h-full rounded-full" alt="Avatar">
                         </div>
                     </div>
@@ -151,10 +163,52 @@
             </header>
 
             <!-- Scrollable Content -->
-            <div class="flex-1 overflow-y-auto p-12 custom-scrollbar">
+            <div class="flex-1 overflow-y-auto p-4 lg:p-12 custom-scrollbar">
                 @yield('content')
             </div>
         </main>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+
+            function toggleSidebar() {
+                const isOpen = !sidebar.classList.contains('-translate-x-full');
+                if (isOpen) {
+                    closeSidebar();
+                } else {
+                    openSidebar();
+                }
+            }
+
+            function openSidebar() {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeSidebar() {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+
+            // Toggle sidebar on mobile menu button click
+            mobileMenuBtn.addEventListener('click', toggleSidebar);
+
+            // Close sidebar when clicking overlay
+            overlay.addEventListener('click', closeSidebar);
+
+            // Close sidebar on window resize to desktop
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 1024) { // lg breakpoint
+                    closeSidebar();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

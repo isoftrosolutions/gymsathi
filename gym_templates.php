@@ -1,63 +1,117 @@
 <?php
-        return [
-            'member_registration_success' => [
-                'subject' => 'Registration Successful - {{gym_name}}! 🎓',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+
+return [
+    'gym_welcome' => [
+        'subject' => 'Welcome to GymSathi - {{gym_name}}! 🏋️‍♂️',
+        'body' => '<div style="font-family:\'Manrope\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #374151;border-radius:24px;color:#f9fafb;background:#111318;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
                     <div style="text-align:center;margin-bottom:32px;">
-                        <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Registeration successful</h2>
+                        <h2 style="font-family:\'Space Grotesk\',sans-serif;color:#C8F135;font-size:32px;font-weight:700;margin:0;letter-spacing:-0.5px;">Welcome to GymSathi! 🏋️‍♂️</h2>
+                        <p style="color:#9ca3af;margin-top:8px;font-size:16px;">Your gym management journey begins now</p>
                     </div>
-                    
-                    <p style="font-size:16px;margin-bottom:24px;line-height:1.6;">Hello , <strong style="color:#111;">{{member_name}} ji</strong></p>
-                    
-                    <p style="font-size:15px;margin-bottom:28px;line-height:1.6;color:#636e72;">You are successfully enrolled in the batch for <span style="color:#2d3436;font-weight:600;">{{plan_name}}</span> .</p>
-                    
-                    <div style="background:#f8fafc;padding:24px;border-radius:16px;margin-bottom:32px;border:1px solid #f1f5f9;">
-                        <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-top:0;margin-bottom:16px;">Login details</h3>
-                        <p style="margin:8px 0;font-size:14px;"><strong>portal :-</strong> <a href="{{login_url}}" style="color:#009E7E;text-decoration:none;">{{login_url}}</a></p>
-                        <p style="margin:8px 0;font-size:14px;"><strong>Username :-</strong> {{member_email}}</p>
-                        <p style="margin:8px 0;font-size:14px;"><strong>password :-</strong> {{temp_password}}</p>
+
+                    <p style="font-size:16px;margin-bottom:24px;line-height:1.6;">Hello <strong style="color:#f9fafb;">{{owner_name}}</strong>,</p>
+
+                    <p style="font-size:15px;margin-bottom:28px;line-height:1.6;color:#d1d5db;">Congratulations! Your gym <strong style="color:#f9fafb;">{{gym_name}}</strong> has been successfully set up on the GymSathi platform. You\'re now ready to streamline your gym operations with our powerful management tools.</p>
+
+                    <div style="background:#1f2937;padding:24px;border-radius:16px;margin-bottom:32px;border:1px solid #374151;">
+                        <h3 style="font-family:\'Space Grotesk\',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:1px;color:#C8F135;margin-top:0;margin-bottom:16px;font-weight:600;">Your Gym Details</h3>
+                        <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Gym Name:</strong> {{gym_name}}</p>
+                        <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Location:</strong> {{gym_city}}</p>
+                        <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Plan:</strong> {{plan_name}}</p>
+                        <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Status:</strong> <span style="color:#C8F135;font-weight:600;">Setup Complete</span></p>
+                    </div>
+
+                     <div style="background:#1f2937;padding:24px;border-radius:16px;margin-bottom:32px;border:1px solid #374151;">
+                         <h3 style="font-family:\'Space Grotesk\',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:1px;color:#C8F135;margin-top:0;margin-bottom:16px;font-weight:600;">Admin Login Credentials</h3>
+                         <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Portal:</strong> <a href="{{admin_url}}" style="color:#C8F135;text-decoration:none;font-weight:500;">{{admin_url}}</a></p>
+                         <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Email:</strong> {{admin_email}}</p>
+                         <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Password:</strong> Use the password you set during registration</p>
+                         <p style="margin:16px 0 0;font-size:12px;color:#9ca3af;">✅ Your account is ready to use with the password you provided</p>
+                     </div>
+
+                    <div style="text-align:center;margin-bottom:32px;">
+                        <a href="{{admin_url}}" style="display:inline-block;padding:16px 32px;background:#C8F135;color:#111318;text-decoration:none;border-radius:12px;font-weight:700;font-family:\'Space Grotesk\',sans-serif;box-shadow:0 4px 15px rgba(200, 241, 53, 0.2);text-transform:uppercase;letter-spacing:0.5px;">Access Your Gym Dashboard</a>
+                    </div>
+
+                    <div style="background:#1f2937;padding:24px;border-radius:16px;margin-bottom:32px;border:1px solid #374151;">
+                        <h3 style="font-family:\'Space Grotesk\',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:1px;color:#C8F135;margin-top:0;margin-bottom:16px;font-weight:600;">Next Steps</h3>
+                        <ul style="margin:0;padding-left:20px;color:#d1d5db;font-size:14px;">
+                            <li style="margin-bottom:8px;">Complete your gym profile and add member management</li>
+                            <li style="margin-bottom:8px;">Set up payment integrations (eSewa/Khalti)</li>
+                            <li style="margin-bottom:8px;">Configure attendance tracking and reporting</li>
+                            <li style="margin-bottom:8px;">Invite your staff and set up roles</li>
+                        </ul>
                     </div>
 
                     <div style="text-align:right;margin-top:40px;">
-                        <p style="margin:0;font-size:16px;color:#2d3436;">Best wishes</p>
-                        <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
+                        <p style="margin:0;font-size:16px;color:#9ca3af;">Welcome to the GymSathi family,</p>
+                        <p style="margin:4px 0 0;font-size:18px;font-weight:700;color:#C8F135;font-family:\'Space Grotesk\',sans-serif;">GymSathi Team</p>
                     </div>
-                </div>'
-            ],
-            'member_account_verification' => [
-                'subject' => 'Verify Your Email - {{gym_name}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'member_registration_success' => [
+        'subject' => 'Registration Successful - {{gym_name}}! 🎓',
+        'body' => '<div style="font-family:\'Manrope\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #374151;border-radius:24px;color:#f9fafb;background:#111318;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
                     <div style="text-align:center;margin-bottom:32px;">
-                        <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Verify Your Email</h2>
-                        <p style="color:#636e72;margin-top:8px;">One last step to complete your registration.</p>
-                    </div>
-                    
-                    <p style="font-size:16px;margin-bottom:24px;line-height:1.6;">Hello <strong style="color:#111;">{{member_name}}</strong>,</p>
-                    
-                    <p style="font-size:15px;margin-bottom:28px;line-height:1.6;color:#636e72;">Welcome to {{gym_name}}! To access your member portal and start your journey, please verify your email address by clicking the button below.</p>
-                    
-                    <div style="text-align:center;margin-bottom:32px;">
-                        <a href="{{verification_link}}" style="display:inline-block;padding:16px 36px;background:#009E7E;color:#ffffff;text-decoration:none;border-radius:12px;font-weight:700;box-shadow:0 4px 15px rgba(0,158,126,0.2);">Verify My Email</a>
+                        <h2 style="font-family:\'Space Grotesk\',sans-serif;color:#C8F135;font-size:32px;font-weight:700;margin:0;letter-spacing:-0.5px;">Registration Successful! 🎉</h2>
+                        <p style="color:#9ca3af;margin-top:8px;font-size:16px;">Welcome to your fitness journey</p>
                     </div>
 
-                    <div style="background:#f8fafc;padding:24px;border-radius:16px;margin-bottom:32px;border:1px solid #f1f5f9;">
-                        <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-top:0;margin-bottom:16px;">Account Preview</h3>
-                        <p style="margin:8px 0;font-size:14px;"><strong>Roll Number :-</strong> {{member_id}}</p>
-                        <p style="margin:8px 0;font-size:14px;"><strong>Email :-</strong> {{member_email}}</p>
-                        <p style="margin:8px 0;font-size:14px;"><strong>Membership Plan :-</strong> {{plan_name}}</p>
+                    <p style="font-size:16px;margin-bottom:24px;line-height:1.6;">Hello <strong style="color:#f9fafb;">{{member_name}}</strong>,</p>
+
+                    <p style="font-size:15px;margin-bottom:28px;line-height:1.6;color:#d1d5db;">You are successfully enrolled in the batch for <span style="color:#f9fafb;font-weight:600;">{{plan_name}}</span>. Your fitness transformation begins now!</p>
+
+                    <div style="background:#1f2937;padding:24px;border-radius:16px;margin-bottom:32px;border:1px solid #374151;">
+                        <h3 style="font-family:\'Space Grotesk\',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:1px;color:#C8F135;margin-top:0;margin-bottom:16px;font-weight:600;">Login Credentials</h3>
+                        <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Portal:</strong> <a href="{{login_url}}" style="color:#C8F135;text-decoration:none;font-weight:500;">{{login_url}}</a></p>
+                        <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Username:</strong> {{member_email}}</p>
+                        <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Password:</strong> {{temp_password}}</p>
                     </div>
 
-                    <p style="font-size:14px;color:#636e72;margin-bottom:32px;text-align:center;">Link expires in 24 hours. If you didn\'t create this account, please ignore this email.</p>
+                    <div style="text-align:center;margin-bottom:32px;">
+                        <a href="{{login_url}}" style="display:inline-block;padding:16px 32px;background:#C8F135;color:#111318;text-decoration:none;border-radius:12px;font-weight:700;font-family:\'Space Grotesk\',sans-serif;box-shadow:0 4px 15px rgba(200, 241, 53, 0.2);text-transform:uppercase;letter-spacing:0.5px;">Start Your Journey</a>
+                    </div>
 
                     <div style="text-align:right;margin-top:40px;">
-                        <p style="margin:0;font-size:16px;color:#2d3436;">Best wishes,</p>
-                        <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
+                        <p style="margin:0;font-size:16px;color:#9ca3af;">Best wishes,</p>
+                        <p style="margin:4px 0 0;font-size:18px;font-weight:700;color:#C8F135;font-family:\'Space Grotesk\',sans-serif;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'member_profile_updated' => [
-                'subject' => 'Profile Updated Successfully - {{gym_name}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'member_account_verification' => [
+        'subject' => 'Verify Your Email - {{gym_name}}',
+        'body' => '<div style="font-family:\'Manrope\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #374151;border-radius:24px;color:#f9fafb;background:#111318;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
+                    <div style="text-align:center;margin-bottom:32px;">
+                        <h2 style="font-family:\'Space Grotesk\',sans-serif;color:#C8F135;font-size:32px;font-weight:700;margin:0;letter-spacing:-0.5px;">Verify Your Email</h2>
+                        <p style="color:#9ca3af;margin-top:8px;font-size:16px;">One last step to complete your registration</p>
+                    </div>
+
+                    <p style="font-size:16px;margin-bottom:24px;line-height:1.6;">Hello <strong style="color:#f9fafb;">{{member_name}}</strong>,</p>
+
+                    <p style="font-size:15px;margin-bottom:28px;line-height:1.6;color:#d1d5db;">Welcome to {{gym_name}}! To access your member portal and start your fitness journey, please verify your email address by clicking the button below.</p>
+
+                    <div style="text-align:center;margin-bottom:32px;">
+                        <a href="{{verification_link}}" style="display:inline-block;padding:16px 32px;background:#C8F135;color:#111318;text-decoration:none;border-radius:12px;font-weight:700;font-family:\'Space Grotesk\',sans-serif;box-shadow:0 4px 15px rgba(200, 241, 53, 0.2);text-transform:uppercase;letter-spacing:0.5px;">Verify My Email</a>
+                    </div>
+
+                    <div style="background:#1f2937;padding:24px;border-radius:16px;margin-bottom:32px;border:1px solid #374151;">
+                        <h3 style="font-family:\'Space Grotesk\',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:1px;color:#C8F135;margin-top:0;margin-bottom:16px;font-weight:600;">Account Preview</h3>
+                        <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Roll Number:</strong> {{member_id}}</p>
+                        <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Email:</strong> {{member_email}}</p>
+                        <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Membership Plan:</strong> {{plan_name}}</p>
+                    </div>
+
+                    <p style="font-size:14px;color:#9ca3af;margin-bottom:32px;text-align:center;">Link expires in 24 hours. If you didn\'t create this account, please ignore this email.</p>
+
+                    <div style="text-align:right;margin-top:40px;">
+                        <p style="margin:0;font-size:16px;color:#9ca3af;">Best wishes,</p>
+                        <p style="margin:4px 0 0;font-size:18px;font-weight:700;color:#C8F135;font-family:\'Space Grotesk\',sans-serif;">{{gym_name}}</p>
+                    </div>
+                </div>',
+    ],
+    'member_profile_updated' => [
+        'subject' => 'Profile Updated Successfully - {{gym_name}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Profile Updated</h2>
                         <p style="color:#636e72;margin-top:8px;">Your changes have been saved successfully.</p>
@@ -81,43 +135,43 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Best wishes,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'password_reset_request' => [
-                'subject' => 'Password Reset Request - {{gym_name}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'password_reset_request' => [
+        'subject' => 'Password Reset Request - {{gym_name}}',
+        'body' => '<div style="font-family:\'Manrope\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #374151;border-radius:24px;color:#f9fafb;background:#111318;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
                     <div style="text-align:center;margin-bottom:32px;">
-                        <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Password Reset</h2>
-                        <p style="color:#636e72;margin-top:8px;">We received a request to reset your password.</p>
+                        <h2 style="font-family:\'Space Grotesk\',sans-serif;color:#C8F135;font-size:32px;font-weight:700;margin:0;letter-spacing:-0.5px;">Password Reset</h2>
+                        <p style="color:#9ca3af;margin-top:8px;font-size:16px;">We received a request to reset your password</p>
                     </div>
-                    
-                    <p style="font-size:16px;margin-bottom:24px;line-height:1.6;">Hello <strong style="color:#111;">{{member_name}}</strong>,</p>
-                    
-                    <p style="font-size:15px;margin-bottom:28px;line-height:1.6;color:#636e72;">Use the verification code below to proceed with the reset process. This code is valid for <strong>30 minutes</strong>.</p>
-                    
+
+                    <p style="font-size:16px;margin-bottom:24px;line-height:1.6;">Hello <strong style="color:#f9fafb;">{{member_name}}</strong>,</p>
+
+                    <p style="font-size:15px;margin-bottom:28px;line-height:1.6;color:#d1d5db;">Use the verification code below to proceed with the reset process. This code is valid for <strong>30 minutes</strong>.</p>
+
                     <div style="text-align:center;margin:32px 0;">
-                        <div style="display:inline-block;border:2px dashed #009E7E;border-radius:16px;padding:20px 40px;background:#f0faf5;">
-                            <span style="font-size:36px;font-weight:900;letter-spacing:8px;color:#009e7e;">{{reset_token}}</span>
+                        <div style="display:inline-block;border:2px dashed #C8F135;border-radius:16px;padding:24px 48px;background:#1f2937;">
+                            <span style="font-family:\'Space Grotesk\',sans-serif;font-size:36px;font-weight:900;letter-spacing:8px;color:#C8F135;">{{reset_token}}</span>
                         </div>
                     </div>
 
-                    <p style="text-align:center;font-size:14px;color:#636e72;margin-bottom:20px;">Alternatively, you can click the button below:</p>
+                    <p style="text-align:center;font-size:14px;color:#9ca3af;margin-bottom:20px;">Alternatively, you can click the button below:</p>
                     <div style="text-align:center;margin-bottom:32px;">
-                        <a href="{{reset_link}}" style="display:inline-block;padding:16px 36px;background:#009E7E;color:#ffffff;text-decoration:none;border-radius:12px;font-weight:700;box-shadow:0 4px 15px rgba(0,158,126,0.2);">Reset Password Now</a>
+                        <a href="{{reset_link}}" style="display:inline-block;padding:16px 32px;background:#C8F135;color:#111318;text-decoration:none;border-radius:12px;font-weight:700;font-family:\'Space Grotesk\',sans-serif;box-shadow:0 4px 15px rgba(200, 241, 53, 0.2);text-transform:uppercase;letter-spacing:0.5px;">Reset Password Now</a>
                     </div>
 
-                    <p style="font-size:12px;color:#94a3b8;line-height:1.5;text-align:center;">If you did not request a password reset, please ignore this email. Your password will remain unchanged.</p>
+                    <p style="font-size:12px;color:#6b7280;line-height:1.5;text-align:center;">If you did not request a password reset, please ignore this email. Your password will remain unchanged.</p>
 
                     <div style="text-align:right;margin-top:40px;">
-                        <p style="margin:0;font-size:16px;color:#2d3436;">Security Team,</p>
-                        <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
+                        <p style="margin:0;font-size:16px;color:#9ca3af;">Security Team,</p>
+                        <p style="margin:4px 0 0;font-size:18px;font-weight:700;color:#C8F135;font-family:\'Space Grotesk\',sans-serif;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
+                </div>',
+    ],
 
-            'password_changed_success' => [
-                'subject' => 'Password Changed Successfully - {{gym_name}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+    'password_changed_success' => [
+        'subject' => 'Password Changed Successfully - {{gym_name}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Password Changed</h2>
                         <p style="color:#636e72;margin-top:8px;">Your account security has been updated.</p>
@@ -137,45 +191,47 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Best wishes,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'payment_success_full' => [
-                'subject' => 'Payment Receipt #{{receipt_no}} - {{gym_name}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'payment_success_full' => [
+        'subject' => 'Payment Receipt #{{receipt_no}} - {{gym_name}}',
+        'body' => '<div style="font-family:\'Manrope\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #374151;border-radius:24px;color:#f9fafb;background:#111318;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
                     <div style="text-align:center;margin-bottom:32px;">
-                        <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Payment Successful</h2>
+                        <h2 style="font-family:\'Space Grotesk\',sans-serif;color:#C8F135;font-size:32px;font-weight:700;margin:0;letter-spacing:-0.5px;">Payment Successful! 💳</h2>
+                        <p style="color:#9ca3af;margin-top:8px;font-size:16px;">Your payment has been processed successfully</p>
                     </div>
-                    
-                    <p style="font-size:16px;margin-bottom:24px;line-height:1.6;">Hello <strong style="color:#111;">{{member_name}}</strong>,</p>
-                    
-                    <p style="font-size:15px;margin-bottom:28px;line-height:1.6;color:#636e72;">Your payment for <span style="color:#2d3436;font-weight:600;">{{plan_name}}</span> has been received successfully. Below are your receipt details.</p>
-                    
-                    <div style="background:#f8fafc;padding:24px;border-radius:16px;margin-bottom:32px;border:1px solid #f1f5f9;">
+
+                    <p style="font-size:16px;margin-bottom:24px;line-height:1.6;">Hello <strong style="color:#f9fafb;">{{member_name}}</strong>,</p>
+
+                    <p style="font-size:15px;margin-bottom:28px;line-height:1.6;color:#d1d5db;">Your payment for <span style="color:#f9fafb;font-weight:600;">{{plan_name}}</span> has been received successfully. Below are your receipt details.</p>
+
+                    <div style="background:#1f2937;padding:24px;border-radius:16px;margin-bottom:32px;border:1px solid #374151;">
+                        <h3 style="font-family:\'Space Grotesk\',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:1px;color:#C8F135;margin-top:0;margin-bottom:16px;font-weight:600;">Payment Receipt #{{receipt_no}}</h3>
                         <table style="width:100%;border-collapse:collapse;font-size:14px;">
-                            <tr><td style="padding:4px 0;color:#94a3b8;width:50%;">Receipt No:</td><td style="padding:4px 0;color:#2d3436;font-weight:700;text-align:right;">{{receipt_no}}</td></tr>
-                            <tr><td style="padding:4px 0;color:#94a3b8;">Paid Date:</td><td style="padding:4px 0;color:#2d3436;font-weight:700;text-align:right;">{{paid_date}}</td></tr>
-                            <tr><td colspan="2" style="border-top:1px solid #e2e8f0;margin:8px 0;padding:8px 0;"></td></tr>
-                            <tr><td style="padding:4px 0;color:#94a3b8;">Membership Plan Fee:</td><td style="padding:4px 0;color:#2d3436;font-weight:700;text-align:right;">Rs. {{membership_fee}}</td></tr>
-                            <tr><td style="padding:4px 0;color:#009E7E;font-weight:600;">Paid Today:</td><td style="padding:4px 0;color:#009E7E;font-weight:800;text-align:right;">Rs. {{amount}}</td></tr>
-                            <tr><td style="padding:4px 0;color:#94a3b8;">Previous Payments:</td><td style="padding:4px 0;color:#2d3436;font-weight:700;text-align:right;">Rs. {{previous_payments}}</td></tr>
-                            <tr><td colspan="2" style="border-top:1px solid #e2e8f0;margin:8px 0;padding:8px 0;"></td></tr>
-                            <tr style="font-size:16px;"><td style="padding:4px 0;color:#111;font-weight:800;">BALANCE DUE:</td><td style="padding:4px 0;color:#111;font-weight:900;text-align:right;">Rs. {{balance}}</td></tr>
+                            <tr><td style="padding:6px 0;color:#9ca3af;width:50%;">Receipt No:</td><td style="padding:6px 0;color:#f9fafb;font-weight:600;text-align:right;">{{receipt_no}}</td></tr>
+                            <tr><td style="padding:6px 0;color:#9ca3af;">Paid Date:</td><td style="padding:6px 0;color:#f9fafb;font-weight:600;text-align:right;">{{paid_date}}</td></tr>
+                            <tr><td colspan="2" style="border-top:1px solid #374151;margin:12px 0;padding:12px 0;"></td></tr>
+                            <tr><td style="padding:6px 0;color:#9ca3af;">Membership Plan Fee:</td><td style="padding:6px 0;color:#f9fafb;font-weight:600;text-align:right;">Rs. {{membership_fee}}</td></tr>
+                            <tr><td style="padding:6px 0;color:#C8F135;font-weight:600;">Paid Today:</td><td style="padding:6px 0;color:#C8F135;font-weight:700;text-align:right;">Rs. {{amount}}</td></tr>
+                            <tr><td style="padding:6px 0;color:#9ca3af;">Previous Payments:</td><td style="padding:6px 0;color:#f9fafb;font-weight:600;text-align:right;">Rs. {{previous_payments}}</td></tr>
+                            <tr><td colspan="2" style="border-top:1px solid #374151;margin:12px 0;padding:12px 0;"></td></tr>
+                            <tr style="font-size:16px;"><td style="padding:6px 0;color:#f9fafb;font-weight:700;">BALANCE DUE:</td><td style="padding:6px 0;color:#f9fafb;font-weight:800;text-align:right;">Rs. {{balance}}</td></tr>
                         </table>
                     </div>
 
                     <div style="text-align:center;margin-top:20px;">
-                        <a href="{{login_url}}" style="display:inline-block;padding:12px 24px;background:#009E7E;color:#ffffff;text-decoration:none;border-radius:8px;font-weight:700;">View in Member Portal</a>
+                        <a href="{{login_url}}" style="display:inline-block;padding:14px 28px;background:#C8F135;color:#111318;text-decoration:none;border-radius:12px;font-weight:700;font-family:\'Space Grotesk\',sans-serif;text-transform:uppercase;letter-spacing:0.5px;">View in Member Portal</a>
                     </div>
 
                     <div style="text-align:right;margin-top:40px;">
-                        <p style="margin:0;font-size:16px;color:#2d3436;">Best wishes,</p>
-                        <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
+                        <p style="margin:0;font-size:16px;color:#9ca3af;">Best wishes,</p>
+                        <p style="margin:4px 0 0;font-size:18px;font-weight:700;color:#C8F135;font-family:\'Space Grotesk\',sans-serif;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'payment_success_partial' => [
-                'subject' => 'Partial Payment Received - Receipt #{{receipt_no}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'payment_success_partial' => [
+        'subject' => 'Partial Payment Received - Receipt #{{receipt_no}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Partial Payment Received</h2>
                     </div>
@@ -205,11 +261,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Best wishes,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'payment_failed' => [
-                'subject' => 'Payment Failed - Action Required',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'payment_failed' => [
+        'subject' => 'Payment Failed - Action Required',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#e74c3c;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Payment Failed</h2>
                         <p style="color:#636e72;margin-top:8px;">Your recent transaction could not be processed.</p>
@@ -238,11 +294,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Accounts Department,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'payment_pending' => [
-                'subject' => 'Payment Under Verification - {{gym_name}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'payment_pending' => [
+        'subject' => 'Payment Under Verification - {{gym_name}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#f39c12;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Payment Pending</h2>
                         <p style="color:#636e72;margin-top:8px;">We are currently verifying your payment.</p>
@@ -266,11 +322,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Accounts Department,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'fee_reminder_7days' => [
-                'subject' => 'Fee Payment Reminder - Due in 7 Days',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'fee_reminder_7days' => [
+        'subject' => 'Fee Payment Reminder - Due in 7 Days',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009e7e;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Upcoming Payment</h2>
                         <p style="color:#636e72;margin-top:8px;">Friendly reminder: Your fee is due in 7 days.</p>
@@ -297,11 +353,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Accounts Team,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'fee_reminder_3days' => [
-                'subject' => 'URGENT: Fee Payment Due in 3 Days ⚠️',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'fee_reminder_3days' => [
+        'subject' => 'URGENT: Fee Payment Due in 3 Days ⚠️',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#e67e22;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Urgent: Payment Due</h2>
                         <p style="color:#636e72;margin-top:8px;">Action required: Your fee is due in 3 days.</p>
@@ -328,11 +384,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Accounts Team,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'fee_overdue_notice' => [
-                'subject' => 'OVERDUE: Payment Required Immediately 🔴',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'fee_overdue_notice' => [
+        'subject' => 'OVERDUE: Payment Required Immediately 🔴',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#e74c3c;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Payment Overdue</h2>
                         <p style="color:#636e72;margin-top:8px;">Immediate action required: Your payment is past due.</p>
@@ -359,11 +415,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Accounts Department,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'invoice_generated' => [
-                'subject' => 'New Invoice Generated - {{invoice_number}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'invoice_generated' => [
+        'subject' => 'New Invoice Generated - {{invoice_number}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Invoice Generated</h2>
                         <p style="color:#636e72;margin-top:8px;">A new fee invoice is ready for review.</p>
@@ -389,11 +445,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Accounts Department,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'payment_refund_processed' => [
-                'subject' => 'Refund Processed - {{receipt_no}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'payment_refund_processed' => [
+        'subject' => 'Refund Processed - {{receipt_no}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Refund Processed</h2>
                         <p style="color:#636e72;margin-top:8px;">Your refund has been approved and completed.</p>
@@ -417,11 +473,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Accounts Department,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'plan_registration_success' => [
-                'subject' => 'Successfully Enrolled - {{plan_name}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'plan_registration_success' => [
+        'subject' => 'Successfully Enrolled - {{plan_name}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Registration Confirmed</h2>
                         <p style="color:#636e72;margin-top:8px;">You are now officially enrolled in {{plan_name}}.</p>
@@ -447,11 +503,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Academic Department,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'session_schedule_published' => [
-                'subject' => 'Session Schedule Announced - {{session_name}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'session_schedule_published' => [
+        'subject' => 'Session Schedule Announced - {{session_name}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009e7e;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Session Schedule</h2>
                         <p style="color:#636e72;margin-top:8px;">The schedule for <strong>{{session_name}}</strong> is now available.</p>
@@ -477,11 +533,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Sessionination Dept,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'session_results_published' => [
-                'subject' => 'Session Results Available - {{session_name}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'session_results_published' => [
+        'subject' => 'Session Results Available - {{session_name}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Results Published</h2>
                         <p style="color:#636e72;margin-top:8px;">Your performance for {{session_name}} is now live.</p>
@@ -507,11 +563,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Sessionination Dept,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'workout_new' => [
-                'subject' => 'New Workout: {{workout_title}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'workout_new' => [
+        'subject' => 'New Workout: {{workout_title}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#004D30;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">New Workout</h2>
                         <p style="color:#636e72;margin-top:8px;">A new task has been assigned for <strong>{{plan_name}}</strong>.</p>
@@ -536,11 +592,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Academic Department,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'workout_submission_confirmed' => [
-                'subject' => 'Workout Submitted Successfully - {{workout_title}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'workout_submission_confirmed' => [
+        'subject' => 'Workout Submitted Successfully - {{workout_title}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Submission Received</h2>
                         <p style="color:#636e72;margin-top:8px;">Your workout has been uploaded successfully.</p>
@@ -562,11 +618,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Academic Department,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'workout_graded' => [
-                'subject' => 'Workout Evaluated - {{workout_title}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'workout_graded' => [
+        'subject' => 'Workout Evaluated - {{workout_title}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Workout Graded</h2>
                         <p style="color:#636e72;margin-top:8px;">Evaluation for <strong>{{workout_title}}</strong> is complete.</p>
@@ -591,11 +647,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Academic Department,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'attendance_warning' => [
-                'subject' => 'ATTENTION REQUIRED: Low Attendance Alert ⚠️',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'attendance_warning' => [
+        'subject' => 'ATTENTION REQUIRED: Low Attendance Alert ⚠️',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#e74c3c;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Attendance Warning</h2>
                         <p style="color:#636e72;margin-top:8px;">Action required: Your attendance is below the minimum threshold.</p>
@@ -621,11 +677,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Academic Department,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'general_announcement' => [
-                'subject' => 'Important Announcement - {{gym_name}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'general_announcement' => [
+        'subject' => 'Important Announcement - {{gym_name}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Announcement</h2>
                         <p style="color:#636e72;margin-top:8px;">{{announcement_title}}</p>
@@ -650,11 +706,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Administration,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'account_suspended' => [
-                'subject' => 'Account Suspension Notice - {{gym_name}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'account_suspended' => [
+        'subject' => 'Account Suspension Notice - {{gym_name}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#e74c3c;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Account Suspended</h2>
                         <p style="color:#636e72;margin-top:8px;">Access to your member portal has been restricted.</p>
@@ -681,11 +737,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Administration,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'account_reactivated' => [
-                'subject' => 'Account Reactivated - Welcome Back!',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'account_reactivated' => [
+        'subject' => 'Account Reactivated - Welcome Back!',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Account Reactivated</h2>
                         <p style="color:#636e72;margin-top:8px;">Welcome back! Your access has been restored.</p>
@@ -710,11 +766,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Administration,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'document_verification_required' => [
-                'subject' => 'Document Verification Required - {{gym_name}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'document_verification_required' => [
+        'subject' => 'Document Verification Required - {{gym_name}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#f39c12;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Verification Required</h2>
                         <p style="color:#636e72;margin-top:8px;">Action required: Please provide the missing documents.</p>
@@ -740,11 +796,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Administration,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'leave_request_status' => [
-                'subject' => 'Leave Request {{status}} - {{gym_name}}',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'leave_request_status' => [
+        'subject' => 'Leave Request {{status}} - {{gym_name}}',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009e7e;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Leave Request</h2>
                         <p style="color:#636e72;margin-top:8px;">Your application has been reviewed.</p>
@@ -769,11 +825,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Administration,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'staff_welcome' => [
-                'subject' => 'Welcome to the Team! - {{gym_name}} 🏢',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'staff_welcome' => [
+        'subject' => 'Welcome to the Team! - {{gym_name}} 🏢',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009E7E;font-size:28px;font-weight:800;margin:0;letter-spacing:-0.5px;">Welcome to the Team!</h2>
                         <p style="color:#636e72;margin-top:8px;">Your account as <strong>{{role_label}}</strong> has been created.</p>
@@ -796,11 +852,11 @@
                         <p style="margin:0;font-size:16px;color:#2d3436;">Best regards,</p>
                         <p style="margin:4px 0 0;font-size:18px;font-weight:800;color:#009E7E;">{{gym_name}}</p>
                     </div>
-                </div>'
-            ],
-            'tenant_welcome' => [
-                'subject' => 'Welcome to Isoftro ERP! Your Gym Portal is Ready',
-                'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
+                </div>',
+    ],
+    'tenant_welcome' => [
+        'subject' => 'Welcome to Isoftro ERP! Your Gym Portal is Ready',
+        'body' => '<div style="font-family:\'Plus Jakarta Sans\',\'Helvetica Neue\',sans-serif;max-width:600px;margin:20px auto;padding:40px;border:1px solid #eef2f6;border-radius:24px;color:#2d3436;background:#ffffff;box-shadow:0 10px 30px rgba(0,0,0,0.02);">
                     <div style="text-align:center;margin-bottom:32px;">
                         <h2 style="color:#009e7e;font-size:32px;font-weight:800;margin:0;letter-spacing:-1px;">Welcome to Isoftro ERP</h2>
                         <p style="color:#636e72;margin-top:8px;font-size:16px;">Your digital gym management platform is live!</p>
@@ -854,6 +910,6 @@
                         <p style="margin:0;font-size:14px;color:#94a3b8;">Powered by</p>
                         <p style="margin:4px 0 0;font-size:20px;font-weight:900;color:#009e7e;letter-spacing:-0.5px;">Isoftro<span style="color:#2d3436;">ERP</span></p>
                     </div>
-                </div>'
-            ]
-        ];
+                </div>',
+    ],
+];

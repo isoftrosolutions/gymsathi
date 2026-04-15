@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class IdentifyTenant
@@ -17,7 +18,7 @@ class IdentifyTenant
     {
         if (auth()->check()) {
             // Use DB to avoid triggering the User model's Global Scopes (recursion)
-            $userData = \Illuminate\Support\Facades\DB::table('users')
+            $userData = DB::table('users')
                 ->where('id', auth()->id())
                 ->first(['tenant_id', 'platform_role']);
 

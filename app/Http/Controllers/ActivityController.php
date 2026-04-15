@@ -145,9 +145,10 @@ class ActivityController extends Controller
         // Generate CSV content
         $csv = function (string $value): string {
             if (in_array(substr($value, 0, 1), ['=', '+', '-', '@', "\t", "\r"], true)) {
-                $value = "'" . $value;
+                $value = "'".$value;
             }
-            return '"' . str_replace('"', '""', $value) . '"';
+
+            return '"'.str_replace('"', '""', $value).'"';
         };
 
         $csvContent = "Date,Action,User,Severity,Message,IP Address\n";
@@ -160,7 +161,7 @@ class ActivityController extends Controller
                 $csv($log->severity),
                 $csv(str_replace(',', ';', $log->getFormattedMessage())),
                 $csv($log->ip_address ?? ''),
-            ]) . "\n";
+            ])."\n";
         }
 
         $filename = "gym-activity-{$tenant->slug}-".now()->format('Y-m-d').'.csv';

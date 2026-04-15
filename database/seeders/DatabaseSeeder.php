@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Permission;
+use App\Models\Plan;
 use App\Models\Role;
 use App\Models\Tenant;
 use App\Models\User;
@@ -19,7 +20,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // 1. Create Plans
-        $basicPlan = \App\Models\Plan::create([
+        $basicPlan = Plan::create([
             'name' => 'Basic',
             'slug' => 'basic',
             'price' => 2000,
@@ -27,7 +28,7 @@ class DatabaseSeeder extends Seeder
             'trial_days' => 14,
         ]);
 
-        $standardPlan = \App\Models\Plan::create([
+        $standardPlan = Plan::create([
             'name' => 'Standard',
             'slug' => 'standard',
             'price' => 5000,
@@ -35,7 +36,7 @@ class DatabaseSeeder extends Seeder
             'trial_days' => 14,
         ]);
 
-        $premiumPlan = \App\Models\Plan::create([
+        $premiumPlan = Plan::create([
             'name' => 'Premium',
             'slug' => 'premium',
             'price' => 10000,

@@ -3,51 +3,60 @@
 @section('title', 'Support Ticket - ' . $ticket->subject)
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <!-- Header -->
-    <div class="mb-8">
-        <div class="flex justify-between items-start">
-            <div>
-                <h1 class="text-3xl font-bold text-gray-900">{{ $ticket->subject }}</h1>
-                <div class="flex items-center gap-4 mt-2">
-                    <span class="px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wider {{ $ticket->getStatusBadgeClass() }}">
-                        {{ ucfirst(str_replace('_', ' ', $ticket->status)) }}
-                    </span>
-                    <span class="px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wider {{ $ticket->getPriorityBadgeClass() }}">
-                        {{ $ticket->getPriorityDisplayText() }}
-                    </span>
-                    <span class="text-gray-600">From {{ $ticket->tenant->name }}</span>
+<div class="min-h-screen bg-dark-surface text-on-surface font-body">
+    <div class="container mx-auto px-6 py-8">
+        <!-- Header -->
+        <div class="mb-12">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h1 class="text-4xl font-headline font-bold text-on-surface">{{ $ticket->subject }}</h1>
+                    <div class="flex items-center gap-6 mt-4">
+                        <span class="px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider
+                            @if($ticket->status === 'open') bg-blue-500/20 text-blue-400 border border-blue-500/30
+                            @elseif($ticket->status === 'in_progress') bg-yellow-500/20 text-yellow-400 border border-yellow-500/30
+                            @elseif($ticket->status === 'resolved') bg-green-500/20 text-green-400 border border-green-500/30
+                            @else bg-gray-500/20 text-gray-400 border border-gray-500/30 @endif">
+                            {{ ucfirst(str_replace('_', ' ', $ticket->status)) }}
+                        </span>
+                        <span class="px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider
+                            @if($ticket->priority === 'urgent') bg-red-500/20 text-red-400 border border-red-500/30
+                            @elseif($ticket->priority === 'high') bg-orange-500/20 text-orange-400 border border-orange-500/30
+                            @elseif($ticket->priority === 'medium') bg-yellow-500/20 text-yellow-400 border border-yellow-500/30
+                            @else bg-green-500/20 text-green-400 border border-green-500/30 @endif">
+                            {{ $ticket->getPriorityDisplayText() }}
+                        </span>
+                        <span class="text-on-surface-variant font-medium">From {{ $ticket->tenant->name }}</span>
+                    </div>
                 </div>
+                <a href="{{ route('admin.support.index') }}" class="bg-surface-low hover:bg-surface text-on-surface px-6 py-3 rounded-xl font-medium transition-all border border-outline">
+                    ← Back to Tickets
+                </a>
             </div>
-            <a href="{{ route('admin.support.index') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">
-                ← Back to Tickets
-            </a>
         </div>
-    </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Ticket Details & Messages -->
-        <div class="lg:col-span-2 space-y-6">
+        <div class="lg:col-span-2 space-y-8">
             <!-- Ticket Info -->
-            <div class="bg-white rounded-lg shadow p-6">
-                <h2 class="text-xl font-semibold text-gray-900 mb-4">Ticket Details</h2>
-                <div class="grid grid-cols-2 gap-6">
-                    <div>
-                        <p class="text-sm font-medium text-gray-600">Gym</p>
-                        <p class="text-lg font-semibold text-gray-900">{{ $ticket->tenant->name }}</p>
-                        <p class="text-sm text-gray-500">{{ $ticket->tenant->city }}</p>
+            <div class="bg-surface-low rounded-2xl shadow-xl p-8 border border-outline">
+                <h2 class="text-2xl font-headline font-bold text-on-surface mb-6">Ticket Details</h2>
+                <div class="grid grid-cols-2 gap-8">
+                    <div class="bg-surface p-6 rounded-xl border border-outline">
+                        <p class="text-xs font-medium text-on-surface-variant uppercase tracking-wider mb-2">Gym</p>
+                        <p class="text-xl font-headline font-bold text-on-surface">{{ $ticket->tenant->name }}</p>
+                        <p class="text-sm text-on-surface-variant mt-1">{{ $ticket->tenant->city }}</p>
                     </div>
-                    <div>
-                        <p class="text-sm font-medium text-gray-600">Created By</p>
-                        <p class="text-lg font-semibold text-gray-900">{{ $ticket->creator?->name ?? 'Deleted User' }}</p>
-                        <p class="text-sm text-gray-500">{{ $ticket->created_at->format('M d, Y H:i') }}</p>
+                    <div class="bg-surface p-6 rounded-xl border border-outline">
+                        <p class="text-xs font-medium text-on-surface-variant uppercase tracking-wider mb-2">Created By</p>
+                        <p class="text-xl font-headline font-bold text-on-surface">{{ $ticket->creator?->name ?? 'Deleted User' }}</p>
+                        <p class="text-sm text-on-surface-variant mt-1">{{ $ticket->created_at->format('M d, Y H:i') }}</p>
                     </div>
-                    <div>
-                        <p class="text-sm font-medium text-gray-600">Assigned To</p>
-                        <p class="text-lg font-semibold text-gray-900">{{ $ticket->assignedAdmin?->name ?? 'Unassigned' }}</p>
+                    <div class="bg-surface p-6 rounded-xl border border-outline">
+                        <p class="text-xs font-medium text-on-surface-variant uppercase tracking-wider mb-2">Assigned To</p>
+                        <p class="text-xl font-headline font-bold text-on-surface">{{ $ticket->assignedAdmin?->name ?? 'Unassigned' }}</p>
                     </div>
-                    <div>
-                        <p class="text-sm font-medium text-gray-600">Last Updated</p>
+                    <div class="bg-surface p-6 rounded-xl border border-outline">
+                        <p class="text-xs font-medium text-on-surface-variant uppercase tracking-wider mb-2">Last Updated</p>
                         <p class="text-lg font-semibold text-gray-900">{{ $ticket->updated_at->format('M d, Y H:i') }}</p>
                     </div>
                 </div>

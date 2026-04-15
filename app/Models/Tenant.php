@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
 
 #[Fillable([
     'name',
@@ -26,7 +26,6 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 ])]
 class Tenant extends Model
 {
-
     /** @var list<string> */
     protected $casts = [
         'settings' => 'array',
@@ -77,6 +76,22 @@ class Tenant extends Model
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Get all gym packages for the tenant.
+     */
+    public function gymPackages(): HasMany
+    {
+        return $this->hasMany(GymPackage::class);
+    }
+
+    /**
+     * Get all member packages for the tenant.
+     */
+    public function memberPackages(): HasMany
+    {
+        return $this->hasMany(MemberPackage::class);
     }
 
     /**

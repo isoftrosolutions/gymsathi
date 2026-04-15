@@ -18,7 +18,9 @@
       "Bash(net stop:*)",
       "Bash(net start:*)",
       "Bash(/C/php/php.exe:*)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(grep -l \"phone\" C:/Apache24/htdocs/gym/database/migrations/*.php)",
+      "Bash(grep:*)"
     ]
   }
 }

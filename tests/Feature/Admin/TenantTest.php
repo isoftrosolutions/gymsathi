@@ -3,7 +3,6 @@
 namespace Tests\Feature\Admin;
 
 use App\Models\Plan;
-use App\Models\Role;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -56,7 +55,7 @@ class TenantTest extends TestCase
         ]);
 
         $tenant = Tenant::where('name', 'Test Gym')->first();
-        
+
         $this->assertDatabaseHas('users', [
             'name' => 'John Doe',
             'email' => '9800000000@gymsathi.com',

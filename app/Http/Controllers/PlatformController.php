@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payment;
+use App\Mail\TemplateMail;
 use App\Models\Plan;
 use App\Models\Role;
 use App\Models\Subscription;
@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -23,13 +24,13 @@ class PlatformController extends Controller
     public function dashboard(): View
     {
         $stats = [
-            'total_gyms'      => Tenant::count(),
-            'active_gyms'     => Tenant::where('status', 'active')->count(),
-            'pending_gyms'    => Tenant::where('status', 'pending')->count(),
-            'suspended_gyms'  => Tenant::where('status', 'suspended')->count(),
-            'active_members'  => 0, // TODO: implement when Members model exists
-            'monthly_revenue' => '₨ ' . number_format(Subscription::active()->sum('price'), 0),
-            'growth_rate'     => Tenant::where('created_at', '>=', now()->startOfMonth())->count() . ' this month',
+            'total_gyms' => Tenant::count(),
+            'active_gyms' => Tenant::where('status', 'active')->count(),
+            'pending_gyms' => Tenant::where('status', 'pending')->count(),
+            'suspended_gyms' => Tenant::where('status', 'suspended')->count(),
+            'active_members' => 0, // TODO: implement when Members model exists
+            'monthly_revenue' => '₨ '.number_format(Subscription::active()->sum('price'), 0),
+            'growth_rate' => Tenant::where('created_at', '>=', now()->startOfMonth())->count().' this month',
         ];
 
         $tenants = Tenant::with('plan')->latest()->take(10)->get();
@@ -87,6 +88,8 @@ class PlatformController extends Controller
             'name' => 'required|string|max:255|unique:tenants,name',
             'owner_name' => 'required|string|max:255',
             'owner_phone' => 'required|string|max:20',
+            'owner_email' => 'required|email|unique:users,email',
+            'owner_password' => 'required|string|min:8',
             'city' => 'required|string|max:100',
             'address' => 'nullable|string',
             'plan' => 'required|string|exists:plans,slug',
@@ -107,27 +110,50 @@ class PlatformController extends Controller
             'subscription_expires_at' => now()->addDays(30),
         ]);
 
-        // Create Default Admin for the Gym
-        $tempPassword = Str::random(10);
-        $user = User::create([
-            'name' => $validated['owner_name'],
-            'email' => $validated['owner_phone'].'@gymsathi.com', // Placeholder email
-            'password' => Hash::make($tempPassword),
+        // Create default roles for the tenant
+        $adminRole = Role::create([
             'tenant_id' => $tenant->id,
-            'role_id' => Role::where('tenant_id', $tenant->id)->where('slug', 'admin')->first()?->id,
+            'name' => 'Admin',
+            'slug' => 'admin',
         ]);
 
-        // Send welcome email
-        \Illuminate\Support\Facades\Mail::to($validated['owner_phone'].'@gymsathi.com')->send(new \App\Mail\TemplateMail('member_registration_success', [
-            'member_name'  => $validated['owner_name'],
-            'plan_name'    => $plan->name . ' Plan',
-            'member_email' => $validated['owner_phone'].'@gymsathi.com',
-            'temp_password' => $tempPassword,
-        ]));
+        Role::create([
+            'tenant_id' => $tenant->id,
+            'name' => 'Staff',
+            'slug' => 'staff',
+        ]);
 
-        Log::info("Gym Created: {$tenant->name} (ID: {$tenant->id}). Credentials sent to {$validated['owner_phone']}@gymsathi.com");
+        Role::create([
+            'tenant_id' => $tenant->id,
+            'name' => 'Member',
+            'slug' => 'member',
+        ]);
 
-        return redirect()->route('admin.tenants.index')->with('success', 'Gym created successfully. Deliver credentials to the owner via WhatsApp.');
+        // Create Default Admin for the Gym
+        $user = User::create([
+            'name' => $validated['owner_name'],
+            'email' => $validated['owner_email'],
+            'password' => Hash::make($validated['owner_password']),
+            'tenant_id' => $tenant->id,
+            'role_id' => $adminRole->id,
+        ]);
+
+        // Send welcome email (wrapped in try-catch to not fail gym creation if email fails)
+        try {
+            Mail::to($validated['owner_email'])->send(new TemplateMail('gym_welcome', [
+                'owner_name' => $validated['owner_name'],
+                'gym_name' => $validated['name'],
+                'gym_city' => $validated['city'],
+                'plan_name' => $plan->name.' Plan',
+                'admin_email' => $validated['owner_email'],
+                'admin_url' => url('/'),
+            ]));
+            Log::info("Gym Created: {$tenant->name} (ID: {$tenant->id}). Welcome email sent to {$validated['owner_email']}");
+        } catch (\Exception $e) {
+            Log::warning("Gym Created: {$tenant->name} (ID: {$tenant->id}). Email failed: {$e->getMessage()}");
+        }
+
+        return redirect()->route('admin.tenants.index')->with('success', 'Gym created successfully. Welcome email sent to the owner.');
     }
 
     /**
@@ -255,7 +281,6 @@ class PlatformController extends Controller
      */
     public function destroy(Tenant $tenant): RedirectResponse
     {
-        // In a real app, you might want to force delete all related data
         $tenant->delete();
 
         return redirect()->route('admin.tenants.index')->with('success', 'Gym deleted permanently.');

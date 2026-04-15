@@ -29,7 +29,7 @@ trait TenantScoped
 
             // If we have a tenant ID from the middleware, apply scope
             if ($tenantId !== null) {
-                $builder->where($builder->getQuery()->from . '.tenant_id', $tenantId);
+                $builder->where($builder->getQuery()->from.'.tenant_id', $tenantId);
             }
         });
     }

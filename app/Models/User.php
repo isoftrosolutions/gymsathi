@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'tenant_id', 'platform_role', 'role_id'])]
+#[Fillable(['name', 'email', 'password', 'tenant_id', 'platform_role', 'role_id', 'phone', 'address', 'emergency_contact', 'date_of_birth', 'gender'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -25,6 +25,25 @@ class User extends Authenticatable
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Get member packages for this user.
+     */
+    public function memberPackages()
+    {
+        return $this->hasMany(MemberPackage::class);
+    }
+
+    /**
+     * Get active member package.
+     */
+    public function activeMemberPackage()
+    {
+        return $this->memberPackages()
+            ->where('status', 'active')
+            ->where('end_date', '>=', now()->toDateString())
+            ->first();
     }
 
     /**

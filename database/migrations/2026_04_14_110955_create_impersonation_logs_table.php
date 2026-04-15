@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('impersonation_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('admin_user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('impersonated_tenant_id')->constrained()->onDelete('cascade');
+            $table->foreignId('impersonated_tenant_id')->constrained('tenants')->onDelete('cascade');
             $table->foreignId('impersonated_user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->text('reason');
             $table->timestamp('started_at');
