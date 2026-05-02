@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GymSathi | Member Attendance</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;family=Syne:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-primary-fixed-variant": "#3d4d00",
+                        "outline-variant": "#444934",
+                        "on-primary-container": "#566c00",
+                        "on-background": "#e2e2e9",
+                        "secondary": "#44faa4",
+                        "on-secondary-container": "#005b36",
+                        "on-error-container": "#ffdad6",
+                        "surface-dim": "#111318",
+                        "on-primary-fixed": "#171e00",
+                        "secondary-fixed": "#53ffab",
+                        "tertiary-fixed": "#c5e7ff",
+                        "surface-container-highest": "#33353a",
+                        "surface": "#111318",
+                        "on-tertiary-container": "#45687d",
+                        "on-tertiary-fixed-variant": "#274b5f",
+                        "on-surface-variant": "#c5c9ae",
+                        "surface-container-low": "#1a1b21",
+                        "surface-container": "#1e1f25",
+                        "on-surface": "#e2e2e9",
+                        "background": "#111318",
+                        "tertiary-fixed-dim": "#a8cbe4",
+                        "primary-container": "#c8f135",
+                        "inverse-surface": "#e2e2e9",
+                        "on-primary": "#293500",
+                        "tertiary-container": "#c2e6ff",
+                        "primary-fixed": "#c9f236",
+                        "on-tertiary": "#0c3447",
+                        "secondary-container": "#00dc8a",
+                        "primary-fixed-dim": "#aed50d",
+                        "on-error": "#690005",
+                        "inverse-primary": "#526600",
+                        "outline": "#8f937b",
+                        "surface-tint": "#aed50d",
+                        "on-tertiary-fixed": "#001e2d",
+                        "tertiary": "#fefdff",
+                        "surface-container-lowest": "#0c0e13",
+                        "on-secondary-fixed-variant": "#005230",
+                        "surface-variant": "#33353a",
+                        "primary": "#ffffef",
+                        "on-secondary-fixed": "#002111",
+                        "inverse-on-surface": "#2e3036",
+                        "error": "#ffb4ab",
+                        "secondary-fixed-dim": "#16e28f",
+                        "surface-container-high": "#282a2f",
+                        "surface-bright": "#37393f",
+                        "on-secondary": "#003920",
+                        "error-container": "#93000a"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Syne", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"],
+                        "label": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        .font-syne { font-family: 'Syne', sans-serif; }
+        .font-space-grotesk { font-family: 'Space Grotesk', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .qr-gradient { background: linear-gradient(135deg, #ffffef 0%, #c8f135 100%); }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-[#111318] flex justify-between items-center px-6 py-4 w-full">
+<div class="text-2xl font-black tracking-tighter text-[#C8F135] font-syne">GymSathi</div>
+<div class="hidden md:flex gap-8 items-center">
+<nav class="flex gap-6">
+<a class="text-[#C5C9AE] hover:bg-[#33353A]/40 transition-colors px-3 py-2 rounded-lg font-medium" href="#">Marketplace</a>
+<a class="text-[#C8F135] font-bold px-3 py-2 rounded-lg" href="#">Attendance</a>
+<a class="text-[#C5C9AE] hover:bg-[#33353A]/40 transition-colors px-3 py-2 rounded-lg font-medium" href="#">Workout</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#C5C9AE] hover:bg-[#33353A]/40 transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-surface-container-high border-2 border-[#C8F135] overflow-hidden">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="professional portrait of a fit man in sports gear with a neutral expression and high-end studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmhslLDr4oInpVK_2CZypGo-SU2F7hRypctOgbAZq1Yn79exDaRaisAwP7RTpNyKT5qJIap5SWfhG82qBFHQiTTXAz1Us76V6Pq_mQGJbK3MPacbIL-wKyjAvC5MF2rdO9XCWBjlYKsuVqIIM9DSgu_Qxs4N0SNPSig_WaAmJ58U8WAz4SYe-PQwi4LgQlZ0bXxOrNiUvizfnCOkr8l9_2uiVNngFtuOl5hdpg6dFotA-wesW-0N5hafbbYo4E5_tM8rGrRLAsH6g"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Desktop Only) -->
+<aside class="hidden md:flex h-screen w-64 fixed left-0 top-0 bg-[#0C0E13] flex-col py-8 overflow-y-auto z-40 shadow-2xl shadow-black/50">
+<div class="px-6 mb-10 pt-16">
+<div class="flex items-center gap-3 mb-4">
+<div class="h-12 w-12 rounded-xl bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="bolt" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div>
+<p class="text-[#C8F135] font-bold font-space-grotesk text-sm">Member Portal</p>
+<p class="text-[#C5C9AE] text-xs">The Kinetic Pulse</p>
+</div>
+</div>
+</div>
+<nav class="flex-grow space-y-1">
+<a class="flex items-center gap-4 text-[#C5C9AE] hover:text-[#C8F135] px-6 py-3 hover:bg-[#33353A] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-space-grotesk text-sm font-medium">Account</span>
+</a>
+<a class="flex items-center gap-4 text-[#C5C9AE] hover:text-[#C8F135] px-6 py-3 hover:bg-[#33353A] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="card_membership">card_membership</span>
+<span class="font-space-grotesk text-sm font-medium">Membership</span>
+</a>
+<a class="flex items-center gap-4 bg-[#C8F135] text-[#293500] rounded-r-full font-bold ml-0 mr-4 px-6 py-3 translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="how_to_reg">how_to_reg</span>
+<span class="font-space-grotesk text-sm font-medium">Attendance</span>
+</a>
+<a class="flex items-center gap-4 text-[#C5C9AE] hover:text-[#C8F135] px-6 py-3 hover:bg-[#33353A] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="event_available">event_available</span>
+<span class="font-space-grotesk text-sm font-medium">Booking</span>
+</a>
+<a class="flex items-center gap-4 text-[#C5C9AE] hover:text-[#C8F135] px-6 py-3 hover:bg-[#33353A] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-space-grotesk text-sm font-medium">Marketplace</span>
+</a>
+<a class="flex items-center gap-4 text-[#C5C9AE] hover:text-[#C8F135] px-6 py-3 hover:bg-[#33353A] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+<span class="font-space-grotesk text-sm font-medium">Workout</span>
+</a>
+<a class="flex items-center gap-4 text-[#C5C9AE] hover:text-[#C8F135] px-6 py-3 hover:bg-[#33353A] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+<span class="font-space-grotesk text-sm font-medium">Nutrition</span>
+</a>
+<a class="flex items-center gap-4 text-[#C5C9AE] hover:text-[#C8F135] px-6 py-3 hover:bg-[#33353A] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-space-grotesk text-sm font-medium">Payments</span>
+</a>
+<a class="flex items-center gap-4 text-[#C5C9AE] hover:text-[#C8F135] px-6 py-3 hover:bg-[#33353A] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+<span class="font-space-grotesk text-sm font-medium">Notifications</span>
+</a>
+<a class="flex items-center gap-4 text-[#C5C9AE] hover:text-[#C8F135] px-6 py-3 hover:bg-[#33353A] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="help_center">help_center</span>
+<span class="font-space-grotesk text-sm font-medium">Support</span>
+</a>
+<a class="flex items-center gap-4 text-[#C5C9AE] hover:text-[#C8F135] px-6 py-3 hover:bg-[#33353A] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="emoji_events">emoji_events</span>
+<span class="font-space-grotesk text-sm font-medium">Rewards</span>
+</a>
+</nav>
+<div class="px-6 mt-10">
+<button class="w-full py-4 qr-gradient rounded-2xl text-[#293500] font-bold font-syne tracking-tight hover:scale-105 transition-transform">
+                Book a Class
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-12 px-6 md:ml-64 min-h-screen">
+<div class="max-w-7xl mx-auto">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+<div>
+<h1 class="text-5xl md:text-6xl font-syne font-black text-primary-fixed tracking-tighter mb-2">PULSE STATUS</h1>
+<p class="text-on-surface-variant font-body text-lg">Member ID: GS-2024-8891 • Elite Performance Tier</p>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-high/40 backdrop-blur-xl p-4 rounded-3xl border-l-4 border-primary-container">
+<span class="material-symbols-outlined text-secondary text-4xl" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<div>
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Active Status</p>
+<p class="text-on-surface font-syne text-xl">CHECKED-IN</p>
+</div>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- QR Check-in Section -->
+<div class="md:col-span-4 flex flex-col gap-6">
+<div class="bg-surface-container-high/50 backdrop-blur-md rounded-[2.5rem] p-8 relative overflow-hidden flex flex-col items-center text-center">
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-primary-container/10 blur-3xl rounded-full"></div>
+<h3 class="font-syne text-xl font-bold mb-8 text-on-surface">DIGITAL KEY</h3>
+<div class="bg-white p-6 rounded-3xl mb-8 shadow-2xl shadow-black/60 relative">
+<!-- Visual placeholder for QR -->
+<div class="w-48 h-48 bg-white flex flex-wrap gap-1 p-1">
+<div class="w-10 h-10 bg-black"></div><div class="w-10 h-10 bg-black"></div><div class="w-10 h-10 bg-white"></div><div class="w-10 h-10 bg-black"></div>
+<div class="w-10 h-10 bg-black"></div><div class="w-10 h-10 bg-white"></div><div class="w-10 h-10 bg-black"></div><div class="w-10 h-10 bg-black"></div>
+<div class="w-10 h-10 bg-white"></div><div class="w-10 h-10 bg-black"></div><div class="w-10 h-10 bg-white"></div><div class="w-10 h-10 bg-black"></div>
+<div class="w-10 h-10 bg-black"></div><div class="w-10 h-10 bg-black"></div><div class="w-10 h-10 bg-black"></div><div class="w-10 h-10 bg-white"></div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent pointer-events-none"></div>
+</div>
+<p class="text-on-surface-variant text-sm font-body max-w-[200px] mb-6">Scan at the Kinetic terminal to log your session.</p>
+<button class="w-full flex items-center justify-center gap-3 py-4 rounded-2xl bg-surface-container-highest hover:bg-surface-bright transition-all text-on-surface font-bold text-sm">
+<span class="material-symbols-outlined" data-icon="refresh">refresh</span>
+                            REFRESH CODE
+                        </button>
+</div>
+<!-- Pulse Card: Alert -->
+<div class="bg-surface-container-high/50 backdrop-blur-md rounded-[2rem] p-6 border-l-4 border-primary-container">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary-container text-3xl" data-icon="emergency_home">emergency_home</span>
+<div>
+<h4 class="font-syne font-bold text-on-surface mb-1">STREAK ALERT</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed">You are 1 session away from a 7-day streak. Don't break the kinetic flow!</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Center -->
+<div class="md:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Consistency Tracker -->
+<div class="bg-surface-container-low rounded-[2.5rem] p-8 flex flex-col justify-between overflow-hidden relative md:col-span-2">
+<div class="flex justify-between items-start mb-12">
+<div>
+<h3 class="font-syne text-3xl font-black text-on-surface tracking-tighter">CONSISTENCY</h3>
+<p class="text-on-surface-variant">Your momentum over the last 30 days</p>
+</div>
+<div class="text-right">
+<span class="block text-6xl font-syne font-black text-secondary leading-none">12</span>
+<span class="text-xs font-bold text-on-secondary-container bg-secondary-container px-2 py-1 rounded">DAY STREAK</span>
+</div>
+</div>
+<!-- Streak Visualization -->
+<div class="flex items-end gap-2 md:gap-3 h-48">
+<div class="flex-1 bg-surface-container-highest rounded-t-xl h-[40%]"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t-xl h-[60%]"></div>
+<div class="flex-1 bg-primary-container rounded-t-xl h-[90%] shadow-[0_0_20px_rgba(200,241,53,0.3)]"></div>
+<div class="flex-1 bg-primary-container rounded-t-xl h-[100%] shadow-[0_0_20px_rgba(200,241,53,0.3)]"></div>
+<div class="flex-1 bg-primary-container rounded-t-xl h-[95%] shadow-[0_0_20px_rgba(200,241,53,0.3)]"></div>
+<div class="flex-1 bg-primary-container rounded-t-xl h-[85%] shadow-[0_0_20px_rgba(200,241,53,0.3)]"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t-xl h-[30%]"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t-xl h-[50%]"></div>
+<div class="flex-1 bg-secondary rounded-t-xl h-[100%] shadow-[0_0_20px_rgba(68,250,164,0.3)]"></div>
+<div class="flex-1 bg-primary-container rounded-t-xl h-[100%] shadow-[0_0_20px_rgba(200,241,53,0.3)]"></div>
+<div class="flex-1 bg-primary-container rounded-t-xl h-[100%] shadow-[0_0_20px_rgba(200,241,53,0.3)]"></div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] font-bold text-outline uppercase tracking-widest">
+<span>May 01</span>
+<span>Today</span>
+</div>
+</div>
+<!-- Attendance Calendar -->
+<div class="bg-surface-container-low rounded-[2.5rem] p-8">
+<div class="flex justify-between items-center mb-8">
+<h4 class="font-syne font-bold text-lg">CALENDAR</h4>
+<div class="flex gap-2">
+<button class="p-1 hover:bg-surface-variant rounded-lg transition-colors"><span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span></button>
+<button class="p-1 hover:bg-surface-variant rounded-lg transition-colors"><span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span></button>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-2 text-center text-xs font-bold text-on-surface-variant mb-4">
+<div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
+</div>
+<div class="grid grid-cols-7 gap-2">
+<!-- Simple calendar grid representation -->
+<div class="aspect-square flex items-center justify-center text-xs text-outline-variant">28</div>
+<div class="aspect-square flex items-center justify-center text-xs text-outline-variant">29</div>
+<div class="aspect-square flex items-center justify-center text-xs text-outline-variant">30</div>
+<div class="aspect-square flex items-center justify-center font-bold bg-primary-container text-on-primary rounded-xl">1</div>
+<div class="aspect-square flex items-center justify-center font-bold bg-primary-container text-on-primary rounded-xl">2</div>
+<div class="aspect-square flex items-center justify-center text-xs">3</div>
+<div class="aspect-square flex items-center justify-center font-bold bg-secondary text-on-secondary rounded-xl">4</div>
+<div class="aspect-square flex items-center justify-center font-bold bg-primary-container text-on-primary rounded-xl">5</div>
+<div class="aspect-square flex items-center justify-center font-bold bg-primary-container text-on-primary rounded-xl">6</div>
+<div class="aspect-square flex items-center justify-center font-bold bg-primary-container text-on-primary rounded-xl">7</div>
+<div class="aspect-square flex items-center justify-center text-xs">8</div>
+<div class="aspect-square flex items-center justify-center text-xs">9</div>
+<div class="aspect-square flex items-center justify-center font-bold bg-primary-container text-on-primary rounded-xl">10</div>
+<div class="aspect-square flex items-center justify-center font-bold bg-primary-container text-on-primary rounded-xl">11</div>
+<div class="aspect-square flex items-center justify-center font-bold bg-primary-container text-on-primary rounded-xl">12</div>
+<div class="aspect-square flex items-center justify-center font-bold bg-primary-container text-on-primary rounded-xl">13</div>
+<div class="aspect-square flex items-center justify-center font-bold bg-primary-container text-on-primary rounded-xl border-2 border-white shadow-xl scale-110">14</div>
+<div class="aspect-square flex items-center justify-center text-xs">15</div>
+<div class="aspect-square flex items-center justify-center text-xs">16</div>
+<div class="aspect-square flex items-center justify-center text-xs">17</div>
+<div class="aspect-square flex items-center justify-center text-xs">18</div>
+</div>
+</div>
+<!-- History Timeline -->
+<div class="bg-surface-container-low rounded-[2.5rem] p-8 overflow-hidden">
+<h4 class="font-syne font-bold text-lg mb-8">HISTORY</h4>
+<div class="space-y-6">
+<div class="flex items-center justify-between p-4 bg-surface-container rounded-2xl">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</div>
+<div>
+<p class="font-bold text-sm">Leg Day Burn</p>
+<p class="text-xs text-on-surface-variant">May 13 • 08:30 AM</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-syne font-bold">1h 12m</p>
+<span class="text-[10px] bg-outline-variant/20 text-on-surface-variant px-2 py-0.5 rounded">640 kcal</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container rounded-2xl">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</div>
+<div>
+<p class="font-bold text-sm">HIIT Pulse</p>
+<p class="text-xs text-on-surface-variant">May 12 • 06:15 PM</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-syne font-bold">45m</p>
+<span class="text-[10px] bg-outline-variant/20 text-on-surface-variant px-2 py-0.5 rounded">480 kcal</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container rounded-2xl opacity-60">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</div>
+<div>
+<p class="font-bold text-sm">Upper Body A</p>
+<p class="text-xs text-on-surface-variant">May 11 • 07:00 AM</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-syne font-bold">58m</p>
+<span class="text-[10px] bg-outline-variant/20 text-on-surface-variant px-2 py-0.5 rounded">390 kcal</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Motivational Footer Section -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-2 relative h-48 rounded-[2.5rem] overflow-hidden group">
+<img alt="Gym Interior" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="ultra-modern gym interior with neon lighting, high-end weight equipment, and a sleek dark aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkFmR4B3HtoS3xJILDXJvXNlFMizvrOWu7dJggSFzaRFBFw32o9DaZQNgsgPWiItOTO8vQXCDNRT7t8Cm_zeJHwCpESHvTEJq1QpszZNR_TcHL3QXwGMuw21gBaxKeBjh3Yn6-xUb3qP-8RbdBjx0caSTNqugI40Wju7WsGb_RizjSXG7xgboMfuBcCKJkjf46LJwgFWhVa72rch_EOweT5jfRqAtdGR6YmofWzflx29EfoY4sjGKqxmy5oRhn3GJ155FwF_PTo1U"/>
+<div class="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent flex flex-col justify-center p-10">
+<h2 class="text-3xl font-syne font-black text-white leading-tight">THE ONLY BAD WORKOUT<br/>IS THE ONE THAT DIDN'T HAPPEN.</h2>
+<p class="text-primary-container font-bold mt-2">#KINETICPRO</p>
+</div>
+</div>
+<div class="bg-surface-container-high rounded-[2.5rem] p-8 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-6xl text-primary-container mb-4" data-icon="trophy" style="font-variation-settings: 'FILL' 1;">trophy</span>
+<h3 class="font-syne font-black text-2xl mb-2">REWARD READY</h3>
+<p class="text-on-surface-variant text-sm">3 more sessions to unlock your next guest pass.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-lowest flex justify-around items-center py-4 px-6 z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+<button class="flex flex-col items-center gap-1 text-[#C5C9AE]">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-[10px] font-bold">ACCOUNT</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-[#C8F135]">
+<span class="material-symbols-outlined" data-icon="how_to_reg" style="font-variation-settings: 'FILL' 1;">how_to_reg</span>
+<span class="text-[10px] font-bold">ATTENDANCE</span>
+</button>
+<div class="relative -top-8">
+<button class="h-14 w-14 rounded-full qr-gradient shadow-2xl shadow-primary-container/40 flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-3xl" data-icon="qr_code_scanner">qr_code_scanner</span>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 text-[#C5C9AE]">
+<span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+<span class="text-[10px] font-bold">WORKOUT</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-[#C5C9AE]">
+<span class="material-symbols-outlined" data-icon="help_center">help_center</span>
+<span class="text-[10px] font-bold">SUPPORT</span>
+</button>
+</nav>
+</body></html>

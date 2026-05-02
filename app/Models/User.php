@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'tenant_id', 'platform_role', 'role_id', 'phone', 'address', 'emergency_contact', 'date_of_birth', 'gender'])]
+#[Fillable(['name', 'email', 'password', 'tenant_id', 'platform_role', 'role_id', 'phone', 'address', 'emergency_contact', 'date_of_birth', 'gender', 'profile_picture', 'blood_group'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -28,9 +30,17 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the tenant that the user belongs to.
+     */
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(Tenant::class);
+    }
+
+    /**
      * Get member packages for this user.
      */
-    public function memberPackages()
+    public function memberPackages(): HasMany
     {
         return $this->hasMany(MemberPackage::class);
     }
@@ -38,12 +48,12 @@ class User extends Authenticatable
     /**
      * Get active member package.
      */
-    public function activeMemberPackage()
+    public function activeMemberPackage(): HasOne
     {
-        return $this->memberPackages()
+        return $this->hasOne(MemberPackage::class)
             ->where('status', 'active')
-            ->where('end_date', '>=', now()->toDateString())
-            ->first();
+            ->whereDate('end_date', '>=', now())
+            ->latest('end_date');
     }
 
     /**
@@ -76,6 +86,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'date_of_birth' => 'date',
         ];
     }
 }

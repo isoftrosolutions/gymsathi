@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Membership &amp; Plans | GymSathi</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;family=Syne:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#3d4d00",
+                        "outline-variant": "#444934",
+                        "on-primary-container": "#566c00",
+                        "on-background": "#e2e2e9",
+                        "secondary": "#44faa4",
+                        "on-secondary-container": "#005b36",
+                        "on-error-container": "#ffdad6",
+                        "surface-dim": "#111318",
+                        "on-primary-fixed": "#171e00",
+                        "secondary-fixed": "#53ffab",
+                        "tertiary-fixed": "#c5e7ff",
+                        "surface-container-highest": "#33353a",
+                        "surface": "#111318",
+                        "on-tertiary-container": "#45687d",
+                        "on-tertiary-fixed-variant": "#274b5f",
+                        "on-surface-variant": "#c5c9ae",
+                        "surface-container-low": "#1a1b21",
+                        "surface-container": "#1e1f25",
+                        "on-surface": "#e2e2e9",
+                        "background": "#111318",
+                        "tertiary-fixed-dim": "#a8cbe4",
+                        "primary-container": "#c8f135",
+                        "inverse-surface": "#e2e2e9",
+                        "on-primary": "#293500",
+                        "tertiary-container": "#c2e6ff",
+                        "primary-fixed": "#c9f236",
+                        "on-tertiary": "#0c3447",
+                        "secondary-container": "#00dc8a",
+                        "primary-fixed-dim": "#aed50d",
+                        "on-error": "#690005",
+                        "inverse-primary": "#526600",
+                        "outline": "#8f937b",
+                        "surface-tint": "#aed50d",
+                        "on-tertiary-fixed": "#001e2d",
+                        "tertiary": "#fefdff",
+                        "surface-container-lowest": "#0c0e13",
+                        "on-secondary-fixed-variant": "#005230",
+                        "surface-variant": "#33353a",
+                        "primary": "#ffffef",
+                        "on-secondary-fixed": "#002111",
+                        "inverse-on-surface": "#2e3036",
+                        "error": "#ffb4ab",
+                        "secondary-fixed-dim": "#16e28f",
+                        "surface-container-high": "#282a2f",
+                        "surface-bright": "#37393f",
+                        "on-secondary": "#003920",
+                        "error-container": "#93000a"
+                    },
+                    "fontFamily": {
+                        "headline": ["Syne", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"],
+                        "label": ["Manrope", "sans-serif"],
+                        "space-grotesk": ["Space Grotesk", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .kinetic-gradient {
+            background: linear-gradient(135deg, #ffffef 0%, #c8f135 100%);
+        }
+        .glass-panel {
+            background: rgba(51, 53, 58, 0.4);
+            backdrop-filter: blur(12px) saturate(180%);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .pulse-accent {
+            border-left: 4px solid #c8f135;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-[#111318] flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<span class="text-2xl font-black tracking-tighter text-[#C8F135] font-headline">GymSathi</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-[#C5C9AE] hover:bg-[#33353A]/40 transition-colors px-3 py-2 rounded-lg font-medium" href="#">Dashboard</a>
+<a class="text-[#C8F135] font-bold px-3 py-2 rounded-lg" href="#">Membership</a>
+<a class="text-[#C5C9AE] hover:bg-[#33353A]/40 transition-colors px-3 py-2 rounded-lg font-medium" href="#">Workouts</a>
+<a class="text-[#C5C9AE] hover:bg-[#33353A]/40 transition-colors px-3 py-2 rounded-lg font-medium" href="#">Nutrition</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#C5C9AE] hover:bg-[#33353A]/40 transition-colors rounded-full relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-secondary rounded-full"></span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant/20">
+<img class="w-full h-full object-cover" data-alt="portrait of a confident athletic man in a dark gym environment with subtle rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCauzaDWI9NIV8s2nT5Q-vari99ltzVH483jHRH7yhu5ySXfnhVcmWeOwbjQ59wdnsqSMTMnAblmlHkhUWRTiNGGsSSmMKt3JX6_N8BVFgvRT0tLpnFv8egWcABj0oMJWA2RTTAk-mAexsRbMV-J3EnIYOsuaUPqTQEhOvHm0I8ymjji0MKo_zk_2wf1PUHa4BjVP0IsbQXbaBwjOKTowyOe_JXHq6jdfNfocPw913PnWtlJITENbQetciBVrf81Ar0qpVFZd87SJM"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Hidden on Mobile) -->
+<aside class="hidden lg:flex flex-col h-screen w-64 fixed left-0 top-0 bg-[#0C0E13] py-8 overflow-y-auto z-40">
+<div class="px-6 mb-10 mt-16">
+<p class="text-[#C8F135] font-bold text-xs tracking-widest font-headline uppercase">Member Portal</p>
+<h2 class="text-[#C5C9AE] text-sm opacity-60">The Kinetic Pulse</h2>
+</div>
+<nav class="flex flex-col flex-grow">
+<a class="text-[#C5C9AE] hover:bg-[#33353A] transition-all duration-300 px-6 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">person</span> Account
+            </a>
+<a class="bg-[#C8F135] text-[#293500] rounded-r-full font-bold ml-0 mr-4 px-6 py-3 flex items-center gap-3 translate-x-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">card_membership</span> Membership
+            </a>
+<a class="text-[#C5C9AE] hover:bg-[#33353A] transition-all duration-300 px-6 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">how_to_reg</span> Attendance
+            </a>
+<a class="text-[#C5C9AE] hover:bg-[#33353A] transition-all duration-300 px-6 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">event_available</span> Booking
+            </a>
+<a class="text-[#C5C9AE] hover:bg-[#33353A] transition-all duration-300 px-6 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">storefront</span> Marketplace
+            </a>
+<a class="text-[#C5C9AE] hover:bg-[#33353A] transition-all duration-300 px-6 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">fitness_center</span> Workout
+            </a>
+<a class="text-[#C5C9AE] hover:bg-[#33353A] transition-all duration-300 px-6 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">restaurant</span> Nutrition
+            </a>
+<a class="text-[#C5C9AE] hover:bg-[#33353A] transition-all duration-300 px-6 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">payments</span> Payments
+            </a>
+<a class="text-[#C5C9AE] hover:bg-[#33353A] transition-all duration-300 px-6 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">notifications_active</span> Notifications
+            </a>
+<a class="text-[#C5C9AE] hover:bg-[#33353A] transition-all duration-300 px-6 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">help_center</span> Support
+            </a>
+<a class="text-[#C5C9AE] hover:bg-[#33353A] transition-all duration-300 px-6 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">emoji_events</span> Rewards
+            </a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="kinetic-gradient w-full py-4 rounded-xl text-on-primary font-black text-sm uppercase tracking-tighter hover:scale-[1.02] transition-transform">
+                Book a Class
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 pt-24 pb-12 px-6 md:px-12">
+<div class="max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="text-5xl md:text-7xl font-headline font-black tracking-tighter text-on-surface leading-none mb-4">MEMBERSHIP</h1>
+<p class="text-on-surface-variant max-w-lg text-lg">Manage your elite access, explore expansion opportunities, or pause your kinetic journey.</p>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-3 rounded-2xl border border-outline-variant/30 text-on-surface font-bold hover:bg-surface-container-high transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined">pause_circle</span> Freeze Plan
+                    </button>
+<button class="px-6 py-3 rounded-2xl bg-error-container/20 text-error font-bold hover:bg-error-container/30 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">cancel</span> Cancel
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Current Plan Pulse Card -->
+<div class="md:col-span-8 glass-panel rounded-[2rem] p-8 relative overflow-hidden flex flex-col justify-between min-h-[400px] pulse-accent">
+<div class="absolute top-0 right-0 p-12 opacity-10">
+<span class="material-symbols-outlined text-[12rem]" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<div class="relative z-10">
+<span class="bg-secondary-container text-on-secondary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-6 inline-block">Active • Pro Tier</span>
+<h2 class="text-4xl font-headline font-bold mb-2">Elite Kinetic Pro</h2>
+<p class="text-on-surface-variant mb-8">Unlimited access to all global locations and recovery zones.</p>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+<div>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest mb-1">Renewal Date</p>
+<p class="text-xl font-bold font-space-grotesk">Oct 24, 2024</p>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest mb-1">Billing Cycle</p>
+<p class="text-xl font-bold font-space-grotesk">Monthly Auto-pay</p>
+</div>
+<div class="col-span-2 md:col-span-1">
+<p class="text-xs text-on-surface-variant uppercase tracking-widest mb-1">Member Since</p>
+<p class="text-xl font-bold font-space-grotesk">Jan 2022</p>
+</div>
+</div>
+</div>
+<div class="mt-12 flex flex-wrap gap-4 items-center relative z-10">
+<div class="flex -space-x-3">
+<img class="w-10 h-10 rounded-full border-2 border-surface shadow-xl object-cover" data-alt="dynamic close-up of heavy dumbbells on a weight rack in a dark modern gym" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7nvUCotaHxhTOqISqZphnr_4lJWMmSd4OAQ2XGPeSHqB7U37Z8uAdlI1358p-CisjmugVPf7SLmAmgxs_qy4m2BnA6tM9247vfu1mCpkPb6tt_kc43yYTeW7voBBxx-C8DxmdSoBizysa-Ho5Gbm95XLn9QcogfoXWkouyxWXGeo-ctLPCNuWh0QwkA7C8Pbu4IejhPkvKxjoz2JoiidfODMlt_zggxdXpz-7dSzh7Yx8MT8xMvwVqTI18XsuMMse_utl33m4P-g"/>
+<img class="w-10 h-10 rounded-full border-2 border-surface shadow-xl object-cover" data-alt="fitness athlete performing a cable row with focused expression and sweat" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZk46_x2bJEA1Up7Uo3T3VLKtrFMNPfwO4TUoKgHm1ruHzPSlNugsNXW9OZiyr4iwVsJduKiyQDiFl7UNUpQmPrnI5x9c19FwqDe2KJ6X8sx_p0lP1bz2tkK4weo0Rn1b8ZzHX7x-nwj6qBH5jBEDFvR7aIRhT00Sf5xVAoUDxkIhhQSkgwChH1_iz7JOpeQd-uXhwS8XriRaPP1vjLJpS3HeN5UcoWH5-fGGt8i3CP7naogj7DyBvTzZCmY_VNrVX_Ithw0XiLlo"/>
+<img class="w-10 h-10 rounded-full border-2 border-surface shadow-xl object-cover" data-alt="modern industrial gym interior with neon lighting and high-end equipment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCayKBSZKrhK9nCQTlo_nsY8nHAtKjUrU5rRccW7tuCBKOm1KuZIkVvvyOhxHu7D1bRDrbK-qiHs62vQtqM5sA3f0iKPOQV2K8Yy0xnTAiwG1h_PxKza1KDFNu-i_e1IF4nqmCXOrDPGDGDH5Eg5XRJvIF6Zhgd8p6nOUOlmBev3w2qg3lEv8Oy3GSeMMWJqMwT3F0ZL0qh3L7eydITEXuY-TQkI6JkODO0cJhfvYVWpR3aBl5lYR0IaHaDgmta-RlbgGgKl-yWGYQ"/>
+<div class="w-10 h-10 rounded-full border-2 border-surface bg-surface-container-highest flex items-center justify-center text-[10px] font-bold">+12</div>
+</div>
+<p class="text-sm text-on-surface-variant">Your membership includes <span class="text-secondary font-bold">12 Active Rewards</span> and 2 Guest Passes remaining this month.</p>
+</div>
+</div>
+<!-- Payment Quick Action -->
+<div class="md:col-span-4 bg-surface-container-high rounded-[2rem] p-8 flex flex-col justify-between overflow-hidden relative">
+<div class="relative z-10">
+<h3 class="text-2xl font-headline font-bold mb-6">Last Payment</h3>
+<div class="flex items-center justify-between mb-2">
+<span class="text-on-surface-variant">Sept 24, 2024</span>
+<span class="text-on-surface font-space-grotesk font-bold">$129.00</span>
+</div>
+<div class="w-full bg-outline-variant/10 h-[1px] my-4"></div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-8 bg-surface-container-highest rounded-md flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">credit_card</span>
+</div>
+<div>
+<p class="text-sm font-bold">Visa ending in 4242</p>
+<p class="text-xs text-on-surface-variant">Expires 08/27</p>
+</div>
+</div>
+</div>
+<button class="mt-8 py-4 border border-outline-variant/30 rounded-2xl font-bold hover:bg-surface-container-highest transition-colors">
+                        Update Payment Method
+                    </button>
+</div>
+<!-- Plan Comparison / Upgrade -->
+<div class="md:col-span-12 mt-12">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-3xl font-headline font-black tracking-tight">UPGRADE YOUR POTENTIAL</h3>
+<div class="flex bg-surface-container-lowest p-1 rounded-full">
+<button class="px-6 py-2 rounded-full bg-surface-container-highest text-sm font-bold">Monthly</button>
+<button class="px-6 py-2 rounded-full text-sm text-on-surface-variant font-bold">Yearly (-20%)</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Essential -->
+<div class="bg-surface-container-low rounded-[2rem] p-8 border border-outline-variant/5 flex flex-col">
+<div class="mb-8">
+<h4 class="text-xl font-bold mb-1">Essential</h4>
+<p class="text-on-surface-variant text-sm">Foundational access for the consistent athlete.</p>
+</div>
+<div class="mb-8">
+<span class="text-4xl font-headline font-bold">$79</span>
+<span class="text-on-surface-variant">/mo</span>
+</div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                                    Single Location Access
+                                </li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                                    Standard Gym Hours
+                                </li>
+<li class="flex items-center gap-3 text-sm opacity-40">
+<span class="material-symbols-outlined text-lg">cancel</span>
+                                    Recovery Lounge Access
+                                </li>
+<li class="flex items-center gap-3 text-sm opacity-40">
+<span class="material-symbols-outlined text-lg">cancel</span>
+                                    Personal Training Sessions
+                                </li>
+</ul>
+<button class="w-full py-4 rounded-xl border border-outline-variant/30 font-bold hover:bg-surface-container-high transition-colors">
+                                Current Plan
+                            </button>
+</div>
+<!-- Pro (Active) -->
+<div class="bg-surface-container-highest rounded-[2rem] p-8 border border-primary-container/20 flex flex-col relative scale-105 shadow-2xl shadow-black/50 ring-2 ring-primary-container/30">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">Recommended</div>
+<div class="mb-8">
+<h4 class="text-xl font-bold mb-1">Kinetic Pro</h4>
+<p class="text-on-surface-variant text-sm">The gold standard for dedicated performance.</p>
+</div>
+<div class="mb-8">
+<span class="text-4xl font-headline font-bold">$129</span>
+<span class="text-on-surface-variant">/mo</span>
+</div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                                    All Global Locations
+                                </li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                                    24/7 Access Pass
+                                </li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                                    Basic Recovery Lounge
+                                </li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                                    2 Guest Passes Monthly
+                                </li>
+</ul>
+<button class="w-full py-4 rounded-xl bg-surface-container-low text-on-surface-variant font-bold cursor-default flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">check</span> Your Active Plan
+                            </button>
+</div>
+<!-- Ultra -->
+<div class="bg-surface-container-low rounded-[2rem] p-8 border border-outline-variant/5 flex flex-col">
+<div class="mb-8">
+<h4 class="text-xl font-bold mb-1">Kinetic Ultra</h4>
+<p class="text-on-surface-variant text-sm">The pinnacle of health and recovery tech.</p>
+</div>
+<div class="mb-8">
+<span class="text-4xl font-headline font-bold">$249</span>
+<span class="text-on-surface-variant">/mo</span>
+</div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                                    VIP Private Suites
+                                </li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                                    Weekly 1:1 Training
+                                </li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                                    Hyperbaric &amp; Cryo Access
+                                </li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                                    Biometric Performance Lab
+                                </li>
+</ul>
+<button class="w-full py-4 rounded-xl kinetic-gradient text-on-primary font-black hover:scale-[1.02] transition-transform">
+                                Upgrade Now
+                            </button>
+</div>
+</div>
+</div>
+<!-- Perks / Banner Section -->
+<div class="md:col-span-12 mt-12 bg-surface-container-lowest rounded-[3rem] overflow-hidden grid grid-cols-1 md:grid-cols-2">
+<div class="p-12 md:p-16 flex flex-col justify-center">
+<h3 class="text-4xl font-headline font-black mb-6 leading-tight">THE SATHI PERK NETWORK</h3>
+<p class="text-on-surface-variant text-lg mb-10">Your membership extends beyond the gym floor. Access exclusive discounts with our nutrition, apparel, and lifestyle partners.</p>
+<div class="grid grid-cols-2 gap-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">local_mall</span>
+</div>
+<span class="text-sm font-bold">20% Off Gear</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">eco</span>
+</div>
+<span class="text-sm font-bold">Partner Supplements</span>
+</div>
+</div>
+</div>
+<div class="h-[400px] md:h-auto relative overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="vibrant abstract close-up of a modern gym wall with neon lime green lighting and textured industrial surfaces" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAIgBDEoCV1HUQcQTvfPbN5qs0sqG48sNFkHNDng8qZAg7Ee18ju7GoD-yKIKwI7FX2jCLi4CawxnAxpw_9_8tSfWj-3JsHyIHrbjcBDRnZP8HTDFFokinA_PvZu3zIkH_VHVqR2OX8Dyh5dKymljhD-nTj1q5H27TtyubchfH7Ioyca6FVo1wc7wdv8pO0R4TN6NI4tnX_0vrIL3BWwGSgX8WD7dIBKyICFc7Rj6Vuv5sUlJi8f_rDQuI72JYhzNqw3gaHZ4-ukU"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container-lowest to-transparent"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Mobile Nav -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 glass-panel border-t border-outline-variant/10 z-50 flex justify-around items-center py-4 px-6">
+<button class="flex flex-col items-center gap-1 text-[#C5C9AE]">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="text-[10px] font-bold">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-[#C8F135]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">card_membership</span>
+<span class="text-[10px] font-bold">Plan</span>
+</button>
+<div class="-mt-12 bg-primary-container p-4 rounded-full shadow-lg shadow-primary-container/20">
+<span class="material-symbols-outlined text-on-primary">qr_code_scanner</span>
+</div>
+<button class="flex flex-col items-center gap-1 text-[#C5C9AE]">
+<span class="material-symbols-outlined">fitness_center</span>
+<span class="text-[10px] font-bold">Workout</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-[#C5C9AE]">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold">Profile</span>
+</button>
+</nav>
+</body></html>

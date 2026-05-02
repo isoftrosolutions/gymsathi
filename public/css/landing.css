@@ -1,14 +1,17 @@
 :root {
-    /* Color Palette - Kinetic High-Performance Editorial */
-    --surface: #131313;
-    --surface-low: #1C1B1B;
-    --surface-high: #2A2A2A;
-    --surface-bright: #393939;
-    --primary: #FFFFFF;
-    --primary-lime: #DAFF01;
-    --on-primary-lime: #181E00;
-    --secondary-glow: #5602C9;
-    --on-surface-variant: #A8A8A8;
+    /* Color Palette - GymSathi Performance Design System */
+    --brand-green: #00ed64;
+    --brand-dark: #00684a;
+    --brand-light: #e6fdf2;
+    --surface: #001e2b;
+    --surface-low: #1c2d38;
+    --surface-high: #21313c;
+    --surface-bright: #334155;
+    --primary: #ffffff;
+    --primary-lime: #00ed64;
+    --on-primary-lime: #000000;
+    --secondary-glow: #006cfa;
+    --on-surface-variant: #b8c4c2;
     
     /* Spacing Scale */
     --space-xs: 0.5rem;
@@ -109,6 +112,7 @@ h1, h2, h3, .display-text {
     align-items: center;
     position: relative;
     overflow: hidden;
+    background-color: #001e2b;
 }
 
 .hero-content {
@@ -118,19 +122,24 @@ h1, h2, h3, .display-text {
 }
 
 .hero h1 {
-    font-size: clamp(3rem, 10vw, 8rem);
-    line-height: 0.9;
+    font-size: clamp(3rem, 10vw, 6rem);
+    line-height: 1.2;
     margin-bottom: var(--space-md);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: #ffffff;
 }
 
 .hero p {
     font-size: 1.25rem;
-    color: var(--on-surface-variant);
+    color: #b8c4c2;
     max-width: 600px;
     margin-bottom: var(--space-lg);
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
 }
 
-/* Gradient Glow in Background */
+/* Electric Lime Glow in Background */
 .hero::before {
     content: '';
     position: absolute;
@@ -138,7 +147,7 @@ h1, h2, h3, .display-text {
     right: -10%;
     width: 60vw;
     height: 60vw;
-    background: radial-gradient(circle, rgba(86, 2, 201, 0.15) 0%, rgba(19, 19, 19, 0) 70%);
+    background: radial-gradient(circle, rgba(0, 237, 100, 0.08) 0%, rgba(0, 30, 43, 0) 70%);
     z-index: 1;
 }
 
@@ -146,36 +155,49 @@ h1, h2, h3, .display-text {
 .btn {
     display: inline-block;
     padding: 1.2rem 2.8rem;
-    border-radius: 9999px;
+    border-radius: 100px;
     text-decoration: none;
-    font-weight: 800;
+    font-weight: 600;
     text-transform: uppercase;
     font-size: 0.9rem;
     transition: var(--transition-smooth);
     border: none;
     cursor: pointer;
+    font-family: 'Manrope', sans-serif;
 }
 
 .btn-primary {
-    background-color: var(--primary-lime);
-    color: var(--on-primary-lime);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 24px;
+    background: #00ed64;
+    color: #000000 !important;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: opacity .2s;
 }
 
 .btn-primary:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(218, 255, 1, 0.3);
+    opacity: 0.85;
 }
 
 .btn-secondary {
-    background: rgba(57, 57, 57, 0.3);
-    color: var(--primary);
+    background: #1c2d38;
+    color: #5c6c75;
+    border: 1px solid #3d4f58;
     backdrop-filter: blur(10px);
     margin-left: var(--space-sm);
 }
 
 .btn-secondary:hover {
-    background: rgba(57, 57, 57, 0.6);
-    transform: scale(1.05);
+    background: var(--brand-green);
+    color: #ffffff;
+    transform: translateX(5px);
+    border: 1px solid var(--brand-green);
 }
 
 /* --- Features Section --- */
@@ -186,25 +208,32 @@ h1, h2, h3, .display-text {
 }
 
 .feature-card {
-    background-color: var(--surface-low);
+    background-color: #001e2b;
     padding: var(--space-xl) var(--space-lg);
     transition: var(--transition-smooth);
     position: relative;
     overflow: hidden;
+    border: 1px solid #3d4f58;
+    border-radius: 12px;
+    box-shadow: rgba(0, 30, 43, 0.12) 0px 26px 44px, rgba(0, 0, 0, 0.13) 0px 7px 13px;
 }
 
 .feature-card:hover {
-    background-color: var(--surface-high);
+    transform: translateY(-4px);
+    box-shadow: rgba(0, 30, 43, 0.15) 0px 32px 52px, rgba(0, 0, 0, 0.15) 0px 9px 15px;
 }
 
 .feature-number {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 5rem;
-    color: rgba(218, 255, 1, 0.05);
+    color: rgba(0, 237, 100, 0.05);
     position: absolute;
     top: -1rem;
     left: -0.5rem;
     line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
 }
 
 .feature-card h3 {
@@ -212,17 +241,21 @@ h1, h2, h3, .display-text {
     margin-bottom: var(--space-md);
     position: relative;
     z-index: 2;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
 }
 
 .feature-card p {
-    color: var(--on-surface-variant);
+    color: #b8c4c2;
     position: relative;
     z-index: 2;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
 }
 
 /* --- Pricing --- */
 .pricing-section {
-    background-color: var(--surface-low);
+    background-color: #ffffff;
 }
 
 .pricing-grid {
@@ -232,22 +265,30 @@ h1, h2, h3, .display-text {
 }
 
 .price-card {
-    background-color: var(--surface);
+    background-color: #ffffff;
     padding: var(--space-xl);
     display: flex;
     flex-direction: column;
     gap: var(--space-lg);
     transition: var(--transition-smooth);
+    border: 1px solid #b8c4c2;
+    border-radius: 12px;
+    box-shadow: rgba(0, 30, 43, 0.12) 0px 26px 44px;
 }
 
 .price-card.popular {
-    background-color: var(--surface-high);
-    border: 2px solid rgba(218, 255, 1, 0.1);
+    background-color: #ffffff;
+    border: 2px solid rgba(0, 237, 100, 0.1);
+    box-shadow: rgba(0, 30, 43, 0.15) 0px 32px 52px, rgba(0, 0, 0, 0.15) 0px 9px 15px;
 }
 
 .price-card h4 {
-    color: var(--primary-lime);
+    color: #00ed64;
     font-size: 1rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
 }
 
 .price-value {
@@ -255,11 +296,12 @@ h1, h2, h3, .display-text {
     font-size: 3.5rem;
     font-weight: 700;
     line-height: 1;
+    color: #000000;
 }
 
 .price-value span {
     font-size: 1rem;
-    color: var(--on-surface-variant);
+    color: #64748b;
 }
 
 .price-features {
@@ -268,15 +310,24 @@ h1, h2, h3, .display-text {
 
 .price-features li {
     margin-bottom: var(--space-sm);
-    color: var(--on-surface-variant);
+    color: #64748b;
     display: flex;
     align-items: center;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
 }
 
 .price-features li::before {
     content: '→';
     margin-right: var(--space-sm);
-    color: var(--primary-lime);
+    color: #00ed64;
+}
+
+/* --- Focus States --- */
+*:focus-visible {
+  outline: 2px solid #00ed64;
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 /* --- Footer --- */

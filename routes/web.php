@@ -11,9 +11,11 @@ use App\Http\Controllers\Gym\AttendanceController;
 use App\Http\Controllers\Gym\MemberController;
 use App\Http\Controllers\Gym\PackageController;
 use App\Http\Controllers\Gym\PaymentController;
+use App\Http\Controllers\Gym\PaymentGatewayController;
 use App\Http\Controllers\Gym\StaffController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImpersonationController;
+use App\Http\Controllers\MemberPortalController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\ReportsController;
@@ -35,6 +37,7 @@ use Illuminate\Support\Facades\Route;
 // Public Routes
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('welcome');
+    Route::post('/trial-signup', 'trialSignup')->name('trial.signup');
     Route::get('/about', 'about')->name('about');
     Route::get('/sectors', 'sectors')->name('sectors');
     Route::get('/support', 'contactSupport')->name('support');
@@ -65,6 +68,16 @@ Route::controller(ForgotPasswordController::class)->group(function () {
 // Authenticated Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
+// Member Portal Routes
+Route::middleware(['auth'])->prefix('member')->name('member.')->group(function () {
+    Route::get('/profile', [MemberPortalController::class, 'profile'])->name('profile');
+    Route::post('/profile', [MemberPortalController::class, 'updateProfile'])->name('profile.update');
+    Route::get('/membership', [MemberPortalController::class, 'membership'])->name('membership');
+    Route::get('/attendance', [MemberPortalController::class, 'attendance'])->name('attendance');
+    Route::post('/attendance/checkin', [MemberPortalController::class, 'checkin'])->name('attendance.checkin');
+    Route::post('/attendance/checkout', [MemberPortalController::class, 'checkout'])->name('attendance.checkout');
+});
+
 // Gym Admin Routes (Tenant)
 Route::middleware(['auth'])->prefix('gym')->name('gym.')->group(function () {
     // Members
@@ -83,6 +96,13 @@ Route::middleware(['auth'])->prefix('gym')->name('gym.')->group(function () {
     // Payments
     Route::get('payments/{payment}/receipt', [PaymentController::class, 'receipt'])->name('payments.receipt');
     Route::resource('payments', PaymentController::class);
+
+    // Payment Gateway Integration
+    Route::prefix('payment')->name('payment.')->group(function () {
+        Route::post('/initiate', [PaymentGatewayController::class, 'initiate'])->name('initiate');
+        Route::get('/{gateway}/callback', [PaymentGatewayController::class, 'callback'])->name('callback');
+        Route::post('/verify', [PaymentGatewayController::class, 'verify'])->name('verify');
+    });
 });
 
 // Platform administration Routes (Super Admin)
@@ -180,6 +200,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::get('/sync', [MonitoringController::class, 'sync'])->name('sync');
     });
 });
+
+Route::get('/project-status', function () {
+    return view('project-dashboard');
+})->middleware(['auth', 'admin'])->name('project.status');
 
 Route::post('/chatbot', [ChatbotController::class, 'chat'])
     ->middleware('throttle:30,1')

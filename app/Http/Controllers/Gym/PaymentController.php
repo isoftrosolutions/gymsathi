@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Gym;
 
 use App\Http\Controllers\Controller;
+use App\Mail\TemplateMail;
 use App\Models\MemberPackage;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class PaymentController extends Controller
@@ -20,7 +23,48 @@ class PaymentController extends Controller
             ->latest()
             ->paginate(20);
 
-        return view('gym.payments.index', compact('payments'));
+        $totalCollected = MemberPackage::where('tenant_id', $tenant->id)
+            ->whereMonth('start_date', now()->month)
+            ->sum('amount_paid');
+
+        $pendingDues = MemberPackage::where('tenant_id', $tenant->id)
+            ->where('status', 'active')
+            ->where('end_date', '<', now()->toDateString())
+            ->count();
+
+        $todayCash = MemberPackage::where('tenant_id', $tenant->id)
+            ->whereDate('start_date', now()->toDateString())
+            ->sum('amount_paid');
+
+        $todayTransactions = MemberPackage::where('tenant_id', $tenant->id)
+            ->whereDate('start_date', now()->toDateString())
+            ->count();
+
+        $totalMembers = User::where('tenant_id', $tenant->id)
+            ->whereHas('role', fn ($q) => $q->where('slug', 'member'))
+            ->count();
+
+        $unpaidMembers = User::where('tenant_id', $tenant->id)
+            ->whereHas('role', fn ($q) => $q->where('slug', 'member'))
+            ->whereDoesntHave('memberPackages', fn ($q) => $q->where('status', 'active')->where('end_date', '>=', now()->toDateString()))
+            ->count();
+
+        $recentTransactions = MemberPackage::where('tenant_id', $tenant->id)
+            ->with(['user', 'gymPackage'])
+            ->latest()
+            ->limit(10)
+            ->get();
+
+        return view('gym.payments.index', compact(
+            'payments',
+            'totalCollected',
+            'pendingDues',
+            'todayCash',
+            'todayTransactions',
+            'totalMembers',
+            'unpaidMembers',
+            'recentTransactions'
+        ));
     }
 
     public function create(Request $request): View
@@ -58,7 +102,7 @@ class PaymentController extends Controller
             $endDate = date('Y-m-d', strtotime($validated['start_date'].' +'.$package->duration_days.' days'));
         }
 
-        MemberPackage::create([
+        $memberPackage = MemberPackage::create([
             'tenant_id' => $tenant->id,
             'user_id' => $validated['user_id'],
             'gym_package_id' => $validated['gym_package_id'],
@@ -68,8 +112,34 @@ class PaymentController extends Controller
             'status' => 'active',
         ]);
 
+        // Send payment confirmation email
+        $member = User::find($validated['user_id']);
+        if ($member && $member->email && ! str_ends_with($member->email, '@gymsathi.com')) {
+            try {
+                $previousPayments = MemberPackage::where('tenant_id', $tenant->id)
+                    ->where('user_id', $member->id)
+                    ->where('id', '!=', $memberPackage->id)
+                    ->count();
+
+                Mail::to($member->email)->send(new TemplateMail('payment_success_full', [
+                    'member_name' => $member->name,
+                    'gym_name' => $tenant->name,
+                    'plan_name' => $package->name,
+                    'receipt_no' => 'RCP-'.str_pad($memberPackage->id, 5, '0', STR_PAD_LEFT),
+                    'paid_date' => now()->format('Y-m-d'),
+                    'membership_fee' => 'Rs '.number_format($package->price),
+                    'amount' => 'Rs '.number_format($validated['amount_paid']),
+                    'previous_payments' => $previousPayments,
+                    'balance' => 'Rs 0',
+                ]));
+                Log::info("Payment confirmation sent to {$member->email} for package #{$memberPackage->id}");
+            } catch (\Exception $e) {
+                Log::warning("Payment confirmation email failed for {$member->email}: {$e->getMessage()}");
+            }
+        }
+
         return redirect()->route('gym.payments.index')
-            ->with('success', 'Payment recorded successfully!');
+            ->with('success', 'Payment recorded and confirmation email sent!');
     }
 
     public function show(Request $request, string $id): View

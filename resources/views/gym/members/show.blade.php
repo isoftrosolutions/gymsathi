@@ -14,9 +14,13 @@
     <div class="lg:col-span-1">
         <div class="bg-primary-surface border border-primary-border rounded-3xl p-8">
             <div class="flex flex-col items-center text-center mb-8">
-                <div class="w-24 h-24 rounded-full bg-primary-lime/10 flex items-center justify-center text-primary-lime font-bold text-3xl mb-4">
-                    {{ strtoupper(substr($member->name, 0, 1)) }}
-                </div>
+                @if($member->profile_picture)
+                    <img src="{{ asset(Storage::url($member->profile_picture)) }}" alt="{{ $member->name }}" class="w-24 h-24 rounded-full object-cover mb-4 border-2 border-primary-lime">
+                @else
+                    <div class="w-24 h-24 rounded-full bg-primary-lime/10 flex items-center justify-center text-primary-lime font-bold text-3xl mb-4">
+                        {{ strtoupper(substr($member->name, 0, 1)) }}
+                    </div>
+                @endif
                 <h2 class="text-2xl font-headline font-bold text-white">{{ $member->name }}</h2>
                 <p class="text-on-variant">{{ $member->email }}</p>
                 @if($member->activeMemberPackage && $member->activeMemberPackage->isActive())
@@ -63,6 +67,13 @@
                 <div class="flex items-center gap-3">
                     <svg class="w-5 h-5 text-on-variant" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                     <span class="text-sm text-white">{{ $member->emergency_contact }}</span>
+                </div>
+                @endif
+
+                @if($member->blood_group)
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-on-variant" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                    <span class="text-sm text-white">{{ $member->blood_group }}</span>
                 </div>
                 @endif
             </div>

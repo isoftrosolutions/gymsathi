@@ -19,11 +19,49 @@ class AttendanceController extends Controller
 
         $attendances = Attendance::where('tenant_id', $tenant->id)
             ->whereDate('checked_in_at', $date)
-            ->with('user')
+            ->with('user', 'user.memberPackage.gymPackage')
             ->latest()
             ->paginate(50);
 
-        return view('gym.attendance.index', compact('attendances', 'date'));
+        $totalCheckedIn = Attendance::where('tenant_id', $tenant->id)
+            ->whereDate('checked_in_at', $date)
+            ->count();
+
+        $currentlyInGym = Attendance::where('tenant_id', $tenant->id)
+            ->whereDate('checked_in_at', $date)
+            ->whereNull('checked_out_at')
+            ->count();
+
+        $yesterdayCount = Attendance::where('tenant_id', $tenant->id)
+            ->whereDate('checked_in_at', now()->subDay()->toDateString())
+            ->count();
+
+        $changePercent = $yesterdayCount > 0 ? round((($totalCheckedIn - $yesterdayCount) / $yesterdayCount) * 100) : 0;
+
+        $totalMembers = User::where('tenant_id', $tenant->id)
+            ->whereHas('role', fn ($q) => $q->where('slug', 'member'))
+            ->count();
+
+        $attendanceRate = $totalMembers > 0 ? round(($totalCheckedIn / $totalMembers) * 100, 1) : 0;
+
+        $atRiskMembers = User::where('tenant_id', $tenant->id)
+            ->whereHas('role', fn ($q) => $q->where('slug', 'member'))
+            ->whereDoesntHave('attendances', function ($q) {
+                $q->where('checked_in_at', '>=', now()->subDays(7)->toDateString());
+            })
+            ->limit(10)
+            ->get();
+
+        return view('gym.attendance.index', compact(
+            'attendances',
+            'date',
+            'totalCheckedIn',
+            'currentlyInGym',
+            'changePercent',
+            'attendanceRate',
+            'atRiskMembers',
+            'totalMembers'
+        ));
     }
 
     public function create(Request $request): View

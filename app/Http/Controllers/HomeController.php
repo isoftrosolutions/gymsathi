@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class HomeController extends Controller
 {
@@ -12,6 +14,23 @@ class HomeController extends Controller
     public function index(): View
     {
         return view('welcome');
+    }
+
+    /**
+     * Handle trial signup.
+     */
+    public function trialSignup(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        // Here you would typically save to database or send to email service
+        // For now, just flash success message
+
+        session()->flash('success', 'Thank you! Check your inbox for trial setup instructions.');
+
+        return back();
     }
 
     /**

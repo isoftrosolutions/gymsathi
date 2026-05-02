@@ -1,159 +1,286 @@
 @extends('layouts.member')
 
+@section('title', 'Dashboard')
+@section('topbar-title', 'Dashboard')
+
 @section('content')
-<div class="mb-16">
-    <div class="text-[10px] uppercase font-bold tracking-[0.3em] text-primary-lime mb-2">Welcome Back, {{ explode(' ', auth()->user()->name)[0] }}</div>
-    <div class="flex flex-col md:flex-row justify-between items-end gap-8">
-        <div>
-            <h1 class="text-7xl font-headline font-bold text-white uppercase leading-none">
-                Leave it all on<br>
-                the <span class="text-primary-lime italic">Floor.</span>
-            </h1>
-            <p class="text-on-variant mt-6 max-w-md">Your consistency is paying off. You've hit 85% of your monthly goals so far. Keep pushing.</p>
+
+{{-- ── PAGE HEADER ── --}}
+<div class="mb-10">
+    <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-primary-container mb-2">
+        Welcome back, {{ explode(' ', auth()->user()->name)[0] }}
+    </p>
+    <h1 class="font-syne font-black text-5xl md:text-6xl text-on-surface tracking-tighter leading-none uppercase">
+        Your <span class="text-primary-container">Pulse</span>
+    </h1>
+    <p class="text-on-surface-variant mt-3 text-base max-w-md">
+        {{ now()->format('l, F j') }} — stay consistent, stay kinetic.
+    </p>
+</div>
+
+{{-- ── BENTO GRID ROW 1 ── --}}
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-6">
+
+    {{-- ── MEMBERSHIP CARD (col 8) ── --}}
+    @if($package)
+    @php
+        $daysLeft   = max(0, now()->diffInDays($package->end_date, false));
+        $totalDays  = max(1, $package->start_date->diffInDays($package->end_date));
+        $pct        = round(($totalDays - $daysLeft) / $totalDays * 100);
+        $isExpiring = $daysLeft <= 7;
+    @endphp
+    <div class="md:col-span-8 relative bg-surface-container-high rounded-[2rem] p-8 overflow-hidden"
+         style="border-left: 4px solid #c8f135;">
+
+        {{-- watermark icon --}}
+        <div class="absolute -top-4 right-8 opacity-5 pointer-events-none">
+            <span class="material-symbols-outlined ms-fill" style="font-size:10rem;">workspace_premium</span>
         </div>
-        <div class="bg-white/5 border border-white/10 p-8 rounded-3xl flex items-center gap-10">
+
+        <div class="relative z-10">
+            <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+                <div>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest
+                        {{ $isExpiring ? 'bg-error/15 text-error border border-error/30' : 'bg-secondary/10 text-secondary border border-secondary/20' }}">
+                        <span class="w-1.5 h-1.5 rounded-full {{ $isExpiring ? 'bg-error' : 'bg-secondary' }} inline-block"></span>
+                        {{ $isExpiring ? 'Expiring Soon' : 'Active' }}
+                    </span>
+                    <h2 class="font-syne font-black text-3xl text-on-surface mt-3 leading-none">
+                        {{ $package->gymPackage->name }}
+                    </h2>
+                    <p class="text-on-surface-variant text-sm mt-1">
+                        {{ $package->gymPackage->duration_text }} plan
+                        @if($package->gymPackage->description)
+                            · {{ Str::limit($package->gymPackage->description, 50) }}
+                        @endif
+                    </p>
+                </div>
+                <div class="text-right">
+                    <p class="text-[10px] text-on-surface-variant uppercase tracking-widest mb-1">Days Left</p>
+                    <p class="font-syne font-black text-5xl {{ $isExpiring ? 'text-error' : 'text-primary-container' }} leading-none">
+                        {{ $daysLeft }}
+                    </p>
+                </div>
+            </div>
+
+            {{-- Progress --}}
+            <div class="mb-6">
+                <div class="flex justify-between text-[10px] text-on-surface-variant mb-2">
+                    <span>{{ $package->start_date->format('M d') }}</span>
+                    <span class="font-bold">{{ $pct }}% complete</span>
+                    <span>{{ $package->end_date->format('M d, Y') }}</span>
+                </div>
+                <div class="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden">
+                    <div class="h-full rounded-full transition-all duration-700
+                        {{ $isExpiring ? 'bg-error shadow-[0_0_10px_rgba(255,180,171,0.4)]' : 'bg-secondary shadow-[0_0_10px_rgba(68,250,164,0.3)]' }}"
+                         style="width: {{ $pct }}%"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
+                <div>
+                    <p class="text-[10px] text-on-surface-variant uppercase tracking-widest mb-1">Amount Paid</p>
+                    <p class="font-grotesk font-bold text-lg text-on-surface">
+                        Rs. {{ number_format($package->amount_paid, 0) }}
+                    </p>
+                </div>
+                <div>
+                    <p class="text-[10px] text-on-surface-variant uppercase tracking-widest mb-1">Renewal Date</p>
+                    <p class="font-grotesk font-bold text-lg text-on-surface">
+                        {{ $package->end_date->format('M d, Y') }}
+                    </p>
+                </div>
+                <div>
+                    <p class="text-[10px] text-on-surface-variant uppercase tracking-widest mb-1">Member Since</p>
+                    <p class="font-grotesk font-bold text-lg text-on-surface">
+                        {{ auth()->user()->created_at->format('M Y') }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @else
+    {{-- No active package --}}
+    <div class="md:col-span-8 bg-surface-container-low rounded-[2rem] p-8 flex flex-col items-center justify-center text-center border border-error/20">
+        <span class="material-symbols-outlined text-5xl text-error mb-4">card_off</span>
+        <h3 class="font-syne font-black text-2xl text-on-surface mb-2">No Active Membership</h3>
+        <p class="text-on-surface-variant text-sm max-w-xs">You don't have an active membership plan. Contact your gym admin to get enrolled.</p>
+    </div>
+    @endif
+
+    {{-- ── STREAK CARD (col 4) ── --}}
+    <div class="md:col-span-4 bg-surface-container-low rounded-[2rem] p-8 flex flex-col justify-between">
+        <div>
+            <p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Workout Streak</p>
+            <div class="flex items-end gap-3 mt-2">
+                <span class="font-syne font-black text-7xl text-secondary leading-none">{{ $streak }}</span>
+                <span class="text-on-surface-variant text-sm mb-2 font-medium">days</span>
+            </div>
+            @if($streak > 0)
+                <span class="inline-block mt-3 px-3 py-1 bg-secondary/10 border border-secondary/30 text-secondary text-[10px] font-black uppercase tracking-widest rounded-full">
+                    Keep it up!
+                </span>
+            @else
+                <span class="inline-block mt-3 px-3 py-1 bg-surface-container-highest text-on-surface-variant text-[10px] font-bold uppercase tracking-widest rounded-full">
+                    Start Today
+                </span>
+            @endif
+        </div>
+
+        <div class="mt-8">
+            <p class="text-[10px] text-on-surface-variant uppercase tracking-widest mb-3">Total Sessions</p>
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined ms-fill text-primary-container text-3xl">fitness_center</span>
+                <span class="font-grotesk font-black text-3xl text-on-surface">{{ $totalSessions }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- ── BENTO GRID ROW 2 ── --}}
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-6">
+
+    {{-- ── ATTENDANCE LAST 30 DAYS (col 8) ── --}}
+    <div class="md:col-span-8 bg-surface-container-low rounded-[2rem] p-8">
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h3 class="font-syne font-black text-2xl text-on-surface tracking-tight">CONSISTENCY</h3>
+                <p class="text-on-surface-variant text-sm mt-1">Your check-ins over the last 30 days</p>
+            </div>
             <div class="text-right">
-                <div class="text-[10px] uppercase font-bold text-on-variant tracking-widest mb-1">Workout Streak</div>
-                <div class="flex items-center justify-end gap-2">
-                    <span class="text-5xl font-headline font-bold text-white">14</span>
-                    <svg class="w-8 h-8 text-primary-lime" fill="currentColor" viewBox="0 0 24 24"><path d="M17.5 12a5.5 5.5 0 11-11 0 5.5 5.5 0 0111 0zm-5.5-8C7.5 4 4 7.5 4 12c0 1.2.3 2.3.8 3.3L3 21l5.7-1.8c1 .5 2.1.8 3.3.8 4.5 0 8-3.5 8-8s-3.5-8-8-8z" class="opacity-20"/><path d="M12 2C7.03 2 3 6.03 3 11c0 1.74.5 3.36 1.35 4.73l-1.35 4.1 4.1-1.35C8.64 19.5 10.26 20 12 20c4.97 0 9-4.03 9-9 0-4.97-4.03-9-9-9zm0 16c-1.58 0-3.04-.47-4.27-1.28l-2.43.8.8-2.43C5.47 14.04 5 12.58 5 11c0-3.86 3.14-7 7-7 1.58 0 3.04.47 4.27 1.28l2.43-.8-.8 2.43C18.53 7.96 19 9.42 19 11c0 3.86-3.14 7-7 7z" class="opacity-40"/><path d="M12 18c-3.86 0-7-3.14-7-7 0-.5.06-1 .17-1.47 1.27 1.63 3.2 2.68 5.38 2.72.1-.82.49-1.57 1.12-2.1.37-.31.84-.48 1.33-.48s.96.17 1.33.48c.63.53 1.02 1.28 1.12 2.1 2.18-.04 4.11-1.09 5.38-2.72.11.47.17.97.17 1.47 0 3.86-3.14 7-7 7z" class="text-primary-lime"/></svg>
-                </div>
-                <div class="text-[10px] text-on-variant mt-2 font-bold tracking-tight">Personal Best: 21 Days</div>
+                <p class="font-syne font-black text-4xl text-primary-container leading-none">
+                    {{ $attendanceLast30->count() }}
+                </p>
+                <p class="text-[10px] text-on-surface-variant uppercase tracking-widest mt-1">sessions</p>
             </div>
         </div>
+
+        {{-- Dot-grid calendar (last 30 days) --}}
+        @php
+            $dotDays = collect();
+            for ($i = 29; $i >= 0; $i--) {
+                $d = now()->subDays($i)->toDateString();
+                $dotDays->push($d);
+            }
+            $attendedDays = $attendanceLast30->map(fn($a) => $a->checked_in_at->toDateString())->unique()->flip();
+        @endphp
+        <div class="grid gap-2" style="grid-template-columns: repeat(10, minmax(0, 1fr));">
+            @foreach($dotDays as $day)
+                @php
+                    $attended = isset($attendedDays[$day]);
+                    $isToday  = $day === now()->toDateString();
+                @endphp
+                <div class="relative group aspect-square rounded-lg flex items-center justify-center cursor-default
+                    {{ $attended
+                        ? 'bg-primary-container shadow-[0_0_10px_rgba(200,241,53,0.25)]'
+                        : 'bg-surface-container-highest' }}
+                    {{ $isToday ? 'ring-2 ring-white/50' : '' }}"
+                     title="{{ \Carbon\Carbon::parse($day)->format('M d') }}{{ $attended ? ' · Checked in' : '' }}">
+                    <span class="text-[9px] font-bold {{ $attended ? 'text-on-primary' : 'text-on-surface-variant/40' }}">
+                        {{ \Carbon\Carbon::parse($day)->format('d') }}
+                    </span>
+                    {{-- Tooltip on hover --}}
+                    <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-container-highest text-[9px] text-on-surface px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                        {{ \Carbon\Carbon::parse($day)->format('M d') }}
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="flex items-center gap-6 mt-6 text-[10px] text-on-surface-variant">
+            <span class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded bg-primary-container inline-block"></span>
+                Checked in
+            </span>
+            <span class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded bg-surface-container-highest inline-block"></span>
+                No session
+            </span>
+            <span class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded ring-2 ring-white/50 bg-surface-container-highest inline-block"></span>
+                Today
+            </span>
+        </div>
+    </div>
+
+    {{-- ── NOTICES (col 4) ── --}}
+    <div class="md:col-span-4 bg-surface-container-low rounded-[2rem] p-8 flex flex-col">
+        <h3 class="font-syne font-black text-xl text-on-surface tracking-tight mb-6">NOTICES</h3>
+
+        @if($notices->isNotEmpty())
+            <div class="space-y-5 flex-1">
+                @foreach($notices as $notice)
+                <div class="relative pl-4" style="border-left: 2px solid {{ $loop->first ? '#c8f135' : '#444934' }};">
+                    <span class="text-[10px] font-bold uppercase tracking-widest
+                        {{ $loop->first ? 'text-primary-container' : 'text-on-surface-variant' }}">
+                        {{ $notice->type ?? 'General' }}
+                    </span>
+                    <p class="text-on-surface font-bold text-sm mt-0.5">{{ $notice->title }}</p>
+                    <p class="text-on-surface-variant text-xs mt-1 leading-relaxed line-clamp-2">
+                        {{ $notice->message }}
+                    </p>
+                    @if($notice->sent_at)
+                        <p class="text-[10px] text-on-surface-variant/50 mt-1.5">{{ $notice->sent_at->diffForHumans() }}</p>
+                    @endif
+                </div>
+                @endforeach
+            </div>
+        @else
+            <div class="flex-1 flex flex-col items-center justify-center text-center py-6">
+                <span class="material-symbols-outlined text-4xl text-on-surface-variant/30 mb-3">campaign</span>
+                <p class="text-on-surface-variant text-sm">No notices right now.</p>
+            </div>
+        @endif
     </div>
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-    <!-- Membership Card -->
-    <div class="bg-primary-surface border-t-8 border-t-primary-lime border border-white/5 rounded-3xl p-10 flex flex-col justify-between min-h-[320px]">
-        <div class="flex justify-between items-start">
-            <div>
-                <h3 class="text-2xl font-headline font-bold text-white mb-2 italic">Platinum Monthly</h3>
-                <p class="text-[10px] text-on-variant uppercase tracking-widest">Full Access + Guest Passes</p>
-            </div>
-            <span class="px-3 py-1 bg-primary-lime/10 text-primary-lime text-[10px] font-bold rounded-full border border-primary-lime/30">ACTIVE</span>
-        </div>
-        
-        <div class="flex gap-12 border-t border-white/5 pt-8">
-            <div>
-                <div class="text-5xl font-headline font-bold text-white">12</div>
-                <div class="text-[10px] text-on-variant uppercase mt-1">Days Remaining</div>
-            </div>
-            <div>
-                <div class="text-xl font-headline font-bold text-white mt-1">Oct 28, 2023</div>
-                <div class="text-[10px] text-on-variant uppercase mt-2">Renewal Date</div>
-            </div>
-        </div>
-
-        <button class="w-full kinetic-gradient py-4 rounded-xl text-black font-headline font-bold text-sm uppercase mt-8 hover:opacity-90 transition-all shadow-xl shadow-primary-lime/20">Renew Membership</button>
+{{-- ── ROW 3: PAYMENTS ── --}}
+<div class="bg-surface-container-low rounded-[2rem] p-8">
+    <div class="flex items-center justify-between mb-8">
+        <h3 class="font-syne font-black text-xl text-on-surface tracking-tight">PAYMENT HISTORY</h3>
+        <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Last 5 transactions</span>
     </div>
 
-    <!-- Stats Card 1 -->
-    <div class="bg-primary-surface border border-white/5 rounded-3xl p-10 flex flex-col justify-between">
-        <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-primary-lime">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 11m0 0l11-11m-11 11v-5m0 5h5"/></svg>
-        </div>
-        <div>
-            <div class="text-6xl font-headline font-bold text-white">18</div>
-            <div class="text-[10px] text-on-variant uppercase mt-1">Sessions this month</div>
-        </div>
-        <div class="text-xs text-primary-lime font-bold">+3 vs last month</div>
-    </div>
-
-    <!-- Stats Card 2 -->
-    <div class="bg-primary-surface border border-white/5 rounded-3xl p-10 flex flex-col justify-between">
-        <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-primary-lime">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        </div>
-        <div>
-            <div class="flex items-baseline gap-2">
-                <div class="text-6xl font-headline font-bold text-white">72</div>
-                <span class="text-on-variant text-xl uppercase font-bold tracking-tight">min</span>
+    @if($payments->isNotEmpty())
+        <div class="space-y-3">
+            @foreach($payments as $pay)
+            @php
+                $statusColor = match($pay->status) {
+                    'active'  => ['bg' => 'bg-secondary/10', 'text' => 'text-secondary', 'border' => 'border-secondary/20'],
+                    'expired' => ['bg' => 'bg-error/10',     'text' => 'text-error',     'border' => 'border-error/20'],
+                    'frozen'  => ['bg' => 'bg-outline/10',   'text' => 'text-outline',   'border' => 'border-outline/20'],
+                    default   => ['bg' => 'bg-surface-container-highest', 'text' => 'text-on-surface-variant', 'border' => 'border-outline-variant/20'],
+                };
+            @endphp
+            <div class="flex items-center justify-between px-6 py-4 bg-surface-container rounded-2xl hover:bg-surface-container-high transition-colors">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-primary-container/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary-container text-xl">receipt_long</span>
+                    </div>
+                    <div>
+                        <p class="text-on-surface font-bold text-sm">{{ $pay->gymPackage->name ?? 'Package' }}</p>
+                        <p class="text-on-surface-variant text-xs mt-0.5">
+                            {{ $pay->start_date->format('M d, Y') }} → {{ $pay->end_date->format('M d, Y') }}
+                        </p>
+                    </div>
+                </div>
+                <div class="text-right flex items-center gap-4">
+                    <p class="font-grotesk font-black text-on-surface text-base">Rs. {{ number_format($pay->amount_paid, 0) }}</p>
+                    <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border
+                        {{ $statusColor['bg'] }} {{ $statusColor['text'] }} {{ $statusColor['border'] }}">
+                        {{ $pay->status }}
+                    </span>
+                </div>
             </div>
-            <div class="text-[10px] text-on-variant uppercase mt-1">Avg. session duration</div>
+            @endforeach
         </div>
-        <div class="text-xs text-on-variant font-medium">Consistent intensity</div>
-    </div>
+    @else
+        <div class="text-center py-12">
+            <span class="material-symbols-outlined text-5xl text-on-surface-variant/20 mb-3">payments</span>
+            <p class="text-on-surface-variant text-sm">No payment records found.</p>
+        </div>
+    @endif
 </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <!-- Your Schedule -->
-    <div class="lg:col-span-2 bg-primary-surface border border-white/5 rounded-3xl overflow-hidden p-8">
-        <div class="flex justify-between items-center mb-10">
-            <h3 class="text-2xl font-headline font-bold text-white uppercase italic">Your Schedule</h3>
-            <span class="text-[10px] font-bold text-primary-lime uppercase tracking-widest">Next 48 Hours</span>
-        </div>
-        
-        <div class="space-y-4">
-            <div class="p-6 bg-white/5 rounded-2xl flex items-center justify-between group cursor-pointer hover:bg-white/10 transition-all border border-transparent hover:border-white/10">
-                <div class="flex items-center gap-10">
-                    <div class="text-center w-20">
-                        <div class="text-[10px] text-on-variant uppercase tracking-tighter mb-1">TODAY</div>
-                        <div class="text-2xl font-headline font-bold text-white">18:30</div>
-                    </div>
-                    <div class="h-10 w-px bg-white/10"></div>
-                    <div>
-                        <div class="text-lg font-bold text-white">HIIT Power Blast</div>
-                        <div class="text-xs text-on-variant">Studio A • Coach Marcus</div>
-                    </div>
-                </div>
-                <svg class="w-5 h-5 text-on-variant group-hover:text-primary-lime transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-            </div>
-            
-            <div class="p-6 bg-white/5 rounded-2xl flex items-center justify-between group cursor-pointer hover:bg-white/10 transition-all border border-transparent hover:border-white/10">
-                <div class="flex items-center gap-10">
-                    <div class="text-center w-20">
-                        <div class="text-[10px] text-on-variant uppercase tracking-tighter mb-1">TOMORROW</div>
-                        <div class="text-2xl font-headline font-bold text-white">07:00</div>
-                    </div>
-                    <div class="h-10 w-px bg-white/10"></div>
-                    <div>
-                        <div class="text-lg font-bold text-white">Heavy Leg Day</div>
-                        <div class="text-xs text-on-variant">Main Gym • Personal Training</div>
-                    </div>
-                </div>
-                <svg class="w-5 h-5 text-on-variant group-hover:text-primary-lime transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-            </div>
-        </div>
-    </div>
-
-    <!-- Payments & Notices -->
-    <div class="space-y-8">
-        <div class="bg-primary-surface border border-white/5 rounded-3xl p-8">
-            <h3 class="text-xl font-headline font-bold text-white uppercase italic mb-8">Recent Payments</h3>
-            <div class="space-y-6">
-                <div class="flex justify-between items-center pb-4 border-b border-white/5">
-                    <div>
-                        <div class="text-sm font-bold text-white italic">$89.00</div>
-                        <div class="text-[10px] text-on-variant uppercase">Sep 28 • Visa **** 4242</div>
-                    </div>
-                    <span class="text-[10px] font-bold text-primary-lime uppercase tracking-widest bg-primary-lime/10 px-2 py-0.5 rounded">Paid</span>
-                </div>
-                <div class="flex justify-between items-center pb-4 border-b border-white/5">
-                    <div>
-                        <div class="text-sm font-bold text-white italic">$89.00</div>
-                        <div class="text-[10px] text-on-variant uppercase">Aug 28 • Visa **** 4242</div>
-                    </div>
-                    <span class="text-[10px] font-bold text-primary-lime uppercase tracking-widest bg-primary-lime/10 px-2 py-0.5 rounded">Paid</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-primary-surface border border-white/5 rounded-3xl p-8 h-full">
-            <h3 class="text-xl font-headline font-bold text-white italic mb-10 uppercase">Notices</h3>
-            <div class="space-y-8">
-                <div class="relative pl-6 border-l-2 border-primary-lime">
-                    <div class="text-sm font-bold text-white mb-2">Holiday Hours</div>
-                    <p class="text-[11px] text-on-variant leading-relaxed">We are open from 08:00 to 14:00 this coming Sunday for the regional festival.</p>
-                </div>
-                <div class="relative pl-6 border-l-2 border-white/20">
-                    <div class="text-sm font-bold text-white mb-2">New Equipment</div>
-                    <p class="text-[11px] text-on-variant leading-relaxed">The rogue power racks in Zone 4 have been upgraded.</p>
-                </div>
-                <a href="#" class="inline-block text-[10px] font-bold text-primary-lime uppercase tracking-widest hover:underline mt-4">View All Notices &rarr;</a>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

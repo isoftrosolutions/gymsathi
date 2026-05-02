@@ -28,7 +28,9 @@ class PlatformController extends Controller
             'active_gyms' => Tenant::where('status', 'active')->count(),
             'pending_gyms' => Tenant::where('status', 'pending')->count(),
             'suspended_gyms' => Tenant::where('status', 'suspended')->count(),
-            'active_members' => 0, // TODO: implement when Members model exists
+            'active_members' => User::whereHas('role', fn ($q) => $q->where('slug', 'member'))
+                ->whereHas('tenant', fn ($q) => $q->where('status', 'active'))
+                ->count(),
             'monthly_revenue' => '₨ '.number_format(Subscription::active()->sum('price'), 0),
             'growth_rate' => Tenant::where('created_at', '>=', now()->startOfMonth())->count().' this month',
         ];
@@ -146,6 +148,7 @@ class PlatformController extends Controller
                 'gym_city' => $validated['city'],
                 'plan_name' => $plan->name.' Plan',
                 'admin_email' => $validated['owner_email'],
+                'admin_password' => $validated['owner_password'],
                 'admin_url' => url('/'),
             ]));
             Log::info("Gym Created: {$tenant->name} (ID: {$tenant->id}). Welcome email sent to {$validated['owner_email']}");

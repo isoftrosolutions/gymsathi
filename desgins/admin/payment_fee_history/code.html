@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "outline": "#8f937b",
+                  "inverse-primary": "#526600",
+                  "error": "#ffb4ab",
+                  "secondary-fixed": "#53ffab",
+                  "surface-tint": "#aed50d",
+                  "secondary": "#44faa4",
+                  "primary-fixed": "#c9f236",
+                  "on-secondary-fixed": "#002111",
+                  "on-primary": "#293500",
+                  "tertiary": "#fefdff",
+                  "surface-container-low": "#1a1b21",
+                  "tertiary-container": "#c2e6ff",
+                  "surface-bright": "#37393f",
+                  "on-background": "#e2e2e9",
+                  "inverse-on-surface": "#2e3036",
+                  "primary": "#ffffef",
+                  "on-secondary-fixed-variant": "#005230",
+                  "surface": "#111318",
+                  "error-container": "#93000a",
+                  "surface-container-highest": "#33353a",
+                  "surface-container-high": "#282a2f",
+                  "on-error-container": "#ffdad6",
+                  "outline-variant": "#444934",
+                  "on-surface": "#e2e2e9",
+                  "tertiary-fixed": "#c5e7ff",
+                  "on-tertiary-container": "#45687d",
+                  "background": "#111318",
+                  "surface-container": "#1e1f25",
+                  "on-tertiary": "#0c3447",
+                  "on-primary-fixed-variant": "#3d4d00",
+                  "on-primary-container": "#566c00",
+                  "surface-variant": "#33353a",
+                  "on-primary-fixed": "#171e00",
+                  "secondary-fixed-dim": "#16e28f",
+                  "tertiary-fixed-dim": "#a8cbe4",
+                  "surface-dim": "#111318",
+                  "inverse-surface": "#e2e2e9",
+                  "on-tertiary-fixed-variant": "#274b5f",
+                  "secondary-container": "#00dc8a",
+                  "on-tertiary-fixed": "#001e2d",
+                  "surface-container-lowest": "#0c0e13",
+                  "on-secondary": "#003920",
+                  "on-error": "#690005",
+                  "on-surface-variant": "#c5c9ae",
+                  "primary-fixed-dim": "#aed50d",
+                  "primary-container": "#c8f135",
+                  "on-secondary-container": "#005b36"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "fontFamily": {
+                  "headline": ["Space Grotesk"],
+                  "body": ["Manrope"],
+                  "label": ["Manrope"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body { font-family: 'Manrope', sans-serif; }
+    h1, h2, h3, .headline { font-family: 'Space Grotesk', sans-serif; }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .glass-card {
+      background: rgba(40, 42, 47, 0.4);
+      backdrop-filter: blur(12px) saturate(180%);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#0C0E13] border-none flex flex-col py-8 gap-4 z-50">
+<div class="px-6 mb-8">
+<h1 class="text-2xl font-bold tracking-tighter text-[#C8F135]">GymSathi</h1>
+<p class="text-xs text-on-surface-variant font-medium tracking-tight mt-1">Management Portal</p>
+</div>
+<nav class="flex-1 flex flex-col gap-2">
+<a class="text-[#C5C9AE] hover:text-[#C8F135] px-6 py-3 transition-colors flex items-center gap-3 hover:bg-[#33353A]/50 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium tracking-tight">Dashboard</span>
+</a>
+<a class="text-[#C5C9AE] hover:text-[#C8F135] px-6 py-3 transition-colors flex items-center gap-3 hover:bg-[#33353A]/50 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-sm font-medium tracking-tight">Members</span>
+</a>
+<a class="text-[#C5C9AE] hover:text-[#C8F135] px-6 py-3 transition-colors flex items-center gap-3 hover:bg-[#33353A]/50 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-sm font-medium tracking-tight">Attendance</span>
+</a>
+<!-- Active Tab: Payments -->
+<a class="bg-[#C8F135] text-[#111318] rounded-r-full font-bold px-6 py-3 ml-[-1rem] flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="text-sm font-medium tracking-tight">Payments</span>
+</a>
+<a class="text-[#C5C9AE] hover:text-[#C8F135] px-6 py-3 transition-colors flex items-center gap-3 hover:bg-[#33353A]/50 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-sm font-medium tracking-tight">Reports</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full bg-[#C8F135] text-[#111318] py-3 rounded-xl font-bold text-sm transition-transform active:scale-95">
+        Add New Member
+      </button>
+<div class="mt-8 flex items-center gap-3">
+<img alt="GymSathi Admin Avatar" class="w-10 h-10 rounded-full object-cover" data-alt="Close-up portrait of a professional fitness gym manager in a black shirt with a friendly confident expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBypsV6K3LMzNm_gJy8w6OqgMoJUi7Kule39mKRkWRo96HtXtU0H2mC5U0mX04X4YJ0GRq2bmxcSNEDNYRvY5002MMt9Mm19xEr4ViTRZZV0LFmESJjAr3rUzsaNHdBzXnGEPBUdfES8NbWSDdsjJWyXVWSNvt-oewGCgvkMLK9Nnf8PTNl3Y_KWT5npZBJITmz7b3XBSd07NLmusfgfdxgoZJ8bPkzML-yK3KfDza2l-1cqKiT3WcgGyeLsbYy7tkW5MWcHtDptX4"/>
+<div>
+<p class="text-xs font-bold">Admin Portal</p>
+<p class="text-[10px] text-on-surface-variant">System Administrator</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-20 bg-[#111318]/80 backdrop-blur-xl flex justify-between items-center px-10 z-40 shadow-[0px_20px_40px_rgba(0,0,0,0.4)]">
+<div class="flex-1 max-w-md">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-lowest border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-[#C8F135] transition-all" placeholder="Search transactions or members..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-white transition-all active:scale-95">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-white transition-all active:scale-95">settings</button>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-2 rounded-lg font-bold text-sm transition-all active:scale-95">
+        Collect Fee
+      </button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-28 px-10 pb-12">
+<!-- Kinetic Summary Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+<!-- Total Collected Card -->
+<div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
+<p class="text-on-surface-variant text-xs font-medium uppercase tracking-widest mb-2">Total Collected (Monthly)</p>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-bold headline tracking-tighter">₨. 4,82,500</span>
+</div>
+<div class="mt-4 flex items-center gap-2 text-secondary text-xs">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>12% from last month</span>
+</div>
+</div>
+<!-- Pending Dues Card -->
+<div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-error"></div>
+<p class="text-on-surface-variant text-xs font-medium uppercase tracking-widest mb-2">Pending Dues</p>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-bold headline tracking-tighter text-error">₨. 84,200</span>
+</div>
+<p class="mt-4 text-on-surface-variant text-xs">14 Overdue payments</p>
+</div>
+<!-- Today's Cash Card -->
+<div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
+<p class="text-on-surface-variant text-xs font-medium uppercase tracking-widest mb-2">Today's Cash Collection</p>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-bold headline tracking-tighter">₨. 12,400</span>
+</div>
+<p class="mt-4 text-on-surface-variant text-xs">8 transactions today</p>
+</div>
+<!-- Unpaid Members Card -->
+<div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-[#C8F135]"></div>
+<p class="text-on-surface-variant text-xs font-medium uppercase tracking-widest mb-2">Unpaid Members</p>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-bold headline tracking-tighter">23</span>
+<span class="text-sm text-on-surface-variant">/ 450 total</span>
+</div>
+<div class="mt-4 h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-[#C8F135] w-[5%]" style="width: 5%;"></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Transaction History Table (Editorial Feed) -->
+<div class="lg:col-span-8 space-y-6">
+<div class="flex justify-between items-center px-2">
+<h2 class="text-2xl font-bold headline">Recent Transactions</h2>
+<div class="flex gap-2">
+<button class="bg-surface-container-high text-on-surface text-xs px-4 py-2 rounded-full font-medium hover:bg-surface-bright transition-all">Export PDF</button>
+<button class="bg-surface-container-high text-on-surface text-xs px-4 py-2 rounded-full font-medium hover:bg-surface-bright transition-all">Filter</button>
+</div>
+</div>
+<div class="glass-card rounded-3xl overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant">
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-widest">Date</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-widest">Member</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-widest">Package</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-widest">Amount</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-widest">Method</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-widest">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-5 px-6">
+<div class="flex flex-col">
+<span class="text-sm font-medium">Oct 24, 2023</span>
+<span class="text-[10px] text-on-surface-variant">10:45 AM</span>
+</div>
+</td>
+<td class="py-5 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center text-primary-container text-xs font-bold">AS</div>
+<span class="text-sm font-semibold">Anish Shrestha</span>
+</div>
+</td>
+<td class="py-5 px-6">
+<span class="text-xs bg-surface-container-highest px-3 py-1 rounded-full">3 Months Elite</span>
+</td>
+<td class="py-5 px-6">
+<span class="text-sm font-bold">₨. 12,000</span>
+</td>
+<td class="py-5 px-6">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#44FAA4]"></div>
+<span class="text-xs font-medium">eSewa</span>
+</div>
+</td>
+<td class="py-5 px-6">
+<a class="text-primary-container hover:underline text-xs flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-base">receipt_long</span>
+                    Receipt
+                  </a>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-5 px-6">
+<div class="flex flex-col">
+<span class="text-sm font-medium">Oct 24, 2023</span>
+<span class="text-[10px] text-on-surface-variant">09:12 AM</span>
+</div>
+</td>
+<td class="py-5 px-6">
+<div class="flex items-center gap-3">
+<img alt="Member Avatar" class="w-8 h-8 rounded-full object-cover" data-alt="Portrait of a focused young woman in gym attire with natural lighting and blurred athletic background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJ5KDVPHgUmr2dbxKTHOXg64sBYlohNnEnhXjC9HYARa0eE5YWVBn-XbGcJe8f3gkYMLN_ZCxpU0c0CGbqgxxhYNgcWxBnfxGl5dLS_K29r_ZiHjeduPad13okouKc5sBJ3X04zUxQdcVMl1a9Ise9DdSL6Q_bKzL07fVkdJBZtCkjpyvVcwiFJq-ysk2SsSe8G6TJYj0ymgiIncFk9bSuDB9DMYBLMtNe2gpupCXTex3pIe51432HZNfpez4dRSmDJpm24_oK44Q"/>
+<span class="text-sm font-semibold">Priya Rai</span>
+</div>
+</td>
+<td class="py-5 px-6">
+<span class="text-xs bg-surface-container-highest px-3 py-1 rounded-full">Monthly Basic</span>
+</td>
+<td class="py-5 px-6">
+<span class="text-sm font-bold">₨. 4,500</span>
+</td>
+<td class="py-5 px-6">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+<span class="text-xs font-medium">Cash</span>
+</div>
+</td>
+<td class="py-5 px-6">
+<a class="text-primary-container hover:underline text-xs flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-base">receipt_long</span>
+                    Receipt
+                  </a>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-5 px-6">
+<div class="flex flex-col">
+<span class="text-sm font-medium">Oct 23, 2023</span>
+<span class="text-[10px] text-on-surface-variant">06:30 PM</span>
+</div>
+</td>
+<td class="py-5 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 text-xs font-bold">BT</div>
+<span class="text-sm font-semibold">Bibek Thapa</span>
+</div>
+</td>
+<td class="py-5 px-6">
+<span class="text-xs bg-surface-container-highest px-3 py-1 rounded-full">Annual Platinum</span>
+</td>
+<td class="py-5 px-6">
+<span class="text-sm font-bold">₨. 42,000</span>
+</td>
+<td class="py-5 px-6">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#53ffab]"></div>
+<span class="text-xs font-medium">Khalti</span>
+</div>
+</td>
+<td class="py-5 px-6">
+<a class="text-primary-container hover:underline text-xs flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-base">receipt_long</span>
+                    Receipt
+                  </a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Right Sidebar: Pending Dues & Daily Summary -->
+<div class="lg:col-span-4 space-y-8">
+<!-- Daily Cash Summary Chart-ish Breakdown -->
+<div class="glass-card p-6 rounded-3xl">
+<h3 class="text-lg font-bold headline mb-6">Daily Revenue Mix</h3>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-on-surface-variant">eSewa</span>
+<span class="font-bold">65%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[65%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-on-surface-variant">Cash</span>
+<span class="font-bold">25%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[25%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-on-surface-variant">Khalti</span>
+<span class="font-bold">10%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-fixed-dim w-[10%]"></div>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant/10 flex justify-between items-center">
+<span class="text-xs font-medium text-on-surface-variant">Total Volume</span>
+<span class="text-lg font-bold">₨. 58,900</span>
+</div>
+</div>
+<!-- Pending Dues List -->
+<div class="glass-card p-6 rounded-3xl relative overflow-hidden">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-bold headline">Pending Dues</h3>
+<span class="text-[10px] bg-error-container text-on-error-container px-2 py-0.5 rounded-full font-bold uppercase">Critical</span>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-xs font-bold border border-outline-variant/20">RB</div>
+<div>
+<p class="text-sm font-bold">Rohan Basnet</p>
+<p class="text-[10px] text-error font-medium">Overdue: 12 Days</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full bg-[#25D366]/20 text-[#25D366] flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all active:scale-95" title="Send WhatsApp Reminder">
+<span class="material-symbols-outlined text-lg">chat</span>
+</button>
+</div>
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-xs font-bold border border-outline-variant/20">SM</div>
+<div>
+<p class="text-sm font-bold">Suman Magar</p>
+<p class="text-[10px] text-error font-medium">Overdue: 5 Days</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full bg-[#25D366]/20 text-[#25D366] flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all active:scale-95" title="Send WhatsApp Reminder">
+<span class="material-symbols-outlined text-lg">chat</span>
+</button>
+</div>
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-xs font-bold border border-outline-variant/20">KK</div>
+<div>
+<p class="text-sm font-bold">Kiran KC</p>
+<p class="text-[10px] text-on-surface-variant font-medium">Due: Tomorrow</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full bg-[#25D366]/20 text-[#25D366] flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all active:scale-95" title="Send WhatsApp Reminder">
+<span class="material-symbols-outlined text-lg">chat</span>
+</button>
+</div>
+</div>
+<button class="w-full mt-8 py-3 bg-surface-container-highest rounded-xl text-xs font-bold hover:bg-surface-bright transition-all">
+            View All Pending (14)
+          </button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -37,12 +37,25 @@ return [
 
     'groq' => [
         'api_key' => env('GROQ_API_KEY'),
-        'model' => env('GROQ_MODEL', 'llama3-70b-8192'),
+        'model' => env('GROQ_MODEL', 'llama-3.3-70b-versatile'),
     ],
 
     'gemini' => [
         'api_key' => env('GEMINI_API_KEY'),
         'model' => env('GEMINI_MODEL', 'gemini-2.0-flash-lite'),
+    ],
+
+    'esewa' => [
+        'merchant_id' => env('ESEWA_MERCHANT_ID'),
+        'merchant_secret' => env('ESEWA_MERCHANT_SECRET'),
+        'base_url' => env('ESEWA_BASE_URL', 'https://esewa.io'),
+        'callback_url' => env('ESEWA_CALLBACK_URL'),
+    ],
+
+    'khalti' => [
+        'api_key' => env('KHALTI_API_KEY'),
+        'base_url' => env('KHALTI_BASE_URL', 'https://khalti.com/api/v2'),
+        'callback_url' => env('KHALTI_CALLBACK_URL'),
     ],
 
 ];

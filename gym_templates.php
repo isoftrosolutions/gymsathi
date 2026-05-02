@@ -25,8 +25,8 @@ return [
                          <h3 style="font-family:\'Space Grotesk\',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:1px;color:#C8F135;margin-top:0;margin-bottom:16px;font-weight:600;">Admin Login Credentials</h3>
                          <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Portal:</strong> <a href="{{admin_url}}" style="color:#C8F135;text-decoration:none;font-weight:500;">{{admin_url}}</a></p>
                          <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Email:</strong> {{admin_email}}</p>
-                         <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Password:</strong> Use the password you set during registration</p>
-                         <p style="margin:16px 0 0;font-size:12px;color:#9ca3af;">✅ Your account is ready to use with the password you provided</p>
+                         <p style="margin:8px 0;font-size:14px;color:#d1d5db;"><strong>Password:</strong> <span style="color:#C8F135;font-weight:600;">{{admin_password}}</span></p>
+                         <p style="margin:16px 0 0;font-size:12px;color:#9ca3af;">⚠️ Please change your password after your first login.</p>
                      </div>
 
                     <div style="text-align:center;margin-bottom:32px;">

@@ -38,6 +38,8 @@ class TenantTest extends TestCase
             'name' => 'Test Gym',
             'owner_name' => 'John Doe',
             'owner_phone' => '9800000000',
+            'owner_email' => 'john@gymsathi.com',
+            'owner_password' => 'password123',
             'city' => 'Kathmandu',
             'address' => 'New Road',
             'plan' => 'basic',
@@ -58,7 +60,7 @@ class TenantTest extends TestCase
 
         $this->assertDatabaseHas('users', [
             'name' => 'John Doe',
-            'email' => '9800000000@gymsathi.com',
+            'email' => 'john@gymsathi.com',
             'tenant_id' => $tenant->id,
         ]);
     }
@@ -75,6 +77,8 @@ class TenantTest extends TestCase
             'name' => 'Test Gym',
             'owner_name' => 'John Doe',
             'owner_phone' => '9800000000',
+            'owner_email' => 'john@gymsathi.com',
+            'owner_password' => 'password123',
             'city' => 'Kathmandu',
             'plan' => 'basic',
         ]);
